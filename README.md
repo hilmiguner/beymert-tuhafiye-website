@@ -45,3 +45,10 @@ pnpm lint
 pnpm typecheck
 pnpm build
 ```
+
+## Proje planı
+
+Teknik scaffold, kapsam ve geliştirme roadmap'i için:
+
+- [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)
+
