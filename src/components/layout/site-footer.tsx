@@ -13,7 +13,7 @@ export function SiteFooter() {
             <BrandMark />
             <p className="mt-5 max-w-md leading-7 text-muted">
               Parti malzemeleri, helyumlu balonlar, özel gün konseptleri,
-              kişiye özel hazırlıklar ve tuhafiye ürünleri için Gemlik'te
+              kişiye özel hazırlıklar ve tuhafiye ürünleri için Gemlik’te
               renkli bir buluşma noktası.
             </p>
           </div>
@@ -65,7 +65,7 @@ export function SiteFooter() {
 
         <div className="mt-10 flex flex-col gap-2 border-t border-border pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
           <span>© {new Date().getFullYear()} Beymert. Tüm hakları saklıdır.</span>
-          <span>Gemlik'te kutlamalara renk katıyoruz.</span>
+          <span>Gemlik’te kutlamalara renk katıyoruz.</span>
         </div>
       </Container>
     </footer>
