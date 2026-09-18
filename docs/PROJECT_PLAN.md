@@ -499,7 +499,7 @@ Durum: SIRADAKİ
 
 Amaç: Kodlamanın geri kalanında kullanılacak görsel sistemi belirlemek.
 
-- [ ] Logo / mevcut marka materyallerini değerlendirme — final logo asset'i henüz paylaşılmadı; entegrasyon geldiğinde yapılacak.
+- [x] Logo / mevcut marka materyallerini değerlendirme — resmi sosyal hesaplar ve marka adı doğrulandı; yüksek kaliteli logo asset'i bulunamadığı için geçici text lockup kullanılıyor, kaynak logo geldiğinde değiştirilecek.
 - [x] Ana renk paleti
 - [x] Accent renkler
 - [x] Typography
@@ -521,13 +521,13 @@ Amaç: Kodlamanın geri kalanında kullanılacak görsel sistemi belirlemek.
 ### Phase 2 — Site Shell
 
 - [ ] Header / navbar
-- [ ] Mobile navigation
-- [ ] Global container
-- [ ] Footer
-- [ ] WhatsApp CTA altyapısı
-- [ ] Site config yapısı
-- [ ] Ortak metadata
-- [ ] Responsive navigation davranışı
+- [x] Mobile navigation
+- [x] Global container
+- [x] Footer
+- [x] WhatsApp CTA altyapısı
+- [x] Site config yapısı
+- [x] Ortak metadata
+- [x] Responsive navigation davranışı
 
 Çıkış kriteri:
 
