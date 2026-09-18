@@ -1,53 +1,107 @@
-const plannedSections = [
-  "Ürün kategorileri",
-  "Parti konseptleri",
-  "Öne çıkan ürünler",
-  "Galeri",
-  "Mağaza ve iletişim",
+import { ButtonLink } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Container, Section } from "@/components/ui/container";
+
+const colors = [
+  { name: "Primary", className: "bg-primary", value: "#C43D5A" },
+  { name: "Secondary", className: "bg-secondary", value: "#6446D8" },
+  { name: "Accent", className: "bg-accent", value: "#F7C948" },
+  { name: "Surface", className: "bg-surface", value: "#FFFFFF" },
 ];
 
 export default function Home() {
   return (
-    <main className="min-h-screen px-5 py-6 sm:px-8 lg:px-12">
-      <header className="mx-auto flex max-w-7xl items-center justify-between border-b border-[var(--border)] pb-5">
-        <span className="text-sm font-semibold tracking-[0.18em] uppercase">
-          Beymert Tuhafiye
-        </span>
-        <span className="text-xs text-[var(--muted)]">Proje iskeleti</span>
-      </header>
+    <main>
+      <Section>
+        <Container>
+          <div className="max-w-4xl">
+            <p className="bt-eyebrow text-primary">Beymert Tuhafiye</p>
+            <h1 className="bt-display bt-balance mt-5 text-5xl leading-[0.94] font-semibold sm:text-6xl lg:text-8xl">
+              Renkli, sıcak ve modern bir dijital vitrin.
+            </h1>
+            <p className="mt-7 max-w-2xl text-base leading-7 text-muted sm:text-lg">
+              Bu ekran Phase 1 tasarım sistemini doğrulamak için kullanılan
+              geçici bir kontrol yüzeyidir. Gerçek ana sayfa ve Hero sonraki
+              fazlarda geliştirilecek.
+            </p>
 
-      <section className="mx-auto flex min-h-[72vh] max-w-7xl flex-col justify-center py-16">
-        <p className="mb-5 text-sm font-medium text-[var(--muted)]">
-          Parti malzemeleri · Konseptler · Özel günler
-        </p>
-        <h1 className="max-w-4xl text-5xl leading-[0.98] font-semibold tracking-[-0.045em] sm:text-6xl lg:text-8xl">
-          Kutlamaların daha renkli hali.
-        </h1>
-        <p className="mt-7 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg">
-          Mobil öncelikli katalog ve mağaza tanıtım deneyiminin geliştirme
-          iskeleti hazır. Görsel kimlik ve gerçek içerikler sonraki adımlarda
-          bu yapı üzerine uygulanacak.
-        </p>
-      </section>
-
-      <section className="mx-auto max-w-7xl border-t border-[var(--border)] py-10">
-        <p className="mb-5 text-xs font-semibold tracking-[0.16em] text-[var(--muted)] uppercase">
-          Planlanan ana bölümler
-        </p>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {plannedSections.map((section, index) => (
-            <div
-              key={section}
-              className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5"
-            >
-              <span className="text-xs text-[var(--muted)]">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <p className="mt-8 text-sm font-medium">{section}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href="#components" size="lg">
+                Tasarım sistemini gör
+              </ButtonLink>
+              <ButtonLink href="#palette" variant="outline" size="lg">
+                Renk paleti
+              </ButtonLink>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </Container>
+      </Section>
+
+      <Section className="border-y border-border bg-surface-muted/45">
+        <Container>
+          <div id="palette">
+            <p className="bt-eyebrow text-muted">Renk Sistemi</p>
+            <h2 className="bt-display mt-3 text-4xl font-semibold sm:text-5xl">
+              Kontrollü enerji.
+            </h2>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {colors.map((color) => (
+                <Card key={color.name} className="overflow-hidden p-0">
+                  <div className={`h-28 ${color.className}`} />
+                  <div className="flex items-center justify-between p-5">
+                    <span className="font-extrabold">{color.name}</span>
+                    <span className="font-mono text-xs text-muted">
+                      {color.value}
+                    </span>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <div id="components" className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+            <Card>
+              <p className="bt-eyebrow text-secondary">Typography</p>
+              <h2 className="bt-display mt-4 text-5xl leading-none font-semibold">
+                Kutlamalar biraz daha özel.
+              </h2>
+              <p className="mt-5 max-w-xl leading-7 text-muted">
+                Fraunces başlıklara sıcak ve karakterli bir ifade verirken,
+                Nunito Sans ürün bilgileri ve navigasyonda yüksek okunabilirlik
+                sağlar.
+              </p>
+            </Card>
+
+            <Card tone="accent">
+              <p className="bt-eyebrow">Component Primitives</p>
+              <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+                <ButtonLink href="#" onClick={(event) => event.preventDefault()}>
+                  Primary
+                </ButtonLink>
+                <ButtonLink
+                  href="#"
+                  variant="secondary"
+                  onClick={(event) => event.preventDefault()}
+                >
+                  Secondary
+                </ButtonLink>
+                <ButtonLink
+                  href="#"
+                  variant="outline"
+                  onClick={(event) => event.preventDefault()}
+                >
+                  Outline
+                </ButtonLink>
+              </div>
+            </Card>
+          </div>
+        </Container>
+      </Section>
     </main>
   );
 }

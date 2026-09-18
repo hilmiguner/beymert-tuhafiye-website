@@ -1,3 +1,5 @@
+import "@fontsource-variable/fraunces/wght.css";
+import "@fontsource-variable/nunito-sans/wght.css";
 import type { Metadata } from "next";
 import "./globals.css";
 

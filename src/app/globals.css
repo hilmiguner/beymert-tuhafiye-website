@@ -1,11 +1,70 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-background: var(--bt-background);
+  --color-foreground: var(--bt-foreground);
+  --color-surface: var(--bt-surface);
+  --color-surface-muted: var(--bt-surface-muted);
+  --color-muted: var(--bt-muted);
+  --color-border: var(--bt-border);
+
+  --color-primary: var(--bt-primary);
+  --color-primary-hover: var(--bt-primary-hover);
+  --color-primary-foreground: var(--bt-primary-foreground);
+
+  --color-secondary: var(--bt-secondary);
+  --color-secondary-hover: var(--bt-secondary-hover);
+  --color-secondary-foreground: var(--bt-secondary-foreground);
+
+  --color-accent: var(--bt-accent);
+  --color-accent-soft: var(--bt-accent-soft);
+  --color-accent-foreground: var(--bt-accent-foreground);
+
+  --color-focus: var(--bt-focus);
+
+  --font-sans: "Nunito Sans Variable", "Segoe UI", sans-serif;
+  --font-display: "Fraunces Variable", Georgia, serif;
+
+  --radius-control: 0.875rem;
+  --radius-card: 1.5rem;
+  --radius-pill: 9999px;
+
+  --shadow-soft: 0 18px 50px rgb(68 38 50 / 0.08);
+  --shadow-lift: 0 22px 65px rgb(68 38 50 / 0.14);
+}
+
 :root {
-  --background: #fffaf7;
-  --foreground: #241f24;
-  --surface: #ffffff;
-  --muted: #746d73;
-  --border: #e9e0e4;
+  --bt-background: #fffaf5;
+  --bt-foreground: #241a1f;
+  --bt-surface: #ffffff;
+  --bt-surface-muted: #fff1ea;
+  --bt-muted: #74666e;
+  --bt-border: #eadde2;
+
+  --bt-primary: #c43d5a;
+  --bt-primary-hover: #a92f49;
+  --bt-primary-foreground: #ffffff;
+
+  --bt-secondary: #6446d8;
+  --bt-secondary-hover: #5338c3;
+  --bt-secondary-foreground: #ffffff;
+
+  --bt-accent: #f7c948;
+  --bt-accent-soft: #fff3bf;
+  --bt-accent-foreground: #241a1f;
+
+  --bt-focus: #6446d8;
+
+  --bt-container: 80rem;
+  --bt-gutter: clamp(1.25rem, 4vw, 3rem);
+  --bt-section-space: clamp(4.5rem, 9vw, 8rem);
+
+  --bt-duration-fast: 140ms;
+  --bt-duration-normal: 240ms;
+  --bt-duration-slow: 480ms;
+
+  --bt-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --bt-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
@@ -13,15 +72,22 @@
 }
 
 html {
+  background: var(--bt-background);
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bt-background);
+  color: var(--bt-foreground);
+  font-family: "Nunito Sans Variable", "Segoe UI", sans-serif;
+  font-synthesis: none;
   text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--bt-accent);
+  color: var(--bt-accent-foreground);
 }
 
 a {
@@ -32,6 +98,35 @@ a {
 button,
 a {
   -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--bt-focus) 75%, white);
+  outline-offset: 3px;
+}
+
+.bt-display {
+  font-family: "Fraunces Variable", Georgia, serif;
+  font-variation-settings: "SOFT" 50, "WONK" 0;
+  letter-spacing: -0.035em;
+}
+
+.bt-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.bt-balance {
+  text-wrap: balance;
 }
 
 @media (prefers-reduced-motion: reduce) {
