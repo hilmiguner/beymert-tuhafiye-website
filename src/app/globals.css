@@ -78,6 +78,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: clip;
   background:
     radial-gradient(circle at 12% 8%, rgb(251 233 226 / 0.8), transparent 28rem),
     var(--bt-background);
@@ -262,11 +263,15 @@ select {
   }
 
   .bt-hero-stage {
-    min-height: 27rem;
+    min-height: 22rem;
   }
 
   .bt-balloon {
-    width: clamp(4.6rem, 22vw, 6.1rem);
+    width: clamp(4.25rem, 20vw, 5.75rem);
+  }
+
+  .bt-hero [data-party-card] {
+    font-size: 0.9rem;
   }
 }
 
