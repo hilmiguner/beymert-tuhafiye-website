@@ -80,20 +80,18 @@ export default function Home() {
             <Card tone="accent">
               <p className="bt-eyebrow">Component Primitives</p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-                <ButtonLink href="#" onClick={(event) => event.preventDefault()}>
+                <ButtonLink href="#palette">
                   Primary
                 </ButtonLink>
                 <ButtonLink
-                  href="#"
+                  href="#components"
                   variant="secondary"
-                  onClick={(event) => event.preventDefault()}
                 >
                   Secondary
                 </ButtonLink>
                 <ButtonLink
-                  href="#"
+                  href="#palette"
                   variant="outline"
-                  onClick={(event) => event.preventDefault()}
                 >
                   Outline
                 </ButtonLink>
