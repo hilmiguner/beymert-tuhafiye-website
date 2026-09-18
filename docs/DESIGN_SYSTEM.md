@@ -15,17 +15,17 @@ Bu dosya Phase 1 ile oluşturulan görsel sistemin uygulama referansıdır.
 
 | Token | Değer | Kullanım |
 | --- | --- | --- |
-| Background | `#FFFAF5` | Ana sayfa zemini |
-| Foreground | `#241A1F` | Ana metin |
+| Background | `#FFFAFB` | Ana sayfa zemini |
+| Foreground | `#2B2025` | Ana metin |
 | Surface | `#FFFFFF` | Kartlar |
-| Surface muted | `#FFF1EA` | İkincil alanlar |
-| Muted | `#74666E` | Yardımcı metin |
-| Border | `#EADDE2` | İnce sınırlar |
-| Primary | `#C43D5A` | Ana CTA / marka vurgusu |
-| Secondary | `#6446D8` | İkincil vurgu |
-| Accent | `#F7C948` | Highlight / sıcak vurgu |
+| Surface muted | `#FFF1F5` | İkincil alanlar |
+| Muted | `#75656D` | Yardımcı metin |
+| Border | `#ECDDE3` | İnce sınırlar |
+| Primary | `#D13F73` | Ana CTA / marka vurgusu |
+| Secondary | `#946047` | İkincil vurgu |
+| Accent | `#E7B39A` | Highlight / sıcak vurgu |
 
-Primary ve Secondary beyaz metin ile; Accent koyu metin ile kullanılmalıdır.
+Primary ve Secondary beyaz metin ile; Accent koyu metin ile kullanılmalıdır. Palet, kamuya açık Beymert sosyal içeriklerinde görülen pink / white / rose-gold yönüne yaklaştırılmıştır; ürün temalarının kendi renkleri marka tokenlarından bağımsız kalır.
 
 ## Typography
 
@@ -86,4 +86,4 @@ Yeni componentler mümkün olduğunca bu primitive'ler ve tokenlar üzerinden ku
 
 ## Logo
 
-Henüz final logo asset'i repository'ye eklenmedi. Logo geldiğinde mevcut renk/typography sistemiyle uyumu kontrol edilerek entegre edilecektir. Bu durum diğer UI geliştirmelerini bloke etmez.
+Kamuya açık sosyal hesaplar doğrulandı ancak yüksek kaliteli, güvenilir logo asset'i internet indekslerinden elde edilemedi. Bu nedenle BrandMark şu an metin tabanlı bir lockup kullanır. Kaynak logo dosyası sağlandığında tek component üzerinden değiştirilecektir.

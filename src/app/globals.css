@@ -29,31 +29,31 @@
   --radius-card: 1.5rem;
   --radius-pill: 9999px;
 
-  --shadow-soft: 0 18px 50px rgb(68 38 50 / 0.08);
-  --shadow-lift: 0 22px 65px rgb(68 38 50 / 0.14);
+  --shadow-soft: 0 18px 50px rgb(70 35 48 / 0.08);
+  --shadow-lift: 0 22px 65px rgb(70 35 48 / 0.14);
 }
 
 :root {
-  --bt-background: #fffaf5;
-  --bt-foreground: #241a1f;
+  --bt-background: #fffafb;
+  --bt-foreground: #2b2025;
   --bt-surface: #ffffff;
-  --bt-surface-muted: #fff1ea;
-  --bt-muted: #74666e;
-  --bt-border: #eadde2;
+  --bt-surface-muted: #fff1f5;
+  --bt-muted: #75656d;
+  --bt-border: #ecdde3;
 
-  --bt-primary: #c43d5a;
-  --bt-primary-hover: #a92f49;
+  --bt-primary: #d13f73;
+  --bt-primary-hover: #b83263;
   --bt-primary-foreground: #ffffff;
 
-  --bt-secondary: #6446d8;
-  --bt-secondary-hover: #5338c3;
+  --bt-secondary: #946047;
+  --bt-secondary-hover: #7d4e39;
   --bt-secondary-foreground: #ffffff;
 
-  --bt-accent: #f7c948;
-  --bt-accent-soft: #fff3bf;
-  --bt-accent-foreground: #241a1f;
+  --bt-accent: #e7b39a;
+  --bt-accent-soft: #fbe9e2;
+  --bt-accent-foreground: #2b2025;
 
-  --bt-focus: #6446d8;
+  --bt-focus: #d13f73;
 
   --bt-container: 80rem;
   --bt-gutter: clamp(1.25rem, 4vw, 3rem);
@@ -78,7 +78,9 @@ html {
 
 body {
   margin: 0;
-  background: var(--bt-background);
+  background:
+    radial-gradient(circle at 12% 8%, rgb(251 233 226 / 0.8), transparent 28rem),
+    var(--bt-background);
   color: var(--bt-foreground);
   font-family: "Nunito Sans Variable", "Segoe UI", sans-serif;
   font-synthesis: none;
@@ -108,13 +110,13 @@ select {
 }
 
 :focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--bt-focus) 75%, white);
+  outline: 3px solid color-mix(in srgb, var(--bt-focus) 72%, white);
   outline-offset: 3px;
 }
 
 .bt-display {
   font-family: "Fraunces Variable", Georgia, serif;
-  font-variation-settings: "SOFT" 50, "WONK" 0;
+  font-variation-settings: "SOFT" 55, "WONK" 0;
   letter-spacing: -0.035em;
 }
 
@@ -127,6 +129,12 @@ select {
 
 .bt-balance {
   text-wrap: balance;
+}
+
+.bt-brand-glow {
+  background:
+    radial-gradient(circle at 20% 25%, rgb(209 63 115 / 0.16), transparent 28%),
+    radial-gradient(circle at 78% 30%, rgb(231 179 154 / 0.3), transparent 24%);
 }
 
 @media (prefers-reduced-motion: reduce) {
