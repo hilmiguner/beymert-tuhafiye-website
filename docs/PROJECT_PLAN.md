@@ -499,20 +499,20 @@ Durum: SIRADAKİ
 
 Amaç: Kodlamanın geri kalanında kullanılacak görsel sistemi belirlemek.
 
-- [ ] Logo / mevcut marka materyallerini değerlendirme
-- [ ] Ana renk paleti
-- [ ] Accent renkler
-- [ ] Typography
-- [ ] Spacing scale
-- [ ] Border radius sistemi
-- [ ] Shadow / border dili
-- [ ] Button varyantları
-- [ ] Link stilleri
-- [ ] Card sistemi
-- [ ] Container / grid sistemi
-- [ ] Responsive breakpoint kullanım kuralları
-- [ ] Motion duration/easing tokenları
-- [ ] Temel CSS design tokenlarının oluşturulması
+- [ ] Logo / mevcut marka materyallerini değerlendirme — final logo asset'i henüz paylaşılmadı; entegrasyon geldiğinde yapılacak.
+- [x] Ana renk paleti
+- [x] Accent renkler
+- [x] Typography
+- [x] Spacing scale
+- [x] Border radius sistemi
+- [x] Shadow / border dili
+- [x] Button varyantları
+- [x] Link stilleri
+- [x] Card sistemi
+- [x] Container / grid sistemi
+- [x] Responsive breakpoint kullanım kuralları
+- [x] Motion duration/easing tokenları
+- [x] Temel CSS design tokenlarının oluşturulması
 
 Çıkış kriteri:
 
