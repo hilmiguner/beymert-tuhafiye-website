@@ -215,17 +215,20 @@ export function HeroSection() {
       </div>
 
       <Container className="relative z-10">
-        <div className="grid min-h-[calc(100svh-4.5rem)] items-center gap-12 py-12 sm:py-16 lg:grid-cols-[1.02fr_0.98fr] lg:gap-8 lg:py-14">
-          <div className="relative z-20">
+        <div className="grid min-h-0 items-center gap-10 py-10 sm:gap-12 sm:py-14 lg:min-h-[calc(100svh-4.5rem)] lg:grid-cols-[1.02fr_0.98fr] lg:gap-8 lg:py-14">
+          <div className="relative z-20 min-w-0 max-w-full overflow-hidden">
             <p
               data-hero-eyebrow
               data-hero-reveal
-              className="bt-eyebrow text-primary"
+              className="bt-eyebrow max-w-full text-[0.68rem] leading-5 text-primary sm:text-xs"
             >
-              Gemlik’te kutlamalara renk katıyoruz
+              <span className="sm:hidden">Gemlik · Bursa</span>
+              <span className="hidden sm:inline">
+                Gemlik’te kutlamalara renk katıyoruz
+              </span>
             </p>
 
-            <h1 className="bt-display bt-balance mt-5 max-w-4xl text-[clamp(3.15rem,10vw,5.8rem)] leading-[0.9] font-semibold">
+            <h1 className="bt-display bt-balance mt-4 max-w-full text-[clamp(2.8rem,13vw,3.65rem)] leading-[0.91] font-semibold sm:mt-5 sm:text-[clamp(4.25rem,7vw,5.8rem)]">
               <span className="block overflow-hidden pb-[0.08em]">
                 <span
                   data-hero-title-line
@@ -241,7 +244,16 @@ export function HeroSection() {
                   data-hero-reveal
                   className="block origin-left text-primary"
                 >
-                  biraz Beymert.
+                  biraz<span className="hidden sm:inline"> Beymert.</span>
+                </span>
+              </span>
+              <span className="block overflow-hidden pb-[0.08em] sm:hidden">
+                <span
+                  data-hero-title-line
+                  data-hero-reveal
+                  className="block origin-left text-primary"
+                >
+                  Beymert.
                 </span>
               </span>
             </h1>
@@ -249,7 +261,7 @@ export function HeroSection() {
             <p
               data-hero-copy
               data-hero-reveal
-              className="mt-6 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8"
+              className="mt-5 max-w-full pr-1 text-[0.98rem] leading-7 text-muted sm:mt-6 sm:max-w-xl sm:pr-0 sm:text-lg sm:leading-8"
             >
               Balonlardan özel gün konseptlerine, kişiye özel hediyeliklerden
               tül ve kurdeleye kadar kutlamanı tamamlayan detayları bir araya
@@ -259,9 +271,13 @@ export function HeroSection() {
             <div
               data-hero-actions
               data-hero-reveal
-              className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+              className="mt-7 flex w-full max-w-full flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap"
             >
-              <ButtonLink href="/urunler" size="lg" className="sm:min-w-44">
+              <ButtonLink
+                href="/urunler"
+                size="lg"
+                className="w-full sm:w-auto sm:min-w-44"
+              >
                 Ürünleri Keşfet
                 <span aria-hidden="true" className="ml-2">
                   →
@@ -273,7 +289,7 @@ export function HeroSection() {
                 rel="noreferrer"
                 variant="outline"
                 size="lg"
-                className="sm:min-w-44"
+                className="w-full sm:w-auto sm:min-w-44"
               >
                 WhatsApp’tan Sor
               </ButtonLink>
@@ -297,11 +313,11 @@ export function HeroSection() {
             ref={visualRef}
             data-hero-scene
             data-hero-reveal
-            className="relative mx-auto w-full max-w-[35rem] lg:max-w-none"
+            className="relative mx-auto min-w-0 w-full max-w-[35rem] lg:max-w-none"
             aria-label="Beymert parti ürünlerini temsil eden dekoratif vitrin"
             role="img"
           >
-            <div className="bt-hero-stage relative aspect-[0.94] min-h-[28rem] overflow-hidden rounded-[2rem] border border-white/75 bg-surface/72 p-4 shadow-lift backdrop-blur-md sm:min-h-[34rem] sm:p-6">
+            <div className="bt-hero-stage relative aspect-[1.03] min-h-[22rem] overflow-hidden rounded-[1.6rem] border border-white/75 bg-surface/72 p-4 shadow-lift backdrop-blur-md sm:aspect-[0.94] sm:min-h-[34rem] sm:rounded-[2rem] sm:p-6">
               <div
                 data-depth="1.8"
                 className="absolute -right-8 top-8 size-44 rounded-full bg-[#f4d7e1]/75 blur-3xl sm:size-56"
