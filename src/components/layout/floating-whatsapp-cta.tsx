@@ -20,7 +20,7 @@ export function FloatingWhatsappCta() {
         <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.3 9.3 0 0 1-3.8-.8L3 21l1.8-5a8.3 8.3 0 1 1 16.2-4.5Z" />
         <path d="M8.8 8.4c.2 2.8 2 4.7 4.8 5.4" />
       </svg>
-      <span className="hidden xs:inline sm:inline">WhatsApp</span>
+      <span className="hidden sm:inline">WhatsApp</span>
     </a>
   );
 }
