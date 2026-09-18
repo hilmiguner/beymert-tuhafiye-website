@@ -23,7 +23,7 @@ export default function Home() {
             <div>
               <p className="bt-eyebrow text-primary">Gemlik · Bursa</p>
               <h1 className="bt-display bt-balance mt-5 max-w-4xl text-5xl leading-[0.94] font-semibold sm:text-6xl lg:text-8xl">
-                Kutlamanın her rengi Beymert'te.
+                Kutlamanın her rengi Beymert’te.
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-7 text-muted sm:text-lg">
                 Balondan doğum günü konseptlerine, söz-nişan hazırlıklarından
@@ -42,7 +42,7 @@ export default function Home() {
                   variant="outline"
                   size="lg"
                 >
-                  WhatsApp'tan Sor
+                  WhatsApp’tan Sor
                 </ButtonLink>
               </div>
             </div>
@@ -91,14 +91,14 @@ export default function Home() {
         <Container>
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <p className="bt-eyebrow text-secondary">Beymert'te neler var?</p>
+              <p className="bt-eyebrow text-secondary">Beymert’te neler var?</p>
               <h2 className="bt-display mt-3 text-4xl font-semibold sm:text-5xl">
                 Özel günün neyse, başlangıç noktası burada.
               </h2>
             </div>
             <p className="max-w-lg leading-7 text-muted">
               Gerçek ürün ve kategori görselleri sonraki fazlarda eklenecek.
-              Site kabuğu şimdiden Beymert'in ürün çeşitliliğine göre kuruldu.
+              Site kabuğu şimdiden Beymert’in ürün çeşitliliğine göre kuruldu.
             </p>
           </div>
 
