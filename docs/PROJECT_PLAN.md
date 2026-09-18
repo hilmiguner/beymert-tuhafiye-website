@@ -495,7 +495,7 @@ Durum: TAMAMLANDI
 
 ### Phase 1 — Brand & Design System
 
-Durum: SIRADAKİ
+Durum: TAMAMLANDI
 
 Amaç: Kodlamanın geri kalanında kullanılacak görsel sistemi belirlemek.
 
@@ -520,7 +520,9 @@ Amaç: Kodlamanın geri kalanında kullanılacak görsel sistemi belirlemek.
 
 ### Phase 2 — Site Shell
 
-- [ ] Header / navbar
+Durum: TAMAMLANDI
+
+- [x] Header / navbar
 - [x] Mobile navigation
 - [x] Global container
 - [x] Footer
@@ -535,7 +537,9 @@ Amaç: Kodlamanın geri kalanında kullanılacak görsel sistemi belirlemek.
 
 ### Phase 3 — Hero Experience
 
-- [ ] Hero copy
+Durum: GELİŞTİRMEDE — PR #4
+
+- [x] Hero copy
 - [x] Ana CTA
 - [x] Secondary CTA
 - [x] Ürün/parti görsel kompozisyonu
