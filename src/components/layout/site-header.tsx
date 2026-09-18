@@ -58,7 +58,7 @@ export function SiteHeader() {
               rel="noreferrer"
               size="sm"
             >
-              WhatsApp'tan Sor
+              WhatsApp’tan Sor
             </ButtonLink>
           </div>
 
@@ -102,7 +102,7 @@ export function SiteHeader() {
                 className="mt-2"
                 onClick={() => setOpen(false)}
               >
-                WhatsApp'tan Sor
+                WhatsApp’tan Sor
               </ButtonLink>
             </nav>
           </div>
