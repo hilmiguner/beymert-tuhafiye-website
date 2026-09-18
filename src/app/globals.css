@@ -263,15 +263,34 @@ select {
   }
 
   .bt-hero-stage {
-    min-height: 22rem;
+    min-height: 21rem;
   }
 
   .bt-balloon {
-    width: clamp(4.25rem, 20vw, 5.75rem);
+    width: clamp(3.75rem, 17vw, 4.9rem);
+  }
+
+  .bt-balloon::after {
+    height: 4.25rem;
   }
 
   .bt-hero [data-party-card] {
-    font-size: 0.9rem;
+    max-width: calc(100% - 1.25rem);
+    font-size: 0.86rem;
+  }
+}
+
+@media (max-width: 374px) {
+  .bt-hero-stage {
+    min-height: 20.5rem;
+  }
+
+  .bt-balloon {
+    width: 3.7rem;
+  }
+
+  .bt-hero [data-party-card] {
+    font-size: 0.82rem;
   }
 }
 
