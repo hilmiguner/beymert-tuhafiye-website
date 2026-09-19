@@ -11,7 +11,13 @@ const aspectClasses = {
   wide: "aspect-[16/10]",
 } as const;
 
-export function GalleryArtwork({ item }: { item: GalleryItem }) {
+export function GalleryArtwork({
+  item,
+  fill = false,
+}: {
+  item: GalleryItem;
+  fill?: boolean;
+}) {
   if (item.source.kind === "product") {
     const product = getProductBySlug(item.source.slug);
 
@@ -21,7 +27,11 @@ export function GalleryArtwork({ item }: { item: GalleryItem }) {
 
     return (
       <div
-        className={`relative w-full overflow-hidden bg-surface-muted ${aspectClasses[item.aspect]}`}
+        className={
+          fill
+            ? "relative h-full w-full overflow-hidden bg-surface-muted"
+            : `relative w-full overflow-hidden bg-surface-muted ${aspectClasses[item.aspect]}`
+        }
       >
         <ProductArtwork product={product} variant={item.source.variant} />
       </div>
@@ -36,7 +46,11 @@ export function GalleryArtwork({ item }: { item: GalleryItem }) {
 
   return (
     <div
-      className={`relative w-full overflow-hidden bg-surface-muted ${aspectClasses[item.aspect]}`}
+      className={
+        fill
+          ? "relative h-full w-full overflow-hidden bg-surface-muted"
+          : `relative w-full overflow-hidden bg-surface-muted ${aspectClasses[item.aspect]}`
+      }
     >
       <ConceptArtwork
         motif={concept.motif}
