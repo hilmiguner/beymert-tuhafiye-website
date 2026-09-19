@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { CategoryArtwork } from "@/components/categories/category-artwork";
-import { EmptyState } from "@/components/shared/empty-state";
+import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
-import { categories, getCategoryBySlug } from "@/data/categories";
 import { whatsappHref } from "@/config/site";
+import { categories, getCategoryBySlug } from "@/data/categories";
+import { getProductsByCategory } from "@/data/products";
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;
@@ -41,6 +42,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   if (!category) {
     notFound();
   }
+
+  const categoryProducts = getProductsByCategory(category.slug);
 
   return (
     <main>
@@ -109,14 +112,18 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               </div>
             </div>
 
-            <EmptyState
-              title="Ürün kataloğu hazırlanıyor"
-              description="Bu kategorideki tekil ürün kartları Product Catalog fazında eklenecek. Şimdilik güncel seçenekler ve stok bilgisi için WhatsApp üzerinden bize ulaşabilirsin."
-              actionHref={whatsappHref(
-                `Merhaba, "${category.name}" kategorisindeki güncel ürünleri öğrenmek istiyorum.`,
-              )}
-              actionLabel="Güncel ürünleri sor"
-            />
+            <div>
+              <p className="text-sm leading-6 text-muted">
+                Aşağıdaki ürünler katalog yapısını göstermek için kullanılan
+                örnek içeriklerdir. Güncel ürün ve stok bilgisi mağazadan
+                doğrulanacaktır.
+              </p>
+              <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                {categoryProducts.map((product) => (
+                  <ProductCard key={product.slug} product={product} />
+                ))}
+              </div>
+            </div>
           </div>
         </Container>
       </Section>
