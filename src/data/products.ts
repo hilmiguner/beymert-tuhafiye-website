@@ -1,6 +1,6 @@
 import type { Product } from "@/types/product";
 
-export const products = [
+export const products: readonly Product[] = [
   {
     slug: "helyumlu-lateks-balon-demeti",
     name: "Helyumlu Lateks Balon Demeti",
@@ -309,7 +309,7 @@ export const products = [
     sortOrder: 16,
     highlights: ["Saten", "Paketleme", "Süsleme"],
   },
-] as const satisfies readonly Product[];
+];
 
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find((product) => product.slug === slug);
