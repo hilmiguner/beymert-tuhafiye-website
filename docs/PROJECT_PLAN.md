@@ -567,13 +567,13 @@ Durum: GELİŞTİRMEDE — PR #4
 ### Phase 5 — Party Concepts
 
 - [ ] Concept veri modeli
-- [ ] "Partini Seç" ana sayfa bölümü
-- [ ] Concept cards
-- [ ] `/konseptler`
-- [ ] `/konseptler/[slug]`
-- [ ] Konsept galerisi
-- [ ] İlgili ürün bağlantıları
-- [ ] Mobil swipe/scroll davranışı
+- [x] "Partini Seç" ana sayfa bölümü
+- [x] Concept cards
+- [x] `/konseptler`
+- [x] `/konseptler/[slug]`
+- [x] Konsept galerisi
+- [ ] İlgili ürün bağlantıları — kategori seviyesinde bağlantılar hazır; tekil ürün linkleri Phase 6 Product Catalog ile tamamlanacak.
+- [x] Mobil swipe/scroll davranışı
 
 ### Phase 6 — Product Catalog
 
