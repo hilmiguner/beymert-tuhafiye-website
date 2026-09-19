@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 
 import { ProductCard } from "@/components/products/product-card";
@@ -15,6 +15,7 @@ export function ProductCatalog({
   categories: readonly Category[];
 }) {
   const [categorySlug, setCategorySlug] = useState("all");
+  const reducedMotion = useReducedMotion();
 
   const visibleProducts = useMemo(
     () =>
@@ -66,10 +67,13 @@ export function ProductCatalog({
             <motion.div
               layout
               key={product.slug}
-              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              initial={reducedMotion ? false : { opacity: 0, y: 12, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 8, scale: 0.98 }}
-              transition={{ duration: 0.24, ease: [0.2, 0.8, 0.2, 1] }}
+              exit={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 8, scale: 0.98 }}
+              transition={{
+                duration: reducedMotion ? 0 : 0.24,
+                ease: [0.2, 0.8, 0.2, 1],
+              }}
             >
               <ProductCard product={product} />
             </motion.div>
