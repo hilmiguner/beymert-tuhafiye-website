@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { ProductArtwork } from "@/components/products/product-artwork";
+import { ProductMedia } from "@/components/products/product-media";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
@@ -59,7 +59,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-surface shadow-lift">
-              <ProductArtwork product={product} />
+              <ProductMedia product={product} />
             </div>
 
             <div>
@@ -167,13 +167,13 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <p className="bt-eyebrow text-primary">Ürün galerisi</p>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
                 <div className="overflow-hidden rounded-card border border-border bg-surface shadow-soft sm:col-span-2">
-                  <ProductArtwork product={product} variant="main" />
+                  <ProductMedia product={product} variant="main" />
                 </div>
                 <div className="overflow-hidden rounded-card border border-border bg-surface shadow-soft">
-                  <ProductArtwork product={product} variant="detail" />
+                  <ProductMedia product={product} variant="detail" />
                 </div>
                 <div className="overflow-hidden rounded-card border border-border bg-surface shadow-soft">
-                  <ProductArtwork product={product} variant="color" />
+                  <ProductMedia product={product} variant="color" />
                 </div>
               </div>
             </div>
