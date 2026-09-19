@@ -5,8 +5,11 @@ import type { Metadata } from "next";
 import { FloatingWhatsappCta } from "@/components/layout/floating-whatsapp-cta";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { assertContentIntegrity } from "@/lib/content-integrity";
 
 import "./globals.css";
+
+assertContentIntegrity();
 
 export const metadata: Metadata = {
   title: {
