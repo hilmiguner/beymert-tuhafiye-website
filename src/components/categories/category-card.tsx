@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 
-import { CategoryArtwork } from "@/components/categories/category-artwork";
+import { CategoryMedia } from "@/components/categories/category-media";
 import type { Category } from "@/types/category";
 
 export function CategoryCard({ category }: { category: Category }) {
@@ -19,12 +19,7 @@ export function CategoryCard({ category }: { category: Category }) {
     >
       <div className="overflow-hidden border-b border-border">
         <div className="transition-transform duration-[var(--bt-duration-slow)] ease-[var(--bt-ease-emphasized)] group-hover:scale-[1.025]">
-          <CategoryArtwork
-            motif={category.motif}
-            accent={category.accent}
-            accentSoft={category.accentSoft}
-            accentDark={category.accentDark}
-          />
+          <CategoryMedia category={category} />
         </div>
       </div>
 
