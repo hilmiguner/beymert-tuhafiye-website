@@ -169,7 +169,7 @@ export function GalleryExperience({
               role="dialog"
               aria-modal="true"
               aria-label={activeItem.title}
-              className="relative grid max-h-[calc(100svh-1.5rem)] w-full max-w-6xl overflow-hidden rounded-[1.75rem] border border-white/12 bg-background shadow-[0_32px_120px_rgb(0_0_0_/_0.45)] lg:grid-cols-[1.2fr_0.8fr]"
+              className="relative flex h-[calc(100svh-1.5rem)] w-full max-w-6xl flex-col overflow-hidden rounded-[1.75rem] border border-white/12 bg-background shadow-[0_32px_120px_rgb(0_0_0_/_0.45)] lg:grid lg:h-[min(46rem,calc(100svh-3rem))] lg:grid-cols-[1.2fr_0.8fr]"
               initial={
                 reducedMotion
                   ? false
@@ -183,8 +183,17 @@ export function GalleryExperience({
               }}
               onClick={(event) => event.stopPropagation()}
             >
+              <button
+                type="button"
+                onClick={() => setActiveIndex(null)}
+                className="absolute right-3 top-3 z-30 grid size-10 place-items-center rounded-full border border-white/75 bg-white/90 text-lg font-black text-foreground shadow-soft backdrop-blur-sm transition-transform active:scale-95 sm:right-4 sm:top-4"
+                aria-label="Galeriyi kapat"
+              >
+                ×
+              </button>
+
               <motion.div
-                className="relative min-h-0 overflow-hidden bg-surface-muted"
+                className="relative h-[40svh] min-h-56 max-h-80 shrink-0 overflow-hidden bg-surface-muted sm:h-[46svh] sm:max-h-[26rem] lg:h-auto lg:min-h-0 lg:max-h-none"
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.22}
@@ -215,47 +224,38 @@ export function GalleryExperience({
                     exit={{ opacity: 0, x: -22 }}
                     transition={{ duration: reducedMotion ? 0 : 0.2 }}
                   >
-                    <GalleryArtwork item={activeItem} />
+                    <GalleryArtwork item={activeItem} fill />
                   </motion.div>
                 </AnimatePresence>
 
-                <div className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-3 sm:inset-x-5 sm:bottom-5">
-                  <button
-                    type="button"
-                    onClick={showPrevious}
-                    className="grid size-11 place-items-center rounded-full border border-white/75 bg-white/88 text-lg font-black shadow-soft backdrop-blur-sm transition-transform active:scale-95"
-                    aria-label="Önceki görsel"
-                  >
-                    ←
-                  </button>
-                  <span className="rounded-pill border border-white/75 bg-white/88 px-3 py-1.5 text-xs font-extrabold text-muted shadow-soft backdrop-blur-sm">
-                    {activeIndex + 1} / {items.length}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={showNext}
-                    className="grid size-11 place-items-center rounded-full border border-white/75 bg-white/88 text-lg font-black shadow-soft backdrop-blur-sm transition-transform active:scale-95"
-                    aria-label="Sonraki görsel"
-                  >
-                    →
-                  </button>
-                </div>
-              </motion.div>
-
-              <div className="relative max-h-[42svh] overflow-y-auto p-5 sm:p-7 lg:max-h-none lg:p-9">
                 <button
                   type="button"
-                  onClick={() => setActiveIndex(null)}
-                  className="absolute right-4 top-4 grid size-10 place-items-center rounded-full border border-border bg-surface text-lg font-black shadow-soft transition-transform active:scale-95"
-                  aria-label="Galeriyi kapat"
+                  onClick={showPrevious}
+                  className="absolute left-3 top-1/2 z-20 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-white/75 bg-white/90 text-lg font-black shadow-soft backdrop-blur-sm transition-transform active:scale-95 sm:left-5"
+                  aria-label="Önceki görsel"
                 >
-                  ×
+                  ←
                 </button>
 
+                <button
+                  type="button"
+                  onClick={showNext}
+                  className="absolute right-3 top-1/2 z-20 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-white/75 bg-white/90 text-lg font-black shadow-soft backdrop-blur-sm transition-transform active:scale-95 sm:right-5"
+                  aria-label="Sonraki görsel"
+                >
+                  →
+                </button>
+
+                <span className="absolute bottom-3 left-1/2 z-20 -translate-x-1/2 rounded-pill border border-white/75 bg-white/90 px-3 py-1.5 text-xs font-extrabold text-muted shadow-soft backdrop-blur-sm sm:bottom-5">
+                  {activeIndex + 1} / {items.length}
+                </span>
+              </motion.div>
+
+              <div className="relative min-h-0 flex-1 overflow-y-auto p-5 sm:p-7 lg:p-9">
                 <p className="bt-eyebrow pr-12 text-primary">
                   Beymert galerisi
                 </p>
-                <h2 className="bt-display mt-3 pr-10 text-4xl leading-tight font-semibold">
+                <h2 className="bt-display mt-3 pr-10 text-[2rem] leading-tight font-semibold sm:text-4xl">
                   {activeItem.title}
                 </h2>
                 <p className="mt-4 leading-7 text-muted">
