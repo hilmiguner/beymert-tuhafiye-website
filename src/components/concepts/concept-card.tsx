@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 
-import { ConceptArtwork } from "@/components/concepts/concept-artwork";
+import { ConceptMedia } from "@/components/concepts/concept-media";
 import type { Concept } from "@/types/concept";
 
 export function ConceptCard({ concept }: { concept: Concept }) {
@@ -18,13 +18,7 @@ export function ConceptCard({ concept }: { concept: Concept }) {
     >
       <div className="overflow-hidden">
         <div className="transition-transform duration-[var(--bt-duration-slow)] ease-[var(--bt-ease-emphasized)] group-hover:scale-[1.025]">
-          <ConceptArtwork
-            motif={concept.motif}
-            primary={concept.colors.primary}
-            secondary={concept.colors.secondary}
-            background={concept.colors.background}
-            foreground={concept.colors.foreground}
-          />
+          <ConceptMedia concept={concept} />
         </div>
       </div>
 

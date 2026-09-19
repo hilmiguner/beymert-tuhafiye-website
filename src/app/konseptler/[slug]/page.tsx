@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CategoryCard } from "@/components/categories/category-card";
-import { ConceptArtwork } from "@/components/concepts/concept-artwork";
+import { ConceptMedia } from "@/components/concepts/concept-media";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
@@ -87,13 +87,7 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
             </div>
 
             <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-surface shadow-lift">
-              <ConceptArtwork
-                motif={concept.motif}
-                primary={concept.colors.primary}
-                secondary={concept.colors.secondary}
-                background={concept.colors.background}
-                foreground={concept.colors.foreground}
-              />
+              <ConceptMedia concept={concept} />
             </div>
           </div>
         </Container>
@@ -112,14 +106,7 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
                 key={scene.title}
                 className="overflow-hidden rounded-card border border-border bg-surface shadow-soft"
               >
-                <ConceptArtwork
-                  motif={concept.motif}
-                  primary={concept.colors.primary}
-                  secondary={concept.colors.secondary}
-                  background={concept.colors.background}
-                  foreground={concept.colors.foreground}
-                  variant={scene.variant}
-                />
+                <ConceptMedia concept={concept} scene={scene} />
                 <div className="border-t border-border p-5">
                   <h3 className="bt-display text-2xl font-semibold">
                     {scene.title}

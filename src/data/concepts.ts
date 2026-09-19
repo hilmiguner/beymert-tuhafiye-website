@@ -1,6 +1,6 @@
 import type { Concept } from "@/types/concept";
 
-export const concepts = [
+export const concepts: readonly Concept[] = [
   {
     slug: "safari-party",
     name: "Safari Party",
@@ -273,7 +273,7 @@ export const concepts = [
     ],
     sortOrder: 8,
   },
-] as const satisfies readonly Concept[];
+];
 
 export function getConceptBySlug(slug: string): Concept | undefined {
   return concepts.find((concept) => concept.slug === slug);

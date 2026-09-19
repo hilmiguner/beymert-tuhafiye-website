@@ -1,6 +1,6 @@
 import type { Category } from "@/types/category";
 
-export const categories = [
+export const categories: readonly Category[] = [
   {
     slug: "balonlar",
     name: "Balonlar",
@@ -113,7 +113,7 @@ export const categories = [
     sortOrder: 8,
     highlights: ["Tül", "Kurdele", "Paketleme", "Tuhafiye"],
   },
-] as const satisfies readonly Category[];
+];
 
 export function getCategoryBySlug(slug: string): Category | undefined {
   return categories.find((category) => category.slug === slug);

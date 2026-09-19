@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { CategoryArtwork } from "@/components/categories/category-artwork";
+import { CategoryMedia } from "@/components/categories/category-media";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
@@ -81,12 +81,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </div>
 
             <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-surface shadow-lift">
-              <CategoryArtwork
-                motif={category.motif}
-                accent={category.accent}
-                accentSoft={category.accentSoft}
-                accentDark={category.accentDark}
-              />
+              <CategoryMedia category={category} />
             </div>
           </div>
         </Container>

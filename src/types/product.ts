@@ -1,3 +1,5 @@
+import type { ContentImage } from "@/types/media";
+
 export type ProductArtworkKind =
   | "balloon-bouquet"
   | "foil-number"
@@ -29,6 +31,7 @@ export type Product = {
   shortDescription: string;
   description: string;
   artworkKind: ProductArtworkKind;
+  images?: readonly ContentImage[];
   colors: readonly ProductColor[];
   dimensions?: string;
   featured: boolean;
