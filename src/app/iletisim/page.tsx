@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { StoreContactSection } from "@/components/sections/store-contact-section";
 import { Container, Section } from "@/components/ui/container";
 import { siteConfig, whatsappHref } from "@/config/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "İletişim",
-  description:
-    "Beymert Parti Malzemeleri Tuhafiye Tasarım ile telefon, WhatsApp ve mağaza ziyareti için iletişime geçin.",
-};
+  description: "Beymert Parti Malzemeleri Tuhafiye Tasarım ile telefon, WhatsApp ve mağaza ziyareti için iletişime geçin.",
+  path: "/iletisim",
+});
 
 export default function ContactPage() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">
         <Container>
           <p className="bt-eyebrow text-primary">İletişim</p>
