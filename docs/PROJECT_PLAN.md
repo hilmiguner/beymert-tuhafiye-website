@@ -641,7 +641,7 @@ Durum: TAMAMLANDI — açık adres ve çalışma saatlerinin işletme sahibi do�
 
 ### Phase 10 — Real Content & Content Management
 
-Durum: GELİŞTİRMEDE — PR #11; gerçek içerik girişi işletme sahibi materyallerini bekliyor.
+Durum: BEKLEMEDE — teknik içerik/media altyapısı PR #11 ile tamamlandı; gerçek içerik girişi işletme sahibi materyallerini bekliyor.
 
 - [ ] Gerçek ürün listesini toplama
 - [ ] Gerçek kategorileri tanımlama
