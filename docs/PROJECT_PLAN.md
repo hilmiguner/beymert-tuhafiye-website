@@ -548,7 +548,7 @@ Durum: GELİŞTİRMEDE — PR #4
 - [x] Desktop pointer/parallax davranışı gerekiyorsa ekleme
 - [x] Mobile sade animasyon varyantı
 - [x] Reduced-motion varyantı
-- [ ] Hero performance kontrolü — lokal production build ve cihaz kontrolü sonrası tamamlanacak.
+- [x] Hero performance kontrolü — production build, desktop ve 334px mobil QA doğrulandı.
 
 Çıkış kriteri:
 
@@ -557,12 +557,12 @@ Durum: GELİŞTİRMEDE — PR #4
 ### Phase 4 — Product Categories
 
 - [ ] Kategori veri modeli
-- [ ] Category card component
-- [ ] Responsive kategori grid/carousel
-- [ ] Hover/tap interactions
-- [ ] Ana sayfa kategori bölümü
-- [ ] `/kategoriler/[slug]` route
-- [ ] Boş/verisiz durumlar
+- [x] Category card component
+- [x] Responsive kategori grid/carousel
+- [x] Hover/tap interactions
+- [x] Ana sayfa kategori bölümü
+- [x] `/kategoriler/[slug]` route
+- [x] Boş/verisiz durumlar
 
 ### Phase 5 — Party Concepts
 

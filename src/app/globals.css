@@ -305,3 +305,11 @@ select {
     scroll-behavior: auto !important;
   }
 }
+
+.bt-hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.bt-hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
