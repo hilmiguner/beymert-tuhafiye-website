@@ -1,3 +1,4 @@
+import { AnimatedShowcaseSection } from "@/components/sections/animated-showcase-section";
 import { CategoriesSection } from "@/components/sections/categories-section";
 import { ConceptsSection } from "@/components/sections/concepts-section";
 import { FeaturedProductsSection } from "@/components/sections/featured-products-section";
@@ -10,6 +11,7 @@ export default function Home() {
       <CategoriesSection />
       <ConceptsSection />
       <FeaturedProductsSection />
+      <AnimatedShowcaseSection />
     </main>
   );
 }
