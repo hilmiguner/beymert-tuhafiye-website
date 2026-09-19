@@ -130,8 +130,8 @@ export function AnimatedShowcaseSection() {
 
         track.dataset.enhanced = "true";
 
-        gsap.set(steps, { opacity: 0.28, y: 0 });
-        gsap.set(steps[0], { opacity: 1 });
+        gsap.set(steps, { autoAlpha: 0, y: 14 });
+        gsap.set(steps[0], { autoAlpha: 1, y: 0 });
         gsap.set(table, { autoAlpha: 0.1, y: 90 });
         gsap.set(products, { autoAlpha: 0, y: 56, rotate: -4 });
         gsap.set(ribbon, { autoAlpha: 0, scaleX: 0.35 });
@@ -162,8 +162,8 @@ export function AnimatedShowcaseSection() {
             0.18,
           )
           .to(palette, { autoAlpha: 0.42, scale: 0.88, duration: 0.2 }, 0.2)
-          .to(steps[0], { opacity: 0.28, y: -8, duration: 0.16 }, 0.27)
-          .to(steps[1], { opacity: 1, y: -3, duration: 0.18 }, 0.32)
+          .to(steps[0], { autoAlpha: 0, y: -14, duration: 0.14 }, 0.25)
+          .to(steps[1], { autoAlpha: 1, y: 0, duration: 0.18 }, 0.31)
           .to(table, { autoAlpha: 1, y: 0, duration: 0.28 }, 0.3)
           .to(
             products,
@@ -176,8 +176,8 @@ export function AnimatedShowcaseSection() {
             },
             0.36,
           )
-          .to(steps[1], { opacity: 0.28, y: -8, duration: 0.16 }, 0.62)
-          .to(steps[2], { opacity: 1, y: -3, duration: 0.18 }, 0.67)
+          .to(steps[1], { autoAlpha: 0, y: -14, duration: 0.14 }, 0.6)
+          .to(steps[2], { autoAlpha: 1, y: 0, duration: 0.18 }, 0.66)
           .to(ribbon, { autoAlpha: 1, scaleX: 1, duration: 0.22 }, 0.66)
           .to(
             seal,
@@ -311,12 +311,12 @@ export function AnimatedShowcaseSection() {
 
         <div ref={trackRef} className="bt-story-track hidden lg:block">
           <div className="bt-story-sticky">
-            <div className="grid w-full grid-cols-[0.84fr_1.16fr] items-center gap-12 py-12">
+            <div className="grid w-full grid-cols-[0.84fr_1.16fr] items-center gap-12 py-8 xl:py-10">
               <div>
                 <p className="bt-eyebrow text-[#f2b9cd]">Beymert vitrini</p>
                 <h2
                   id="animated-showcase-title"
-                  className="bt-display bt-balance mt-3 max-w-xl text-6xl leading-[0.98] font-semibold xl:text-7xl"
+                  className="bt-display bt-balance mt-3 max-w-xl text-[3.4rem] leading-[0.98] font-semibold xl:text-6xl"
                 >
                   Bir kutlama, detay detay şekillenir.
                 </h2>
@@ -325,13 +325,13 @@ export function AnimatedShowcaseSection() {
                   kutlama sahnesine dönüşür.
                 </p>
 
-                <ol className="mt-9 space-y-5">
+                <ol className="bt-story-steps relative mt-8 min-h-[12.5rem] border-t border-white/10 pt-5">
                   {storySteps.map((step) => (
                     <li
                       key={step.number}
                       data-story-step
                       data-story-animated
-                      className="grid grid-cols-[2.8rem_1fr] gap-4 border-t border-white/10 pt-4"
+                      className="bt-story-step absolute inset-x-0 top-5 grid grid-cols-[2.8rem_1fr] gap-4"
                     >
                       <span className="pt-1 text-xs font-black tracking-[0.14em] text-[#f2b9cd]">
                         {step.number}
@@ -340,10 +340,10 @@ export function AnimatedShowcaseSection() {
                         <p className="bt-eyebrow text-white/48">
                           {step.eyebrow}
                         </p>
-                        <h3 className="bt-display mt-2 text-2xl font-semibold xl:text-3xl">
+                        <h3 className="bt-display mt-2 max-w-md text-2xl leading-tight font-semibold xl:text-3xl">
                           {step.title}
                         </h3>
-                        <p className="mt-2 max-w-md text-sm leading-6 text-white/55">
+                        <p className="mt-3 max-w-md text-sm leading-6 text-white/55">
                           {step.description}
                         </p>
                       </div>
