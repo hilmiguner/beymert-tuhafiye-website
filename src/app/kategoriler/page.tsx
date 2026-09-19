@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 import { CategoryCard } from "@/components/categories/category-card";
 import { Container, Section } from "@/components/ui/container";
 import { categories } from "@/data/categories";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Kategoriler",
-  description:
-    "Beymert’in balon, doğum günü, baby shower, söz-nişan-düğün, hediyelik ve tuhafiye kategorilerini keşfedin.",
-};
+  description: "Beymert’in balon, doğum günü, baby shower, söz-nişan-düğün, hediyelik ve tuhafiye kategorilerini keşfedin.",
+  path: "/kategoriler",
+});
 
 export default function CategoriesPage() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">
         <Container>
           <p className="bt-eyebrow text-primary">Ürün grupları</p>
