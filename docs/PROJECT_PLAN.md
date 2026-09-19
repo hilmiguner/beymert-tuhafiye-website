@@ -581,7 +581,7 @@ Durum: TAMAMLANDI
 
 ### Phase 6 — Product Catalog
 
-Durum: GELİŞTİRMEDE — PR #7
+Durum: TAMAMLANDI
 
 - [x] Product veri modeli
 - [x] `/urunler`
@@ -599,14 +599,16 @@ Online fiyat/sepet/checkout eklenmeyecek.
 
 ### Phase 7 — Animated Showcase / Scroll Story
 
-- [ ] Sahne konseptini belirleme
-- [ ] ScrollTrigger prototipi
-- [ ] Ürün/dekoratif objelerin birleştiği vitrin sahnesi
-- [ ] Desktop timeline
-- [ ] Mobile simplified sequence
-- [ ] Reduced motion fallback
-- [ ] Performans testleri
-- [ ] Gerekirse sahneyi tamamen statik fallback ile değiştirebilme
+Durum: GELİŞTİRMEDE — PR #8
+
+- [x] Sahne konseptini belirleme
+- [x] ScrollTrigger prototipi
+- [x] Ürün/dekoratif objelerin birleştiği vitrin sahnesi
+- [x] Desktop timeline
+- [x] Mobile simplified sequence
+- [x] Reduced motion fallback
+- [ ] Performans testleri — lokal production build ve desktop/mobile scroll QA sonrası tamamlanacak.
+- [x] JavaScript/reduced-motion durumunda uzun scroll track oluşturmayan statik fallback
 
 Bu bölüm "wow effect" için vardır; kullanılabilirliği veya performansı düşürürse sadeleştirilir.
 
@@ -734,4 +736,4 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 
 ---
 
-Son güncelleme: 2026-09-18
+Son güncelleme: 2026-09-19
