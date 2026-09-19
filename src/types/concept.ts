@@ -1,3 +1,5 @@
+import type { ContentImage } from "@/types/media";
+
 export type ConceptMotif =
   | "safari"
   | "princess"
@@ -12,6 +14,7 @@ export type ConceptGalleryScene = {
   title: string;
   description: string;
   variant: "hero" | "table" | "detail";
+  image?: ContentImage;
 };
 
 export type Concept = {
@@ -21,6 +24,7 @@ export type Concept = {
   shortDescription: string;
   description: string;
   motif: ConceptMotif;
+  coverImage?: ContentImage;
   colors: {
     primary: string;
     secondary: string;
