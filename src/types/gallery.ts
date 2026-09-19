@@ -1,3 +1,5 @@
+import type { ContentImage } from "@/types/media";
+
 export type GalleryAspect =
   | "portrait"
   | "landscape"
@@ -21,6 +23,7 @@ export type GalleryItem = {
   title: string;
   description: string;
   source: GallerySource;
+  image?: ContentImage;
   aspect: GalleryAspect;
   categorySlug?: string;
   conceptSlug?: string;
