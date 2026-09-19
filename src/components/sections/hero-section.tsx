@@ -360,8 +360,31 @@ export function HeroSection() {
 
               <div
                 data-party-card
+                className="absolute inset-x-4 bottom-4 z-10 rounded-[1.35rem] border border-white/90 bg-white/94 p-4 shadow-soft backdrop-blur-sm sm:hidden"
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div className="min-w-0">
+                    <span className="bt-eyebrow text-primary">Beymert</span>
+                    <p className="bt-display mt-1 text-[1.35rem] leading-tight font-semibold">
+                      Balon · Konsept · Tasarım
+                    </p>
+                    <p className="mt-1.5 text-xs font-bold leading-5 text-muted">
+                      Özel günlerini tamamlayan renkli detaylar.
+                    </p>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    className="grid size-11 shrink-0 place-items-center rounded-full bg-primary text-sm font-black text-white"
+                  >
+                    B
+                  </span>
+                </div>
+              </div>
+
+              <div
+                data-party-card
                 data-depth="1.2"
-                className="absolute left-[6%] top-[47%] w-[56%] rotate-[-3deg] rounded-card border border-white/80 bg-[#fff6f8]/95 p-3.5 shadow-soft sm:left-[8%] sm:top-[48%] sm:w-[46%] sm:rotate-[-4deg] sm:p-5"
+                className="absolute hidden sm:left-[8%] sm:top-[48%] sm:block sm:w-[46%] sm:rotate-[-4deg] sm:rounded-card sm:border sm:border-white/80 sm:bg-[#fff6f8]/95 sm:p-5 sm:shadow-soft"
               >
                 <span className="bt-eyebrow text-primary">Doğum Günü</span>
                 <p className="bt-display mt-2 text-xl leading-tight font-semibold sm:text-3xl">
@@ -377,7 +400,7 @@ export function HeroSection() {
               <div
                 data-party-card
                 data-depth="1.6"
-                className="absolute right-[5%] top-[60%] w-[50%] rotate-[3deg] rounded-card border border-white/80 bg-[#f8eee9]/95 p-3.5 shadow-soft sm:right-[6%] sm:top-[58%] sm:w-[45%] sm:rotate-[5deg] sm:p-5"
+                className="absolute hidden sm:right-[6%] sm:top-[58%] sm:block sm:w-[45%] sm:rotate-[5deg] sm:rounded-card sm:border sm:border-white/80 sm:bg-[#f8eee9]/95 sm:p-5 sm:shadow-soft"
               >
                 <span className="bt-eyebrow text-secondary">Özel Günler</span>
                 <p className="bt-display mt-2 text-2xl font-semibold sm:text-3xl">
@@ -392,7 +415,7 @@ export function HeroSection() {
               <div
                 data-party-card
                 data-depth="2.1"
-                className="absolute bottom-[5%] left-1/2 flex w-[58%] -translate-x-1/2 items-center justify-between gap-2 rounded-card border border-white/80 bg-white/95 p-3.5 shadow-soft sm:bottom-[6%] sm:left-[28%] sm:w-[44%] sm:translate-x-0 sm:gap-3 sm:p-5"
+                className="absolute hidden sm:bottom-[6%] sm:left-[28%] sm:flex sm:w-[44%] sm:translate-x-0 sm:items-center sm:justify-between sm:gap-3 sm:rounded-card sm:border sm:border-white/80 sm:bg-white/95 sm:p-5 sm:shadow-soft"
               >
                 <div>
                   <span className="bt-eyebrow text-muted">Beymert</span>
