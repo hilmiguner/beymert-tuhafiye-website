@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { GalleryArtwork } from "@/components/gallery/gallery-artwork";
 import { getCategoryBySlug } from "@/data/categories";
@@ -58,42 +58,87 @@ export function GalleryExperience({
 }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const reducedMotion = useReducedMotion();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const restoreFocusRef = useRef<HTMLElement | null>(null);
+  const isOpen = activeIndex !== null;
 
   useEffect(() => {
-    if (activeIndex === null) {
+    if (!isOpen) {
       return;
     }
 
     const previousOverflow = document.body.style.overflow;
+    restoreFocusRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
     document.body.style.overflow = "hidden";
+
+    const focusFrame = window.requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        event.preventDefault();
         setActiveIndex(null);
+        return;
       }
 
       if (event.key === "ArrowRight") {
+        event.preventDefault();
         setActiveIndex((current) =>
           current === null ? null : (current + 1) % items.length,
         );
+        return;
       }
 
       if (event.key === "ArrowLeft") {
+        event.preventDefault();
         setActiveIndex((current) =>
           current === null
             ? null
             : (current - 1 + items.length) % items.length,
         );
+        return;
+      }
+
+      if (event.key !== "Tab") {
+        return;
+      }
+
+      const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+
+      if (!focusable || focusable.length === 0) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
+      window.cancelAnimationFrame(focusFrame);
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
+      restoreFocusRef.current?.focus();
+      restoreFocusRef.current = null;
     };
-  }, [activeIndex, items.length]);
+  }, [isOpen, items.length]);
 
   const activeItem = activeIndex === null ? null : items[activeIndex];
 
@@ -166,6 +211,7 @@ export function GalleryExperience({
             onClick={() => setActiveIndex(null)}
           >
             <motion.div
+              ref={dialogRef}
               role="dialog"
               aria-modal="true"
               aria-label={activeItem.title}
@@ -184,6 +230,7 @@ export function GalleryExperience({
               onClick={(event) => event.stopPropagation()}
             >
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={() => setActiveIndex(null)}
                 className="absolute right-3 top-3 z-30 grid size-10 place-items-center rounded-full border border-white/75 bg-white/90 text-lg font-black text-foreground shadow-soft backdrop-blur-sm transition-transform active:scale-95 sm:right-4 sm:top-4"
