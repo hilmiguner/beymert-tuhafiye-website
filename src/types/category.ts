@@ -1,3 +1,5 @@
+import type { ContentImage } from "@/types/media";
+
 export type CategoryMotif =
   | "balloons"
   | "birthday"
@@ -18,6 +20,7 @@ export type Category = {
   accentSoft: string;
   accentDark: string;
   motif: CategoryMotif;
+  coverImage?: ContentImage;
   sortOrder: number;
   highlights: readonly string[];
 };
