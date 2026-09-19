@@ -614,7 +614,7 @@ Bu bölüm "wow effect" için vardır; kullanılabilirliği veya performansı d�
 
 ### Phase 8 — Gallery
 
-Durum: GELİŞTİRMEDE — PR #9
+Durum: TAMAMLANDI
 
 - [x] Masonry/responsive gallery
 - [x] Lightbox
@@ -625,17 +625,19 @@ Durum: GELİŞTİRMEDE — PR #9
 
 ### Phase 9 — About, Trust & Store Contact
 
-- [ ] Hakkımızda içeriği
-- [ ] Neden Biz? bölümü
-- [ ] Mağaza bilgileri
-- [ ] Adres
-- [ ] Telefon
-- [ ] Çalışma saatleri
-- [ ] WhatsApp
-- [ ] Yol tarifi
-- [ ] Harita
-- [ ] Final CTA
-- [ ] İletişim sayfası
+Durum: GELİŞTİRMEDE — PR #10
+
+- [x] Hakkımızda içeriği
+- [x] Neden Biz? bölümü
+- [x] Mağaza bilgileri
+- [ ] Tam açık adres — kaynaklar arasında çelişki var; Gemlik/Hamidiye seviyesi ve isim bazlı harita araması aktif, kapı numarası Phase 10 işletme sahibi doğrulamasıyla kilitlenecek.
+- [x] Telefon
+- [ ] Çalışma saatleri — public listing Pzt–Cmt 10:00–19:30 olarak işlendi; Phase 10'da işletme sahibiyle final doğrulama yapılacak.
+- [x] WhatsApp
+- [x] Yol tarifi — işletme adıyla güncel harita aramasına yönlendiriliyor.
+- [x] Harita — işletme adıyla arama yapan lazy-loaded embed.
+- [x] Final CTA
+- [x] İletişim sayfası
 
 ### Phase 10 — Real Content & Content Management
 
