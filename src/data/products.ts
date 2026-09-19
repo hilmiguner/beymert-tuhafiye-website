@@ -25,7 +25,7 @@ export const products: readonly Product[] = [
     slug: "folyo-rakam-balon",
     name: "Folyo Rakam Balon",
     categorySlug: "balonlar",
-    conceptSlugs: ["pink-gold", "blue-silver", "football-party"],
+    conceptSlugs: ["pink-gold", "blue-silver", "futbol-partisi"],
     shortDescription: "Yaş ve özel tarihler için büyük folyo rakam balon.",
     description:
       "Doğum günü ve yıl dönümü gibi kutlamalarda yaş veya tarihi vurgulamak için kullanılan folyo rakam balon seçeneği.",
@@ -64,7 +64,7 @@ export const products: readonly Product[] = [
     slug: "dogum-gunu-masa-seti",
     name: "Doğum Günü Masa Seti",
     categorySlug: "dogum-gunu",
-    conceptSlugs: ["prenses-partisi", "unicorn-party", "football-party"],
+    conceptSlugs: ["prenses-partisi", "unicorn-party", "futbol-partisi"],
     shortDescription: "Masa üstü kutlamasını tek dilde tamamlayan temel parti seti.",
     description:
       "Tabak, bardak ve masa üstü tamamlayıcıları gibi temel doğum günü ürünlerini aynı tema altında bir araya getiren örnek set.",
@@ -84,7 +84,7 @@ export const products: readonly Product[] = [
     slug: "happy-birthday-banner",
     name: "Happy Birthday Banner",
     categorySlug: "dogum-gunu",
-    conceptSlugs: ["prenses-partisi", "unicorn-party", "football-party", "pink-gold"],
+    conceptSlugs: ["prenses-partisi", "unicorn-party", "futbol-partisi", "pink-gold"],
     shortDescription: "Doğum günü alanını tamamlayan dekoratif banner.",
     description:
       "Duvar, fon veya masa arkası kullanımına uygun dekoratif doğum günü yazısı. Konsept renkleriyle birlikte kullanılabilir.",
