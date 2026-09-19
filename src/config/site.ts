@@ -3,6 +3,12 @@ export const siteConfig = {
   shortName: "Beymert",
   locationLabel: "Gemlik · Bursa",
   neighborhoodLabel: "Hamidiye · Gemlik · Bursa",
+  locality: {
+    neighborhood: "Hamidiye",
+    city: "Gemlik",
+    region: "Bursa",
+    country: "TR",
+  },
   phoneDisplay: "0543 337 70 04",
   phoneE164: "+905433377004",
   facebookUrl: "https://www.facebook.com/beymertasarim/",
