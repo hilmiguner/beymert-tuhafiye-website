@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { buildPageMetadata } from "@/lib/seo";
+
 import { ProductMedia } from "@/components/products/product-media";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
@@ -33,10 +35,11 @@ export async function generateMetadata({
     return { title: "Ürün bulunamadı" };
   }
 
-  return {
+  return buildPageMetadata({
     title: product.name,
     description: product.shortDescription,
-  };
+    path: `/urunler/${product.slug}`,
+  });
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -54,7 +57,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   );
 
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <Section className="border-b border-border bg-surface-muted/30">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">

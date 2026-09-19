@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 import { ProductCatalog } from "@/components/products/product-catalog";
 import { Container, Section } from "@/components/ui/container";
 import { categories } from "@/data/categories";
 import { products } from "@/data/products";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Ürünler",
-  description:
-    "Beymert’in parti malzemeleri, balon, özel gün, hediyelik ve tuhafiye ürünlerini keşfedin.",
-};
+  description: "Beymert’in parti malzemeleri, balon, özel gün, hediyelik ve tuhafiye ürünlerini keşfedin.",
+  path: "/urunler",
+});
 
 export default function ProductsPage() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">
         <Container>
           <p className="bt-eyebrow text-primary">Ürün kataloğu</p>

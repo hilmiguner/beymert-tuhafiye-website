@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { buildPageMetadata } from "@/lib/seo";
+
 import { CategoryMedia } from "@/components/categories/category-media";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
@@ -29,10 +31,11 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPageMetadata({
     title: category.name,
     description: category.shortDescription,
-  };
+    path: `/kategoriler/${category.slug}`,
+  });
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
@@ -46,7 +49,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const categoryProducts = getProductsByCategory(category.slug);
 
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.85fr]">
