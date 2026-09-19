@@ -78,6 +78,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: clip;
   background:
     radial-gradient(circle at 12% 8%, rgb(251 233 226 / 0.8), transparent 28rem),
     var(--bt-background);
@@ -135,6 +136,159 @@ select {
   background:
     radial-gradient(circle at 20% 25%, rgb(209 63 115 / 0.16), transparent 28%),
     radial-gradient(circle at 78% 30%, rgb(231 179 154 / 0.3), transparent 24%);
+}
+
+.bt-hero {
+  background:
+    radial-gradient(circle at 16% 28%, rgb(209 63 115 / 0.13), transparent 32rem),
+    radial-gradient(circle at 86% 22%, rgb(231 179 154 / 0.34), transparent 27rem),
+    linear-gradient(180deg, #fffafb 0%, #fff7f8 100%);
+}
+
+.bt-hero-stage {
+  transform: translateZ(0);
+  contain: layout paint;
+}
+
+.bt-balloon {
+  position: relative;
+  width: clamp(5.4rem, 11vw, 8.25rem);
+  aspect-ratio: 0.78;
+  border-radius: 52% 48% 50% 50% / 44% 44% 56% 56%;
+  box-shadow:
+    inset -18px -18px 28px rgb(91 31 54 / 0.1),
+    inset 15px 12px 28px rgb(255 255 255 / 0.42),
+    0 20px 35px rgb(85 41 56 / 0.12);
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.bt-balloon::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.55rem;
+  width: 0.9rem;
+  height: 0.75rem;
+  background: inherit;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  transform: translateX(-50%);
+}
+
+.bt-balloon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.15rem);
+  width: 1px;
+  height: clamp(4.5rem, 9vw, 7rem);
+  background: linear-gradient(to bottom, rgb(118 93 102 / 0.5), transparent);
+}
+
+.bt-balloon-primary {
+  background: linear-gradient(145deg, #eb7aa2 0%, #d13f73 72%);
+}
+
+.bt-balloon-rose {
+  background: linear-gradient(145deg, #f2c7b5 0%, #d99c82 75%);
+}
+
+.bt-balloon-cream {
+  background: linear-gradient(145deg, #fffdf8 0%, #f0e2d8 78%);
+}
+
+.bt-confetti-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bt-confetti {
+  position: absolute;
+  display: block;
+  width: 0.55rem;
+  height: 1.2rem;
+  border-radius: 0.25rem;
+  opacity: 0.38;
+}
+
+.bt-confetti-a {
+  left: 5%;
+  top: 18%;
+  background: #d13f73;
+  rotate: 22deg;
+}
+
+.bt-confetti-b {
+  left: 38%;
+  top: 9%;
+  background: #e7b39a;
+  rotate: -38deg;
+}
+
+.bt-confetti-c {
+  right: 7%;
+  top: 22%;
+  background: #946047;
+  rotate: 42deg;
+}
+
+.bt-confetti-d {
+  left: 47%;
+  bottom: 12%;
+  background: #d13f73;
+  rotate: 72deg;
+}
+
+.bt-confetti-e {
+  right: 31%;
+  bottom: 8%;
+  background: #e7b39a;
+  rotate: -18deg;
+}
+
+.bt-confetti-f {
+  left: 13%;
+  bottom: 18%;
+  background: #946047;
+  rotate: 55deg;
+}
+
+@media (max-width: 639px) {
+  .bt-confetti-c,
+  .bt-confetti-d,
+  .bt-confetti-f {
+    display: none;
+  }
+
+  .bt-hero-stage {
+    min-height: 19rem;
+  }
+
+  .bt-balloon {
+    width: clamp(3.6rem, 16vw, 4.5rem);
+  }
+
+  .bt-balloon::after {
+    height: 4rem;
+  }
+}
+
+@media (max-width: 374px) {
+  .bt-hero-stage {
+    min-height: 18.5rem;
+  }
+
+  .bt-balloon {
+    width: 3.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bt-balloon {
+    will-change: auto;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
