@@ -249,7 +249,7 @@ export function AnimatedShowcaseSection() {
     <section
       ref={rootRef}
       aria-labelledby="animated-showcase-title"
-      className="bt-story relative isolate overflow-hidden text-white"
+      className="bt-story relative isolate overflow-x-clip text-white"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-70"
