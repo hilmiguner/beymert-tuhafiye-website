@@ -361,3 +361,22 @@ select {
     will-change: auto !important;
   }
 }
+
+@media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
+  .bt-story-steps {
+    min-height: auto;
+  }
+
+  .bt-story-step {
+    position: static;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .bt-story-step:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+}
