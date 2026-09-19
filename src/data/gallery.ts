@@ -1,0 +1,177 @@
+import type { GalleryItem } from "@/types/gallery";
+
+export const galleryItems: readonly GalleryItem[] = [
+  {
+    id: "pink-gold-main",
+    title: "Pink & Gold kutlama sahnesi",
+    description:
+      "Pembe, beyaz ve sıcak metalik tonların birlikte kullanıldığı modern kutlama atmosferi.",
+    source: { kind: "concept", slug: "pink-gold", variant: "hero" },
+    aspect: "wide",
+    categorySlug: "balonlar",
+    conceptSlug: "pink-gold",
+    featured: true,
+    sortOrder: 1,
+  },
+  {
+    id: "helium-bouquet",
+    title: "Helyumlu balon demeti",
+    description:
+      "Farklı renkleri tek bir kompozisyonda bir araya getiren balon düzeni.",
+    source: {
+      kind: "product",
+      slug: "helyumlu-lateks-balon-demeti",
+      variant: "main",
+    },
+    aspect: "portrait",
+    categorySlug: "balonlar",
+    conceptSlug: "pink-gold",
+    productSlug: "helyumlu-lateks-balon-demeti",
+    featured: true,
+    sortOrder: 2,
+  },
+  {
+    id: "safari-table",
+    title: "Safari masa düzeni",
+    description:
+      "Toprak ve yeşil tonların masa üstü detaylarla birleştiği doğal tema.",
+    source: { kind: "concept", slug: "safari-party", variant: "table" },
+    aspect: "landscape",
+    categorySlug: "dogum-gunu",
+    conceptSlug: "safari-party",
+    featured: true,
+    sortOrder: 3,
+  },
+  {
+    id: "engagement-tray",
+    title: "Söz & nişan sunum detayı",
+    description:
+      "Özel gün sunumunu tamamlayan sade ve sıcak tonlu dekoratif detay.",
+    source: {
+      kind: "product",
+      slug: "soz-nisan-sunum-tepsisi",
+      variant: "detail",
+    },
+    aspect: "square",
+    categorySlug: "soz-nisan-dugun",
+    conceptSlug: "pink-gold",
+    productSlug: "soz-nisan-sunum-tepsisi",
+    featured: false,
+    sortOrder: 4,
+  },
+  {
+    id: "soft-baby-detail",
+    title: "Soft Baby Shower detayı",
+    description:
+      "Krem ve pudra tonlarında küçük hatıra ve masa üstü dokunuşları.",
+    source: { kind: "concept", slug: "baby-shower-soft", variant: "detail" },
+    aspect: "portrait",
+    categorySlug: "baby-shower",
+    conceptSlug: "baby-shower-soft",
+    featured: true,
+    sortOrder: 5,
+  },
+  {
+    id: "bride-set",
+    title: "Bride to Be aksesuar sahnesi",
+    description:
+      "Pembe ve beyaz tonlarla hazırlanan eğlenceli bekarlığa veda detayları.",
+    source: {
+      kind: "product",
+      slug: "bride-to-be-parti-seti",
+      variant: "color",
+    },
+    aspect: "landscape",
+    categorySlug: "kina-bekarliga-veda",
+    conceptSlug: "bride-to-be",
+    productSlug: "bride-to-be-parti-seti",
+    featured: false,
+    sortOrder: 6,
+  },
+  {
+    id: "unicorn-table",
+    title: "Unicorn masa sahnesi",
+    description:
+      "Pastel pembe, lila ve açık mavi detayların eğlenceli masa düzeni.",
+    source: { kind: "concept", slug: "unicorn-party", variant: "table" },
+    aspect: "square",
+    categorySlug: "dogum-gunu",
+    conceptSlug: "unicorn-party",
+    featured: false,
+    sortOrder: 7,
+  },
+  {
+    id: "gender-reveal-balloon",
+    title: "Gender Reveal sürpriz anı",
+    description:
+      "Cinsiyet partilerinde ana sürpriz anını öne çıkaran büyük balon uygulaması.",
+    source: {
+      kind: "product",
+      slug: "gender-reveal-surpriz-balonu",
+      variant: "main",
+    },
+    aspect: "portrait",
+    categorySlug: "cinsiyet-partisi",
+    productSlug: "gender-reveal-surpriz-balonu",
+    featured: true,
+    sortOrder: 8,
+  },
+  {
+    id: "blue-silver-main",
+    title: "Blue & Silver dekor dili",
+    description:
+      "Mavi, beyaz ve gümüş hissini dengeli bir kutlama kompozisyonunda buluşturan tema.",
+    source: { kind: "concept", slug: "blue-silver", variant: "hero" },
+    aspect: "wide",
+    categorySlug: "balonlar",
+    conceptSlug: "blue-silver",
+    featured: false,
+    sortOrder: 9,
+  },
+  {
+    id: "satin-ribbon",
+    title: "Saten kurdele detayı",
+    description:
+      "Paketleme ve dekor hazırlıklarını tamamlayan renkli kurdele seçenekleri.",
+    source: {
+      kind: "product",
+      slug: "saten-kurdele",
+      variant: "detail",
+    },
+    aspect: "landscape",
+    categorySlug: "tul-kurdele-tuhafiye",
+    conceptSlug: "pink-gold",
+    productSlug: "saten-kurdele",
+    featured: false,
+    sortOrder: 10,
+  },
+  {
+    id: "football-party",
+    title: "Futbol temalı kutlama",
+    description:
+      "Saha yeşili, beyaz ve takım renkleriyle hazırlanan sportif parti atmosferi.",
+    source: { kind: "concept", slug: "futbol-partisi", variant: "hero" },
+    aspect: "square",
+    categorySlug: "dogum-gunu",
+    conceptSlug: "futbol-partisi",
+    featured: false,
+    sortOrder: 11,
+  },
+  {
+    id: "personalized-magnet",
+    title: "Kişiye özel magnet",
+    description:
+      "İsim, tarih veya temayla kişiselleştirilebilen küçük kutlama hatırası.",
+    source: {
+      kind: "product",
+      slug: "kisiye-ozel-magnet",
+      variant: "color",
+    },
+    aspect: "square",
+    categorySlug: "kisiye-ozel-hediyelik",
+    conceptSlug: "baby-shower-soft",
+    productSlug: "kisiye-ozel-magnet",
+    featured: false,
+    sortOrder: 12,
+  },
+];

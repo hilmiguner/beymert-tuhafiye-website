@@ -599,7 +599,7 @@ Online fiyat/sepet/checkout eklenmeyecek.
 
 ### Phase 7 — Animated Showcase / Scroll Story
 
-Durum: GELİŞTİRMEDE — PR #8
+Durum: TAMAMLANDI
 
 - [x] Sahne konseptini belirleme
 - [x] ScrollTrigger prototipi
@@ -607,19 +607,21 @@ Durum: GELİŞTİRMEDE — PR #8
 - [x] Desktop timeline
 - [x] Mobile simplified sequence
 - [x] Reduced motion fallback
-- [ ] Performans testleri — lokal production build ve desktop/mobile scroll QA sonrası tamamlanacak.
+- [x] Performans testleri — production build ile desktop/mobile scroll ve viewport-fit QA doğrulandı.
 - [x] JavaScript/reduced-motion durumunda uzun scroll track oluşturmayan statik fallback
 
 Bu bölüm "wow effect" için vardır; kullanılabilirliği veya performansı düşürürse sadeleştirilir.
 
 ### Phase 8 — Gallery
 
-- [ ] Masonry/responsive gallery
-- [ ] Lightbox
-- [ ] Motion transitions
-- [ ] Concept/category ilişkileri
-- [ ] Görsel optimizasyonu
-- [ ] Mobil gesture/tap davranışı
+Durum: GELİŞTİRMEDE — PR #9
+
+- [x] Masonry/responsive gallery
+- [x] Lightbox
+- [x] Motion transitions
+- [x] Concept/category ilişkileri
+- [x] Görsel optimizasyonu — bu fazdaki temsili artwork remote image payload üretmiyor; gerçek fotoğraflar Phase 10'da Next/Image ile optimize edilecek.
+- [x] Mobil gesture/tap davranışı
 
 ### Phase 9 — About, Trust & Store Contact
 
