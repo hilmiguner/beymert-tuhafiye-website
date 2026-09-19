@@ -2,8 +2,8 @@ import { directionsHref, siteConfig } from "@/config/site";
 import { absoluteUrl } from "@/lib/seo";
 
 export function StructuredData() {
-  const businessId = `${absoluteUrl("/") }#business`;
-  const websiteId = `${absoluteUrl("/") }#website`;
+  const businessId = `${absoluteUrl("/")}#business`;
+  const websiteId = `${absoluteUrl("/")}#website`;
 
   const graph = {
     "@context": "https://schema.org",
