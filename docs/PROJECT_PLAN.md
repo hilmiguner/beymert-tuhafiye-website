@@ -537,7 +537,7 @@ Durum: TAMAMLANDI
 
 ### Phase 3 — Hero Experience
 
-Durum: GELİŞTİRMEDE — PR #4
+Durum: TAMAMLANDI
 
 - [x] Hero copy
 - [x] Ana CTA
@@ -556,7 +556,9 @@ Durum: GELİŞTİRMEDE — PR #4
 
 ### Phase 4 — Product Categories
 
-- [ ] Kategori veri modeli
+Durum: TAMAMLANDI
+
+- [x] Kategori veri modeli
 - [x] Category card component
 - [x] Responsive kategori grid/carousel
 - [x] Hover/tap interactions
@@ -566,28 +568,32 @@ Durum: GELİŞTİRMEDE — PR #4
 
 ### Phase 5 — Party Concepts
 
-- [ ] Concept veri modeli
+Durum: TAMAMLANDI
+
+- [x] Concept veri modeli
 - [x] "Partini Seç" ana sayfa bölümü
 - [x] Concept cards
 - [x] `/konseptler`
 - [x] `/konseptler/[slug]`
 - [x] Konsept galerisi
-- [ ] İlgili ürün bağlantıları — kategori seviyesinde bağlantılar hazır; tekil ürün linkleri Phase 6 Product Catalog ile tamamlanacak.
+- [x] İlgili ürün bağlantıları — konsept detaylarında tekil ürün kartları ve ürün route bağlantıları aktif.
 - [x] Mobil swipe/scroll davranışı
 
 ### Phase 6 — Product Catalog
 
-- [ ] Product veri modeli
-- [ ] `/urunler`
-- [ ] Product card
-- [ ] Product detail
-- [ ] Product gallery
-- [ ] Renk / ölçü gibi opsiyonel bilgiler
-- [ ] Featured / New ürün etiketleri
-- [ ] Related products
-- [ ] WhatsApp ürün mesajı
-- [ ] Kategori filtreleme
-- [ ] Mobil katalog deneyimi
+Durum: GELİŞTİRMEDE — PR #7
+
+- [x] Product veri modeli
+- [x] `/urunler`
+- [x] Product card
+- [x] Product detail
+- [x] Product gallery
+- [x] Renk / ölçü gibi opsiyonel bilgiler
+- [x] Featured / New ürün etiketleri
+- [x] Related products
+- [x] WhatsApp ürün mesajı
+- [x] Kategori filtreleme
+- [x] Mobil katalog deneyimi
 
 Online fiyat/sepet/checkout eklenmeyecek.
 

@@ -4,12 +4,13 @@ import { notFound } from "next/navigation";
 
 import { CategoryCard } from "@/components/categories/category-card";
 import { ConceptArtwork } from "@/components/concepts/concept-artwork";
-import { EmptyState } from "@/components/shared/empty-state";
+import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
 import { whatsappHref } from "@/config/site";
 import { categories } from "@/data/categories";
 import { concepts, getConceptBySlug } from "@/data/concepts";
+import { getProductsByConcept } from "@/data/products";
 
 type ConceptPageProps = {
   params: Promise<{ slug: string }>;
@@ -48,6 +49,7 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
   const relatedCategories = categories.filter((category) =>
     concept.relatedCategorySlugs.includes(category.slug),
   );
+  const relatedProducts = getProductsByConcept(concept.slug).slice(0, 4);
 
   return (
     <main>
@@ -99,14 +101,10 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
 
       <Section>
         <Container>
-          <div className="flex items-end justify-between gap-6">
-            <div>
-              <p className="bt-eyebrow text-secondary">Konsept galerisi</p>
-              <h2 className="bt-display mt-3 text-4xl font-semibold sm:text-5xl">
-                Aynı tema, farklı detaylar.
-              </h2>
-            </div>
-          </div>
+          <p className="bt-eyebrow text-secondary">Konsept galerisi</p>
+          <h2 className="bt-display mt-3 text-4xl font-semibold sm:text-5xl">
+            Aynı tema, farklı detaylar.
+          </h2>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {concept.gallery.map((scene) => (
@@ -161,18 +159,32 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
         </Container>
       </Section>
 
-      <Section>
-        <Container>
-          <EmptyState
-            title="Tekil ürün eşleştirmeleri sırada"
-            description="Bu konsepte bağlı tekil ürün kartları Product Catalog fazında eklenecek. Şimdilik ilgili ürün gruplarını inceleyebilir veya güncel seçenekleri WhatsApp üzerinden sorabilirsin."
-            actionHref={whatsappHref(
-              `Merhaba, "${concept.name}" konseptine uygun güncel ürünleri öğrenmek istiyorum.`,
-            )}
-            actionLabel="Uygun ürünleri sor"
-          />
-        </Container>
-      </Section>
+      {relatedProducts.length > 0 ? (
+        <Section>
+          <Container>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="bt-eyebrow text-secondary">Örnek ürünler</p>
+                <h2 className="bt-display mt-3 text-4xl font-semibold sm:text-5xl">
+                  Bu temaya uyum sağlayan ürünler.
+                </h2>
+              </div>
+              <Link
+                href="/urunler"
+                className="text-sm font-extrabold text-primary hover:text-primary-hover"
+              >
+                Tüm ürünler →
+              </Link>
+            </div>
+
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {relatedProducts.map((product) => (
+                <ProductCard key={product.slug} product={product} />
+              ))}
+            </div>
+          </Container>
+        </Section>
+      ) : null}
     </main>
   );
 }
