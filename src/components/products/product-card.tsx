@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { ProductArtwork } from "@/components/products/product-artwork";
+import { ProductMedia } from "@/components/products/product-media";
 import { getCategoryBySlug } from "@/data/categories";
 import type { Product } from "@/types/product";
 
@@ -14,7 +14,7 @@ export function ProductCard({ product }: { product: Product }) {
     >
       <div className="relative overflow-hidden border-b border-border">
         <div className="transition-transform duration-[var(--bt-duration-slow)] ease-[var(--bt-ease-emphasized)] group-hover:scale-[1.025]">
-          <ProductArtwork product={product} />
+          <ProductMedia product={product} />
         </div>
 
         <div className="absolute left-3 top-3 flex flex-wrap gap-2">
