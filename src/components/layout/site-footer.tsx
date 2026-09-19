@@ -2,7 +2,11 @@ import Link from "next/link";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 import { Container } from "@/components/ui/container";
-import { siteConfig, whatsappHref } from "@/config/site";
+import {
+  directionsHref,
+  siteConfig,
+  whatsappHref,
+} from "@/config/site";
 
 export function SiteFooter() {
   return (
@@ -51,6 +55,14 @@ export function SiteFooter() {
                 WhatsApp
               </a>
               <a
+                href={directionsHref()}
+                target="_blank"
+                rel="noreferrer"
+                className="w-fit font-bold transition-colors hover:text-primary"
+              >
+                Yol Tarifi
+              </a>
+              <a
                 href={siteConfig.facebookUrl}
                 target="_blank"
                 rel="noreferrer"
@@ -58,7 +70,9 @@ export function SiteFooter() {
               >
                 Facebook
               </a>
-              <span className="text-sm text-muted">{siteConfig.locationLabel}</span>
+              <span className="text-sm text-muted">
+                {siteConfig.addressVerification.publicLabel}
+              </span>
             </div>
           </div>
         </div>
