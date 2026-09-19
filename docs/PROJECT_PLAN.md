@@ -625,7 +625,7 @@ Durum: TAMAMLANDI
 
 ### Phase 9 — About, Trust & Store Contact
 
-Durum: GELİŞTİRMEDE — PR #10
+Durum: TAMAMLANDI — açık adres ve çalışma saatlerinin işletme sahibi doğrulaması Phase 10'a taşındı.
 
 - [x] Hakkımızda içeriği
 - [x] Neden Biz? bölümü
@@ -641,15 +641,19 @@ Durum: GELİŞTİRMEDE — PR #10
 
 ### Phase 10 — Real Content & Content Management
 
+Durum: GELİŞTİRMEDE — PR #11; gerçek içerik girişi işletme sahibi materyallerini bekliyor.
+
 - [ ] Gerçek ürün listesini toplama
 - [ ] Gerçek kategorileri tanımlama
 - [ ] Gerçek konseptleri tanımlama
 - [ ] Ürün fotoğraflarını optimize etme
 - [ ] Mağaza bilgilerini doğrulama
-- [ ] Statik data mı Supabase mi kararını finalleştirme
-- [ ] Gerekiyorsa Supabase entegrasyonu
-- [ ] Gerekiyorsa basit admin panel
-- [ ] Image storage stratejisi
+- [x] Statik data mı Supabase mi kararını finalleştirme — V1 typed static content ile devam edecek.
+- [x] Gerekiyorsa Supabase entegrasyonu — V1 için gerekmiyor; operasyonel içerik yönetimi ihtiyacı oluşursa yeniden değerlendirilecek.
+- [x] Gerekiyorsa basit admin panel — V1 için gerekmiyor.
+- [x] Image storage stratejisi — V1 için `public/media`, Next/Image ve typed media metadata; büyüme halinde object storage değerlendirilecek.
+- [x] Product/Category/Concept/Gallery media fallback katmanı
+- [x] Content relation integrity kontrolü
 
 Admin panel yalnızca gerçek operasyon ihtiyacı varsa geliştirilir.
 
@@ -677,6 +681,7 @@ Admin panel yalnızca gerçek operasyon ihtiyacı varsa geliştirilir.
 - [ ] Edge desktop
 - [ ] Safari/iOS
 - [ ] Chrome/Android
+- [ ] Gerçek cihazda telefon ve WhatsApp link testi
 - [ ] Küçük mobil ekran
 - [ ] Tablet
 - [ ] 1080p desktop
