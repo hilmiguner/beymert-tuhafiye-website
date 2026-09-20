@@ -24,6 +24,7 @@ export const siteConfig = {
   },
   nav: [
     { label: "Ürünler", href: "/urunler" },
+    { label: "Kategoriler", href: "/kategoriler" },
     { label: "Konseptler", href: "/konseptler" },
     { label: "Galeri", href: "/galeri" },
     { label: "Hakkımızda", href: "/hakkimizda" },
