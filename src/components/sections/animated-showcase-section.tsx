@@ -303,7 +303,11 @@ export function AnimatedShowcaseSection() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href="/konseptler">Konseptleri Keşfet</ButtonLink>
-            <ButtonLink href="/urunler" variant="outline">
+            <ButtonLink
+              href="/urunler"
+              variant="outline"
+              style={{ backgroundColor: "#ffffff", color: "#2b2025" }}
+            >
               Ürünlere Bak
             </ButtonLink>
           </div>
