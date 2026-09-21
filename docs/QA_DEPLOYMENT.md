@@ -187,3 +187,47 @@ Production public launch öncesi hâlâ gerekli:
 - işletme sahibinden kesin çalışma saatleri
 
 Teknik deployment yapılabilir; fakat bu içerikler doğrulanmadan public final release tamamlanmış sayılmaz.
+
+
+## 10. QA execution status — 2026-09-21
+
+Tamamlanan teknik kontroller:
+
+- [x] Lokal `pnpm check`
+- [x] GitHub Actions Quality Gate
+- [x] Vercel production deployment READY
+- [x] Production `qa:smoke`
+- [x] Sitemap route taraması
+- [x] Internal link taraması
+- [x] robots.txt kontrolü
+- [x] Security header kontrolü
+- [x] Intentional 404 kontrolü
+- [x] Vercel runtime error kontrolü — son 24 saatte hata yok
+
+Aktif manuel QA matrisi:
+
+- [ ] Chrome desktop
+- [ ] Edge desktop
+- [ ] 334×715 küçük mobil
+- [ ] 390×844 standart mobil
+- [ ] 768px tablet
+- [ ] 1920×1080 desktop
+- [ ] 2560px large desktop
+- [ ] Safari/iOS gerçek cihaz
+- [ ] Chrome/Android gerçek cihaz
+- [ ] Gerçek cihaz WhatsApp deep link
+- [ ] Gerçek cihaz `tel:` link
+- [ ] Mobile gallery swipe
+- [ ] Mobile menu
+- [ ] Fixed WhatsApp CTA
+- [ ] Scroll performance
+
+### Test sonucu raporlama
+
+Her hedef için üç bilgi yeterli:
+
+1. Hedef/browser/viewport
+2. Sonuç: OK veya NOK
+3. NOK ise kısa açıklama + mümkünse ekran görüntüsü
+
+Browser/device QA bittikten sonra final domain, `NEXT_PUBLIC_SITE_URL`, Lighthouse ve Search Console aşamasına geçilir.
