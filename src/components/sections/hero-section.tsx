@@ -215,7 +215,7 @@ export function HeroSection() {
       </div>
 
       <Container className="relative z-10">
-        <div className="grid min-h-0 items-center gap-10 py-10 sm:gap-12 sm:py-14 lg:min-h-[calc(100svh-4.5rem)] lg:grid-cols-[1.02fr_0.98fr] lg:gap-8 lg:py-14">
+        <div className="grid min-h-0 items-center gap-10 py-10 sm:gap-12 sm:py-14 lg:min-h-[calc(100svh-4.5rem)] lg:grid-cols-[1.02fr_0.98fr] lg:gap-6 lg:py-8 xl:gap-8 xl:py-14">
           <div className="relative z-20 min-w-0 max-w-full overflow-hidden">
             <p
               data-hero-eyebrow
@@ -313,11 +313,11 @@ export function HeroSection() {
             ref={visualRef}
             data-hero-scene
             data-hero-reveal
-            className="relative mx-auto min-w-0 w-full max-w-[35rem] lg:max-w-none"
+            className="relative mx-auto min-w-0 w-full max-w-[35rem] lg:max-w-[30rem] xl:max-w-none"
             aria-label="Beymert parti ürünlerini temsil eden dekoratif vitrin"
             role="img"
           >
-            <div className="bt-hero-stage relative aspect-[1.03] min-h-[22rem] overflow-hidden rounded-[1.6rem] border border-white/75 bg-surface/72 p-4 shadow-lift backdrop-blur-md sm:aspect-[0.94] sm:min-h-[34rem] sm:rounded-[2rem] sm:p-6">
+            <div className="bt-hero-stage relative aspect-[1.03] min-h-[22rem] overflow-hidden rounded-[1.6rem] border border-white/75 bg-surface/72 p-4 shadow-lift backdrop-blur-md sm:aspect-[0.94] sm:min-h-[34rem] sm:rounded-[2rem] sm:p-6 lg:aspect-[1.03] lg:min-h-[28rem] xl:aspect-[0.94] xl:min-h-[34rem]">
               <div
                 data-depth="1.8"
                 className="absolute -right-8 top-8 size-44 rounded-full bg-[#f4d7e1]/75 blur-3xl sm:size-56"
