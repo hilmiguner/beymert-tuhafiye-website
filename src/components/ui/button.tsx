@@ -6,7 +6,7 @@ import type {
 
 import { cn } from "@/lib/cn";
 
-type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
+type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "light";
 type ButtonSize = "sm" | "md" | "lg";
 
 const baseStyles =
@@ -20,6 +20,8 @@ const variantStyles: Record<ButtonVariant, string> = {
   outline:
     "border border-border bg-surface text-foreground hover:border-primary/35 hover:bg-surface-muted",
   ghost: "text-foreground hover:bg-surface-muted",
+  light:
+    "border border-white/80 bg-white text-[#2b2025] shadow-soft hover:bg-[#fff1f5] hover:text-[#2b2025] hover:shadow-lift",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

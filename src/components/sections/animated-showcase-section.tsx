@@ -303,7 +303,7 @@ export function AnimatedShowcaseSection() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href="/konseptler">Konseptleri Keşfet</ButtonLink>
-            <ButtonLink href="/urunler" variant="outline">
+            <ButtonLink href="/urunler" variant="light">
               Ürünlere Bak
             </ButtonLink>
           </div>
@@ -353,7 +353,7 @@ export function AnimatedShowcaseSection() {
 
                 <div className="mt-8 flex gap-3">
                   <ButtonLink href="/konseptler">Konseptleri Keşfet</ButtonLink>
-                  <ButtonLink href="/urunler" variant="outline">
+                  <ButtonLink href="/urunler" variant="light">
                     Ürünlere Bak
                   </ButtonLink>
                 </div>

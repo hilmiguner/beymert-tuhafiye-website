@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { buildPageMetadata } from "@/lib/seo";
+
 import { CategoryCard } from "@/components/categories/category-card";
 import { ConceptMedia } from "@/components/concepts/concept-media";
 import { ProductCard } from "@/components/products/product-card";
@@ -32,10 +34,11 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPageMetadata({
     title: concept.name,
     description: concept.shortDescription,
-  };
+    path: `/konseptler/${concept.slug}`,
+  });
 }
 
 export default async function ConceptPage({ params }: ConceptPageProps) {
@@ -52,7 +55,7 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
   const relatedProducts = getProductsByConcept(concept.slug).slice(0, 4);
 
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <Section className="border-b border-border bg-surface-muted/35">
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.9fr]">

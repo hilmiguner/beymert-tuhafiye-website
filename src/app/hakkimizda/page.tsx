@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo";
 
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { TrustSection } from "@/components/sections/trust-section";
 import { Container, Section } from "@/components/ui/container";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Hakkımızda",
-  description:
-    "Beymert Parti Malzemeleri Tuhafiye Tasarım’ın Gemlik’te sunduğu parti malzemeleri, özel gün konseptleri, hediyelik ve tuhafiye yaklaşımını tanıyın.",
-};
+  description: "Beymert Parti Malzemeleri Tuhafiye Tasarım’ın Gemlik’te sunduğu parti malzemeleri, özel gün konseptleri, hediyelik ve tuhafiye yaklaşımını tanıyın.",
+  path: "/hakkimizda",
+});
 
 const values = [
   {
@@ -30,7 +31,7 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">
         <Container>
           <p className="bt-eyebrow text-primary">Hakkımızda</p>

@@ -127,9 +127,9 @@ Bölüm sırası gerçek tasarım geliştirilirken kullanıcı deneyimine göre 
 - GSAP ScrollTrigger
   - Scroll-driven sahneler
   - Gerektiğinde pin / scrub
-- Lenis
-  - Desktop smooth scroll
-  - Mobilde mümkün olduğunca native touch scroll korunur
+- Native browser scroll
+  - Mobil ve desktopta varsayılan scroll davranışı korunur
+  - Lenis prototip aşamasında değerlendirildi ancak kullanılmadığı için dependency kaldırıldı
 
 ### UI kaynakları
 
@@ -641,7 +641,7 @@ Durum: TAMAMLANDI — açık adres ve çalışma saatlerinin işletme sahibi do�
 
 ### Phase 10 — Real Content & Content Management
 
-Durum: GELİŞTİRMEDE — PR #11; gerçek içerik girişi işletme sahibi materyallerini bekliyor.
+Durum: BEKLEMEDE — teknik içerik/media altyapısı PR #11 ile tamamlandı; gerçek içerik girişi işletme sahibi materyallerini bekliyor.
 
 - [ ] Gerçek ürün listesini toplama
 - [ ] Gerçek kategorileri tanımlama
@@ -659,21 +659,23 @@ Admin panel yalnızca gerçek operasyon ihtiyacı varsa geliştirilir.
 
 ### Phase 11 — SEO, Accessibility & Performance
 
-- [ ] Metadata
-- [ ] Open Graph
-- [ ] Sitemap
-- [ ] robots.txt
-- [ ] Structured data
-- [ ] Alt text audit
-- [ ] Heading audit
-- [ ] Keyboard navigation
-- [ ] Focus states
-- [ ] Contrast kontrolü
-- [ ] Reduced-motion audit
-- [ ] Image audit
-- [ ] Bundle audit
-- [ ] Core Web Vitals optimizasyonu
-- [ ] Lighthouse hedeflerinin kontrolü
+Durum: GELİŞTİRMEDE — PR #12
+
+- [x] Metadata
+- [x] Open Graph
+- [x] Sitemap
+- [x] robots.txt
+- [x] Structured data — WebSite + LocalBusiness; doğrulanmamış sokak/kapı numarası ve çalışma saati schema'ya eklenmedi.
+- [x] Alt text audit — gerçek media metadata'sında alt zorunlu; dekoratif artwork aria-hidden, ürün placeholder'ı anlamlı aria-label kullanıyor.
+- [x] Heading audit — route sayfalarında tek ana H1 ve section bazlı H2/H3 yapısı korunuyor.
+- [x] Keyboard navigation — skip link, mobile nav inert state, Escape desteği ve gallery dialog focus trap/restore.
+- [x] Focus states — global focus-visible ring + skip link.
+- [x] Contrast kontrolü — primary #D13F73 -> #D03D72 ile beyaz metin kontrastı AA sınırının üzerine çıkarıldı.
+- [x] Reduced-motion audit — Hero, Scroll Story, Gallery, Product Catalog ve CSS transitions kontrol edildi.
+- [x] Image audit — gerçek media Next/Image + sizes + lazy defaults; placeholder görseller bitmap payload üretmiyor.
+- [x] Bundle audit — kullanılmayan Lenis dependency kaldırıldı; Motion ve GSAP yalnız etkileşimli bölümlerde kullanılıyor.
+- [x] Core Web Vitals kod seviyesi optimizasyonu — static/SSG routes, responsive image layer, transform/opacity animation yaklaşımı ve ağır medya yok. Field ölçümü Phase 12'de.
+- [ ] Lighthouse hedeflerinin kontrolü — production URL ve gerçek medya sonrası Phase 12'de ölçülecek.
 
 ### Phase 12 — QA & Deployment
 
@@ -722,7 +724,7 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 - V1'de sepet ve ödeme yoktur.
 - Mobile-first geliştirilecektir.
 - Animasyon stack'inin ana parçaları Motion + GSAP'tır.
-- Lenis desktop smooth scroll için kullanılabilir; mobile native scroll önceliklidir.
+- V1 native browser scroll kullanır; kullanılmayan Lenis dependency'si Phase 11'de kaldırılmıştır.
 - Three.js zorunlu değildir.
 - Hazır UI kitleri yalnızca kaynak/component havuzu olarak kullanılır.
 - Kullanıcı harici bir servise login olmak zorunda kalmaz.

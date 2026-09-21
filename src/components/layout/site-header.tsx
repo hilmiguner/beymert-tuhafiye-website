@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { BrandMark } from "@/components/brand/brand-mark";
 import { ButtonLink } from "@/components/ui/button";
@@ -32,6 +33,26 @@ function MenuIcon({ open }: { open: boolean }) {
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [open]);
+
+  const isCurrent = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/75 bg-background/88 backdrop-blur-xl">
@@ -44,7 +65,12 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-control px-3 py-2 text-sm font-bold text-muted transition-colors duration-[var(--bt-duration-fast)] hover:bg-surface-muted hover:text-foreground"
+                aria-current={isCurrent(item.href) ? "page" : undefined}
+                className={`rounded-control px-3 py-2 text-sm font-bold transition-colors duration-[var(--bt-duration-fast)] hover:bg-surface-muted hover:text-foreground ${
+                  isCurrent(item.href)
+                    ? "bg-surface-muted text-foreground"
+                    : "text-muted"
+                }`}
               >
                 {item.label}
               </Link>
@@ -67,6 +93,7 @@ export function SiteHeader() {
             aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
             aria-expanded={open}
             aria-controls="mobile-navigation"
+            aria-haspopup="true"
             onClick={() => setOpen((value) => !value)}
             className="grid size-11 place-items-center rounded-control border border-border bg-surface text-foreground lg:hidden"
           >
@@ -76,6 +103,8 @@ export function SiteHeader() {
 
         <div
           id="mobile-navigation"
+          aria-hidden={!open}
+          inert={open ? undefined : true}
           className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-[var(--bt-duration-normal)] ease-[var(--bt-ease-standard)] lg:hidden ${
             open ? "grid-rows-[1fr] pb-5 opacity-100" : "grid-rows-[0fr] opacity-0"
           }`}
@@ -89,8 +118,11 @@ export function SiteHeader() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={isCurrent(item.href) ? "page" : undefined}
                   onClick={() => setOpen(false)}
-                  className="rounded-control px-4 py-3 text-base font-extrabold transition-colors hover:bg-surface-muted"
+                  className={`rounded-control px-4 py-3 text-base font-extrabold transition-colors hover:bg-surface-muted ${
+                    isCurrent(item.href) ? "bg-surface-muted text-foreground" : ""
+                  }`}
                 >
                   {item.label}
                 </Link>

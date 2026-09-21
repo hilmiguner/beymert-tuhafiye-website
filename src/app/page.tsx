@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { AnimatedShowcaseSection } from "@/components/sections/animated-showcase-section";
 import { CategoriesSection } from "@/components/sections/categories-section";
 import { ConceptsSection } from "@/components/sections/concepts-section";
@@ -7,10 +8,18 @@ import { HomepageStoreSection } from "@/components/sections/homepage-store-secti
 import { HeroSection } from "@/components/sections/hero-section";
 import { TrustSection } from "@/components/sections/trust-section";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Beymert | Parti Malzemeleri & Tuhafiye Gemlik",
+  description: "Gemlik'te parti malzemeleri, helyumlu ve folyo balonlar, doğum günü, baby shower, cinsiyet partisi, söz-nişan-düğün ürünleri, hediyelikler ve tuhafiye seçenekleri.",
+  path: "/",
+  absoluteTitle: true,
+});
 
 export default function Home() {
   return (
-    <main>
+    <main id="main-content" tabIndex={-1}>
       <HeroSection />
       <CategoriesSection />
       <ConceptsSection />
