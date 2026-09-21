@@ -12,8 +12,8 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-surface">
       <Container className="py-10 sm:py-12">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
-          <div>
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
+          <div className="sm:col-span-2 lg:col-span-1">
             <BrandMark />
             <p className="mt-5 max-w-md leading-7 text-muted">
               Parti malzemeleri, helyumlu balonlar, özel gün konseptleri,
