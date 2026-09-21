@@ -659,7 +659,7 @@ Admin panel yalnızca gerçek operasyon ihtiyacı varsa geliştirilir.
 
 ### Phase 11 — SEO, Accessibility & Performance
 
-Durum: GELİŞTİRMEDE — PR #12
+Durum: TAMAMLANDI — final Lighthouse ölçümü Phase 12 production QA kapsamında yapılacak.
 
 - [x] Metadata
 - [x] Open Graph
@@ -679,6 +679,8 @@ Durum: GELİŞTİRMEDE — PR #12
 
 ### Phase 12 — QA & Deployment
 
+Durum: GELİŞTİRMEDE — PR #13
+
 - [ ] Chrome desktop
 - [ ] Edge desktop
 - [ ] Safari/iOS
@@ -688,12 +690,12 @@ Durum: GELİŞTİRMEDE — PR #12
 - [ ] Tablet
 - [ ] 1080p desktop
 - [ ] Large desktop
-- [ ] Broken link kontrolü
-- [ ] Production build
-- [ ] Environment variables
+- [ ] Broken link kontrolü — sitemap + internal link smoke script hazır; lokal/production çalıştırması bekleniyor.
+- [ ] Production build — `pnpm check` kalite kapısı hazır; PR #13 lokal doğrulaması bekleniyor.
+- [ ] Environment variables — contract ve `qa:env` doğrulaması hazır; final domain değeri deployment sırasında girilecek.
 - [ ] Vercel deployment
 - [ ] Domain bağlantısı
-- [ ] Production smoke test
+- [ ] Production smoke test — `pnpm qa:smoke` otomasyonu hazır; deployment URL'si bekleniyor.
 - [ ] Analytics kararı
 - [ ] Search Console / sitemap gönderimi
 
@@ -747,4 +749,4 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 
 ---
 
-Son güncelleme: 2026-09-19
+Son güncelleme: 2026-09-21
