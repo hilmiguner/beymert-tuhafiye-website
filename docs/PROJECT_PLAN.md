@@ -679,7 +679,7 @@ Durum: TAMAMLANDI — final Lighthouse ölçümü Phase 12 production QA kapsam�
 
 ### Phase 12 — QA & Deployment
 
-Durum: GELİŞTİRMEDE — PR #13
+Durum: QA DEVAM EDİYOR — production deployment ve smoke test tamamlandı; browser/gerçek cihaz matrisi aktif.
 
 - [ ] Chrome desktop
 - [ ] Edge desktop
@@ -690,12 +690,12 @@ Durum: GELİŞTİRMEDE — PR #13
 - [ ] Tablet
 - [ ] 1080p desktop
 - [ ] Large desktop
-- [ ] Broken link kontrolü — sitemap + internal link smoke script hazır; lokal/production çalıştırması bekleniyor.
-- [ ] Production build — `pnpm check` kalite kapısı hazır; PR #13 lokal doğrulaması bekleniyor.
+- [x] Broken link kontrolü — production `qa:smoke` testi geçti.
+- [x] Production build — lokal `pnpm check` ve GitHub Actions Quality Gate geçti.
 - [ ] Environment variables — contract ve `qa:env` doğrulaması hazır; final domain değeri deployment sırasında girilecek.
-- [ ] Vercel deployment
+- [x] Vercel deployment — `beymert-tuhafiye-website.vercel.app` production deployment READY.
 - [ ] Domain bağlantısı
-- [ ] Production smoke test — `pnpm qa:smoke` otomasyonu hazır; deployment URL'si bekleniyor.
+- [x] Production smoke test — canlı Vercel URL üzerinde `Smoke test PASSED`.
 - [ ] Analytics kararı
 - [ ] Search Console / sitemap gönderimi
 
