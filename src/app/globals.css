@@ -330,7 +330,7 @@ select {
 
 @media (min-width: 1024px) {
   .bt-story-track[data-enhanced="true"] {
-    min-height: 300vh;
+    min-height: 400vh;
   }
 
   .bt-story-track[data-enhanced="true"] .bt-story-sticky {
