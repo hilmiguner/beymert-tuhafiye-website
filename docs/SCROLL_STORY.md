@@ -4,13 +4,27 @@ Phase 7 ana sayfa vitrin sahnesinin teknik referansıdır.
 
 ## Sahne fikri
 
-Scroll story tek bir kutlamanın üç aşamada oluşmasını anlatır:
+Scroll story bir kutlamanın dört katmanda şekillenmesini anlatır:
 
-1. Rengi seç
+1. Atmosferi kur
 2. Parçaları birleştir
-3. Son dokunuşu yap
+3. Konsepti kişiselleştir
+4. Son dokunuşu yap
 
-Amaç yalnızca dekoratif hareket göstermek değil; Beymert'in kategori, konsept ve ürün yapısının birlikte nasıl bir kutlama atmosferine dönüştüğünü anlatmaktır.
+Amaç yalnızca dekoratif hareket göstermek değil; Beymert'in parti, konsept ve tuhafiye ürünlerinin birlikte nasıl bütünlüklü bir kutlama atmosferine dönüşebileceğini göstermektir.
+
+## Görsel medya
+
+Scroll Story artık saf CSS artwork yerine dört optimize edilmiş WebP konsept görseli kullanır:
+
+- `/media/scroll-story/scene-01-birthday.webp`
+- `/media/scroll-story/scene-02-balloons.webp`
+- `/media/scroll-story/scene-03-baby-shower.webp`
+- `/media/scroll-story/scene-04-supplies.webp`
+
+Görseller 960×720 çözünürlükte web için optimize edilmiştir. Bunlar gerçek mağaza kurulumu veya doğrulanmış ürün envanteri değildir; gerçek işletme fotoğrafları gelene kadar profesyonel geçici konsept medyasıdır. Bu nedenle arayüzde "Temsili konsept görseli" etiketi gösterilir.
+
+Gerçek Beymert fotoğrafları geldiğinde aynı dosya yolları veya aynı veri modeli üzerinden değiştirilebilir.
 
 ## Desktop davranışı
 
@@ -19,17 +33,12 @@ Amaç yalnızca dekoratif hareket göstermek değil; Beymert'in kategori, konsep
 - uzun scroll track yalnızca JavaScript enhancement sonrası aktif olur
 - sahne CSS sticky ile viewport içinde kalır
 - GSAP ScrollTrigger scroll ilerlemesini timeline'a bağlar
-- soldaki üç anlatım adımı sırayla vurgulanır
-- sağdaki vitrin renk paletinden tamamlanmış sahneye dönüşür
+- soldaki dört anlatım adımı sırayla crossfade olur
+- sağdaki dört fotoğraf opacity + scale ile birbirine geçer
+- fotoğraflarda çok hafif zoom/depth hareketi bulunur
+- layout, blur veya ağır filtre değerleri scroll sırasında animate edilmez
 
-Animasyonlar ağırlıklı olarak:
-
-- transform
-- opacity
-
-üzerinden çalışır.
-
-Box-shadow, blur veya layout değerleri scroll sırasında animate edilmez.
+Dört sahne nedeniyle enhanced track 400vh kullanır.
 
 ## Mobile davranışı
 
@@ -37,13 +46,11 @@ Box-shadow, blur veya layout değerleri scroll sırasında animate edilmez.
 
 Aynı hikaye:
 
-- üç ayrı kart
+- dört ayrı fotoğraf kartı
 - native touch scroll
 - kısa fade + translate girişleri
 
-ile sunulur.
-
-Bu sayede dar ekranlarda scroll kontrolü kullanıcıda kalır.
+ile sunulur. Görseller Next/Image üzerinden lazy-load edilir.
 
 ## Reduced motion
 
@@ -52,37 +59,35 @@ Bu sayede dar ekranlarda scroll kontrolü kullanıcıda kalır.
 - scrub timeline kurulmaz
 - mobil entrance animasyonları kurulmaz
 - uzun desktop track aktif olmaz
-- bütün içerik statik ve okunabilir kalır
+- bütün metin içeriği statik ve okunabilir kalır
+- desktop görsel alanında ilk konsept görseli statik olarak gösterilir
 
 ## JavaScript fallback
 
-Desktop track'in 300vh yüksekliği markup/CSS varsayılanı değildir.
+Desktop track'in 400vh yüksekliği markup/CSS varsayılanı değildir.
 
 Bu yükseklik yalnızca ScrollTrigger kurulabildiğinde `data-enhanced="true"` ile etkinleşir. JavaScript çalışmazsa kullanıcı gereksiz uzun boş bir scroll alanı görmez.
 
 ## Performance yaklaşımı
 
-Bu faz:
-
-- remote image
-- video
-- canvas
-- WebGL
-- Three.js
-
-kullanmaz.
-
-Sahne saf HTML/CSS şekillerinden oluşur. Gerçek ürün fotoğrafları ileride eklense bile scroll animasyon katmanının bağımsız kalması hedeflenir.
+- dört WebP asset toplam payload'ı düşük tutulur
+- Next/Image responsive output üretir
+- mobilde görseller native lazy-load davranışını kullanır
+- desktop animasyonu yalnız transform + opacity kullanır
+- video, canvas, WebGL ve Three.js kullanılmaz
 
 ## QA
 
 Merge öncesi özellikle:
 
 - 334–390px mobile native scroll
+- 768px tablet
 - 1024px breakpoint geçişi
 - 1366/1440 desktop scrub
 - hızlı scroll
 - geri scroll
+- dört görselin doğru sırayla crossfade olması
+- temsili görsel etiketinin okunabilirliği
 - reduced-motion
 - production build
 
