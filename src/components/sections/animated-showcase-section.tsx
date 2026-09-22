@@ -295,7 +295,7 @@ export function AnimatedShowcaseSection() {
                       key={step.number}
                       data-story-step
                       data-story-animated
-                      className="bt-story-step absolute inset-x-0 top-5 grid grid-cols-[2.8rem_1fr] gap-4"
+                      className="bt-story-step grid grid-cols-[2.8rem_1fr] gap-4"
                     >
                       <span className="pt-1 text-xs font-black tracking-[0.14em] text-[#f2b9cd]">
                         {step.number}
