@@ -609,6 +609,7 @@ Durum: TAMAMLANDI
 - [x] Reduced motion fallback
 - [x] Performans testleri — production build ile desktop/mobile scroll ve viewport-fit QA doğrulandı.
 - [x] JavaScript/reduced-motion durumunda uzun scroll track oluşturmayan statik fallback
+- [x] Fotoğraf tabanlı Scroll Story geliştirmesi — dört optimize edilmiş temsili konsept görseli, crossfade/scale geçişleri ve mobil fotoğraf kartları; gerçek işletme fotoğrafları geldiğinde değiştirilecek.
 
 Bu bölüm "wow effect" için vardır; kullanılabilirliği veya performansı düşürürse sadeleştirilir.
 
@@ -749,4 +750,4 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 
 ---
 
-Son güncelleme: 2026-09-21
+Son güncelleme: 2026-09-22
