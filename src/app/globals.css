@@ -329,8 +329,29 @@ select {
 }
 
 @media (min-width: 1024px) {
+  .bt-story-step {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .bt-story-step:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
   .bt-story-track[data-enhanced="true"] {
     min-height: 400vh;
+  }
+
+  .bt-story-track[data-enhanced="true"] .bt-story-step {
+    position: absolute;
+    inset-inline: 0;
+    top: 1.25rem;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
   }
 
   .bt-story-track[data-enhanced="true"] .bt-story-sticky {
