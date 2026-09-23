@@ -425,3 +425,16 @@ select {
 #main-content:focus {
   outline: none;
 }
+
+
+/* Admin routes use the same design tokens but not the public storefront chrome. */
+body:has(.bt-admin-root) > .bt-skip-link,
+body:has(.bt-admin-root) > header,
+body:has(.bt-admin-root) > footer,
+body:has(.bt-admin-root) > a[aria-label="WhatsApp üzerinden Beymert'e yaz"] {
+  display: none;
+}
+
+body:has(.bt-admin-root) {
+  background: #f8f3f5;
+}
