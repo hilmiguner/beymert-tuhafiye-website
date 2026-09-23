@@ -649,8 +649,8 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 #### CMS roadmap
 
 - [x] CMS mimarisini netleştirme — Next.js + Supabase Auth + PostgreSQL + Storage + RLS.
-- [ ] Supabase project/environment bağlantısı.
-- [x] Veritabanı schema + migration dosyaları — foundation migration PR #16 ile eklendi.
+- [x] Supabase project/environment bağlantısı — `Beymert Tuhafiye` projesi `eu-central-1` bölgesinde oluşturuldu; database migration'ları canlı projede uygulandı. Vercel environment değişkenlerinin eklenmesi kaldı.
+- [x] Veritabanı schema + migration dosyaları — foundation + hardening migration'ları PR #16 ile eklendi ve canlı Supabase projesine uygulandı.
 - [x] Storage bucket + medya güvenlik politikaları — `cms-media` bucket tanımı ve admin-only write policy'leri migration'a eklendi.
 - [x] Admin authentication — Supabase email/password server action akışı ve owner/editor membership kontrolü eklendi; canlı Supabase doğrulaması proje bağlantısını bekliyor.
 - [x] /admin korumalı route altyapısı — Next.js 16 `src/proxy.ts` ve server-side admin authorization eklendi.
