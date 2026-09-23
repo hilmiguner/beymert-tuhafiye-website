@@ -650,11 +650,11 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 
 - [x] CMS mimarisini netleştirme — Next.js + Supabase Auth + PostgreSQL + Storage + RLS.
 - [ ] Supabase project/environment bağlantısı.
-- [ ] Veritabanı schema + migration dosyaları.
-- [ ] Storage bucket + medya güvenlik politikaları.
-- [ ] Admin authentication.
-- [ ] /admin korumalı route altyapısı.
-- [ ] Admin shell / dashboard.
+- [x] Veritabanı schema + migration dosyaları — foundation migration PR #16 ile eklendi.
+- [x] Storage bucket + medya güvenlik politikaları — `cms-media` bucket tanımı ve admin-only write policy'leri migration'a eklendi.
+- [x] Admin authentication — Supabase email/password server action akışı ve owner/editor membership kontrolü eklendi; canlı Supabase doğrulaması proje bağlantısını bekliyor.
+- [x] /admin korumalı route altyapısı — Next.js 16 `src/proxy.ts` ve server-side admin authorization eklendi.
+- [x] Admin shell / dashboard — storefront'tan ayrılmış temel yönetim paneli kabuğu eklendi.
 - [ ] Kategori CRUD.
 - [ ] Ürün CRUD.
 - [ ] Ürün çoklu fotoğraf yükleme / sıralama / kapak seçimi.
