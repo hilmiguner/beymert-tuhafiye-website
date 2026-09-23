@@ -640,23 +640,58 @@ Durum: TAMAMLANDI — açık adres ve çalışma saatlerinin işletme sahibi do�
 - [x] Final CTA
 - [x] İletişim sayfası
 
-### Phase 10 — Real Content & Content Management
+### Phase 10 — Real Content & CMS / Admin Panel
 
-Durum: BEKLEMEDE — teknik içerik/media altyapısı PR #11 ile tamamlandı; gerçek içerik girişi işletme sahibi materyallerini bekliyor.
+Durum: GELİŞTİRMEDE — operasyonel içerik yönetimi ihtiyacı netleşti; typed static content kararı Supabase tabanlı CMS yönünde revize edildi.
 
-- [ ] Gerçek ürün listesini toplama
-- [ ] Gerçek kategorileri tanımlama
-- [ ] Gerçek konseptleri tanımlama
-- [ ] Ürün fotoğraflarını optimize etme
-- [ ] Mağaza bilgilerini doğrulama
-- [x] Statik data mı Supabase mi kararını finalleştirme — V1 typed static content ile devam edecek.
-- [x] Gerekiyorsa Supabase entegrasyonu — V1 için gerekmiyor; operasyonel içerik yönetimi ihtiyacı oluşursa yeniden değerlendirilecek.
-- [x] Gerekiyorsa basit admin panel — V1 için gerekmiyor.
-- [x] Image storage stratejisi — V1 için `public/media`, Next/Image ve typed media metadata; büyüme halinde object storage değerlendirilecek.
-- [x] Product/Category/Concept/Gallery media fallback katmanı
-- [x] Content relation integrity kontrolü
+Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, galeri, mağaza bilgileri ve görselleri güvenli bir admin panel üzerinden yönetebilmesi.
 
-Admin panel yalnızca gerçek operasyon ihtiyacı varsa geliştirilir.
+#### CMS roadmap
+
+- [x] CMS mimarisini netleştirme — Next.js + Supabase Auth + PostgreSQL + Storage + RLS.
+- [ ] Supabase project/environment bağlantısı.
+- [ ] Veritabanı schema + migration dosyaları.
+- [ ] Storage bucket + medya güvenlik politikaları.
+- [ ] Admin authentication.
+- [ ] /admin korumalı route altyapısı.
+- [ ] Admin shell / dashboard.
+- [ ] Kategori CRUD.
+- [ ] Ürün CRUD.
+- [ ] Ürün çoklu fotoğraf yükleme / sıralama / kapak seçimi.
+- [ ] Konsept CRUD.
+- [ ] Konsept çoklu fotoğraf yükleme / sıralama / kapak seçimi.
+- [ ] Galeri CRUD.
+- [ ] Rich-text ürün/konsept açıklama editörü.
+- [ ] Draft / published durum modeli.
+- [ ] Önizleme akışı.
+- [ ] Mağaza / site ayarları yönetimi.
+- [ ] Public site veri kaynağını typed static datadan Supabase'e taşıma.
+- [ ] Mevcut mock veriyi Supabase'e migrate etme.
+- [ ] Gerçek ürün listesini toplama.
+- [ ] Gerçek kategorileri tanımlama.
+- [ ] Gerçek konseptleri tanımlama.
+- [ ] Gerçek ürün / konsept / galeri fotoğraflarını yükleme.
+- [ ] Açık adres ve çalışma saatlerini işletme sahibiyle doğrulama.
+- [ ] RLS / authorization güvenlik denetimi.
+- [ ] Dükkan sahibi gerçek kullanım testi.
+- [ ] CMS sonrası public-site regression / SEO / performans QA.
+
+#### CMS davranış kararları
+
+- Public ziyaretçi için hesap sistemi eklenmez; Auth yalnızca admin panel içindir.
+- Admin panel public navbar'da gösterilmez.
+- İçerikler taslak olarak hazırlanabilir; yalnızca published içerikler public sitede görünür.
+- Fotoğraflar Supabase Storage'da tutulur; metadata PostgreSQL'de tutulur.
+- Service-role anahtarı browser/client bundle içine konmaz.
+- Public site geçişi kontrollü yapılır; CMS foundation tamamlanana kadar mevcut typed static data çalışmaya devam eder.
+- Rich-text içerik için ilerleyen adımda TipTap benzeri yapı değerlendirilir.
+- İlk yetkilendirme modeli owner / editor rolleridir.
+- Görsel yüklemelerinde JPEG/PNG/WebP/AVIF kabul edilir; boyut ve optimizasyon kuralları admin upload fazında uygulanır.
+
+Çıkış kriteri:
+
+- Dükkan sahibi ürün, kategori, konsept, galeri, medya ve temel mağaza bilgilerini panelden güvenli biçimde yönetebilmeli.
+- Yayınlanan değişiklikler GitHub commit'i gerektirmeden public siteye yansımalı.
 
 ### Phase 11 — SEO, Accessibility & Performance
 
@@ -710,7 +745,6 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 - Kampanya landing page'leri
 - Blog / parti fikirleri
 - Instagram içerik senkronizasyonu
-- Gelişmiş CMS/admin
 - QR kampanya sayfaları
 - 3D/WebGL hero
 - Ürün videosu
@@ -742,12 +776,10 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 - Gerçek kategori listesi
 - Gerçek konsept listesi
 - Gerçek ürün dataset'i
-- Supabase gerekliliği
-- Admin panel gerekliliği
 - Domain
 - Hosting production ayarları
 - Analytics çözümü
 
 ---
 
-Son güncelleme: 2026-09-22
+Son güncelleme: 2026-09-23
