@@ -31,6 +31,8 @@ function parseConceptForm(formData: FormData) {
   const richDescription = parseRichTextFormValue(
     formData.get("descriptionRich"),
   );
+  const whatsappMessage =
+    String(formData.get("whatsappMessage") ?? "").trim() || null;
   const status = String(formData.get("status") ?? "draft") as ContentStatus;
   const sortOrder = Number(formData.get("sortOrder") ?? 0);
   const relatedProductIds = Array.from(
@@ -61,6 +63,7 @@ function parseConceptForm(formData: FormData) {
       short_description: shortDescription,
       description: richDescription.text,
       description_rich: richDescription.json,
+      whatsapp_message: whatsappMessage,
       status,
       sort_order: sortOrder,
     },
