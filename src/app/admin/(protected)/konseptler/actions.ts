@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { parseRichTextFormValue } from "@/lib/rich-text";
 import { toSlug } from "@/lib/slug";
 import { requireCmsAdmin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
@@ -27,7 +28,9 @@ function parseConceptForm(formData: FormData) {
   const shortDescription = String(
     formData.get("shortDescription") ?? "",
   ).trim();
-  const description = String(formData.get("description") ?? "").trim();
+  const richDescription = parseRichTextFormValue(
+    formData.get("descriptionRich"),
+  );
   const status = String(formData.get("status") ?? "draft") as ContentStatus;
   const sortOrder = Number(formData.get("sortOrder") ?? 0);
   const relatedProductIds = Array.from(
@@ -43,6 +46,7 @@ function parseConceptForm(formData: FormData) {
     !name ||
     !slug ||
     !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) ||
+    !richDescription ||
     !validStatuses.has(status) ||
     !Number.isInteger(sortOrder) ||
     sortOrder < 0
@@ -55,7 +59,8 @@ function parseConceptForm(formData: FormData) {
       name,
       slug,
       short_description: shortDescription,
-      description,
+      description: richDescription.text,
+      description_rich: richDescription.json,
       status,
       sort_order: sortOrder,
     },
