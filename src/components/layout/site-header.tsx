@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { BrandMark } from "@/components/brand/brand-mark";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { siteConfig, whatsappHref } from "@/config/site";
+import { siteConfig } from "@/config/site";
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -31,7 +31,13 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
-export function SiteHeader() {
+export function SiteHeader({
+  shortName,
+  whatsappUrl,
+}: {
+  shortName: string;
+  whatsappUrl: string;
+}) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -58,7 +64,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/75 bg-background/88 backdrop-blur-xl">
       <Container>
         <div className="flex min-h-18 items-center justify-between gap-5 py-3">
-          <BrandMark />
+          <BrandMark shortName={shortName} />
 
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Ana navigasyon">
             {siteConfig.nav.map((item) => (
@@ -79,7 +85,7 @@ export function SiteHeader() {
 
           <div className="hidden lg:block">
             <ButtonLink
-              href={whatsappHref()}
+              href={whatsappUrl}
               target="_blank"
               rel="noreferrer"
               size="sm"
@@ -128,7 +134,7 @@ export function SiteHeader() {
                 </Link>
               ))}
               <ButtonLink
-                href={whatsappHref()}
+                href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-2"

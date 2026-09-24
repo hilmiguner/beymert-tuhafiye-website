@@ -1,13 +1,17 @@
-import { whatsappHref } from "@/config/site";
-
-export function FloatingWhatsappCta() {
+export function FloatingWhatsappCta({
+  whatsappUrl,
+  shortName,
+}: {
+  whatsappUrl: string;
+  shortName: string;
+}) {
   return (
     <a
-      href={whatsappHref()}
+      href={whatsappUrl}
       target="_blank"
       rel="noreferrer"
       className="fixed right-4 bottom-4 z-40 inline-flex min-h-12 items-center gap-2 rounded-pill bg-primary px-4 py-3 text-sm font-extrabold text-primary-foreground shadow-lift transition-transform duration-[var(--bt-duration-normal)] hover:-translate-y-0.5 sm:right-6 sm:bottom-6"
-      aria-label="WhatsApp üzerinden Beymert'e yaz"
+      aria-label={`WhatsApp üzerinden ${shortName}'e yaz`}
     >
       <svg
         viewBox="0 0 24 24"

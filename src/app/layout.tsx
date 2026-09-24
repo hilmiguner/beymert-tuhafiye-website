@@ -9,10 +9,17 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { StructuredData } from "@/components/seo/structured-data";
 import { assertContentIntegrity } from "@/lib/content-integrity";
 import { getSiteUrl } from "@/lib/seo";
+import {
+  getStoreSettings,
+  whatsappHref,
+} from "@/lib/store-settings";
 
 import "./globals.css";
 
 assertContentIntegrity();
+
+// Store settings are managed at runtime through the Supabase-backed CMS.
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -29,22 +36,31 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getStoreSettings();
+  const whatsappUrl = whatsappHref(settings);
+
   return (
     <html lang="tr" data-scroll-behavior="smooth">
       <body>
         <a href="#main-content" className="bt-skip-link">
           Ana içeriğe geç
         </a>
-        <SiteHeader />
+        <SiteHeader
+          shortName={settings.shortName}
+          whatsappUrl={whatsappUrl}
+        />
         {children}
-        <SiteFooter />
-        <FloatingWhatsappCta />
-        <StructuredData />
+        <SiteFooter settings={settings} />
+        <FloatingWhatsappCta
+          whatsappUrl={whatsappUrl}
+          shortName={settings.shortName}
+        />
+        <StructuredData settings={settings} />
       </body>
     </html>
   );
