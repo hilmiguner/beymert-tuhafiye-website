@@ -408,10 +408,14 @@ export type Database = {
       store_settings: {
         Row: {
           address: string | null
+          default_whatsapp_message: string | null
           id: number
+          location_label: string | null
           map_query: string | null
           opening_hours: Json
           phone: string | null
+          short_name: string | null
+          site_name: string | null
           social_links: Json
           updated_at: string
           updated_by: string | null
@@ -419,10 +423,14 @@ export type Database = {
         }
         Insert: {
           address?: string | null
+          default_whatsapp_message?: string | null
           id?: number
+          location_label?: string | null
           map_query?: string | null
           opening_hours?: Json
           phone?: string | null
+          short_name?: string | null
+          site_name?: string | null
           social_links?: Json
           updated_at?: string
           updated_by?: string | null
@@ -430,10 +438,14 @@ export type Database = {
         }
         Update: {
           address?: string | null
+          default_whatsapp_message?: string | null
           id?: number
+          location_label?: string | null
           map_query?: string | null
           opening_hours?: Json
           phone?: string | null
+          short_name?: string | null
+          site_name?: string | null
           social_links?: Json
           updated_at?: string
           updated_by?: string | null
