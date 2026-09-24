@@ -220,11 +220,14 @@ Gerçek ürün yönetimi fazında planlanan içerik modeli:
 - map/directions
 - socialLinks
 
-İçerik yönetimi gerektiğinde öncelikli aday:
+Gerçek içerik ve yönetim katmanı:
 
-- Supabase
+- Supabase PostgreSQL
+- Supabase Storage
+- Supabase Auth + RLS
+- Next.js admin paneli
 
-Supabase başlangıç scaffold'ına henüz eklenmez. Ürün/kategori/galeri verilerinin gerçek yönetim ihtiyacı netleştiğinde ayrı fazda entegre edilir.
+Public storefront yayınlanmış içeriği Supabase'den okur; typed static dataset yalnızca mevcut mock içeriğin CMS'e taşınacağı migration adımı tamamlanana kadar kaynak veri olarak korunur.
 
 ## 7. Önerilen Kod Organizasyonu
 
@@ -414,7 +417,7 @@ Merhaba, web sitenizde gördüğüm "[ÜRÜN ADI]" hakkında bilgi almak istiyor
 Kurallar:
 
 - Telefon numarası kod içine dağınık şekilde yazılmamalı.
-- Merkezi site config içinde tutulmalı.
+- Mağaza iletişim bilgileri Supabase `store_settings` kaydından yönetilmeli.
 - CTA metinleri bağlama göre değişebilir.
 - Mobilde WhatsApp aksiyonu kolay erişilebilir olmalı.
 - Kullanıcı doğrudan sipariş verdiği izlenimine sokulmamalı; "bilgi al / sor" dili kullanılmalı.
@@ -664,8 +667,8 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - [x] Rich-text ürün/konsept açıklama editörü — Tiptap tabanlı toolbar, aktif stil durumları, gerçek italic font yüzü, güvenli JSON doğrulama, `description_rich` saklama ve otomatik plain-text fallback canlı E2E doğrulandı.
 - [x] Draft / published durum modeli — ortak draft/published/archived enum ve published_at davranışı kategori/ürün akışlarında aktif.
 - [x] Önizleme akışı — `/preview` altında admin-only, noindex ürün/konsept/galeri önizleme route'ları, düzenlemeye dönüş, custom WhatsApp mesajları ve responsive medya görünümü canlı E2E doğrulandı.
-- [x] Mağaza / site ayarları yönetimi — işletme/marka adı, konum, adres, telefon, WhatsApp, varsayılan mesaj, çalışma saatleri, harita sorgusu ve sosyal bağlantılar için singleton CMS ekranı eklendi; canlı E2E testi bekleniyor.
-- [ ] Public site veri kaynağını typed static datadan Supabase'e taşıma.
+- [x] Mağaza / site ayarları yönetimi — işletme/marka adı, konum, adres, telefon, WhatsApp, varsayılan mesaj, çalışma saatleri, harita sorgusu ve sosyal bağlantılar için singleton CMS ekranı eklendi ve canlı E2E doğrulandı.
+- [x] Public site veri kaynağını typed static datadan Supabase'e taşıma — storefront için oturumsuz anon client, published-only RLS, typed adapter, Storage medya URL'leri, mağaza ayarları, katalog/detail/galeri/homepage ve sitemap veri akışları Supabase'e bağlandı.
 - [ ] Mevcut mock veriyi Supabase'e migrate etme.
 - [ ] Gerçek ürün listesini toplama.
 - [ ] Gerçek kategorileri tanımlama.
@@ -683,7 +686,7 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - İçerikler taslak olarak hazırlanabilir; yalnızca published içerikler public sitede görünür.
 - Fotoğraflar Supabase Storage'da tutulur; metadata PostgreSQL'de tutulur.
 - Service-role anahtarı browser/client bundle içine konmaz.
-- Public site geçişi kontrollü yapılır; CMS foundation tamamlanana kadar mevcut typed static data çalışmaya devam eder.
+- Public site canonical veri kaynağı Supabase'dir; typed static dataset yalnızca sıradaki mock-data migration adımı için geçici kaynak olarak tutulur.
 - Rich-text içerik için Tiptap seçildi; canonical içerik `description_rich` JSONB alanında, SEO/fallback düz metin `description` alanında tutulur.
 - İlk yetkilendirme modeli owner / editor rolleridir.
 - Görsel yüklemelerinde JPEG/PNG/WebP/AVIF kabul edilir; boyut ve optimizasyon kuralları admin upload fazında uygulanır.
