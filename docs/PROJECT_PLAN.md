@@ -661,9 +661,9 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - [x] Konsept CRUD — listeleme, oluşturma, düzenleme, silme, ilgili ürün ilişkileri, sıralama ve yayın durumu canlı Supabase üzerinde E2E doğrulandı.
 - [x] Konsept çoklu fotoğraf yükleme / sıralama / kapak seçimi — Storage upload, tek kapak constraint'i, atomik cover sync ve medya temizliği canlı E2E doğrulandı.
 - [x] Galeri CRUD — oluşturma, düzenleme, silme, görsel yükleme/değiştirme, kategori/konsept ilişkisi, sıralama ve yayın durumu canlı Supabase üzerinde E2E doğrulandı; görsel önizleme state akışı da doğrulandı.
-- [x] Rich-text ürün/konsept açıklama editörü — Tiptap tabanlı toolbar, güvenli JSON doğrulama, `description_rich` saklama ve otomatik plain-text fallback eklendi; canlı E2E testi bekleniyor.
+- [x] Rich-text ürün/konsept açıklama editörü — Tiptap tabanlı toolbar, aktif stil durumları, gerçek italic font yüzü, güvenli JSON doğrulama, `description_rich` saklama ve otomatik plain-text fallback canlı E2E doğrulandı.
 - [x] Draft / published durum modeli — ortak draft/published/archived enum ve published_at davranışı kategori/ürün akışlarında aktif.
-- [ ] Önizleme akışı.
+- [x] Önizleme akışı — `/preview` altında admin-only, noindex ürün/konsept/galeri önizleme route'ları ve düzenleme ekranlarından Önizle aksiyonları eklendi; canlı E2E testi bekleniyor.
 - [ ] Mağaza / site ayarları yönetimi.
 - [ ] Public site veri kaynağını typed static datadan Supabase'e taşıma.
 - [ ] Mevcut mock veriyi Supabase'e migrate etme.
