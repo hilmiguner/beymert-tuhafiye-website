@@ -8,6 +8,7 @@ import { HomepageStoreSection } from "@/components/sections/homepage-store-secti
 import { HeroSection } from "@/components/sections/hero-section";
 import { TrustSection } from "@/components/sections/trust-section";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
+import { getStoreSettings } from "@/lib/public-content";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -17,10 +18,12 @@ export const metadata: Metadata = buildPageMetadata({
   absoluteTitle: true,
 });
 
-export default function Home() {
+export default async function Home() {
+  const settings = await getStoreSettings();
+
   return (
     <main id="main-content" tabIndex={-1}>
-      <HeroSection />
+      <HeroSection settings={settings} />
       <CategoriesSection />
       <ConceptsSection />
       <FeaturedProductsSection />
