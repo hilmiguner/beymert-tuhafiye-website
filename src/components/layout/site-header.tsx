@@ -7,7 +7,11 @@ import { useEffect, useState } from "react";
 import { BrandMark } from "@/components/brand/brand-mark";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { siteConfig, whatsappHref } from "@/config/site";
+import {
+  siteConfig,
+  whatsappHref,
+  type StoreSettings,
+} from "@/config/site";
 
 function MenuIcon({ open }: { open: boolean }) {
   return (
@@ -31,23 +35,18 @@ function MenuIcon({ open }: { open: boolean }) {
   );
 }
 
-export function SiteHeader() {
+export function SiteHeader({ settings }: { settings: StoreSettings }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!open) {
-      return;
-    }
+    if (!open) return;
 
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-      }
+      if (event.key === "Escape") setOpen(false);
     };
 
     window.addEventListener("keydown", handleEscape);
-
     return () => window.removeEventListener("keydown", handleEscape);
   }, [open]);
 
@@ -58,7 +57,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/75 bg-background/88 backdrop-blur-xl">
       <Container>
         <div className="flex min-h-18 items-center justify-between gap-5 py-3">
-          <BrandMark />
+          <BrandMark name={settings.shortName} />
 
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Ana navigasyon">
             {siteConfig.nav.map((item) => (
@@ -79,7 +78,7 @@ export function SiteHeader() {
 
           <div className="hidden lg:block">
             <ButtonLink
-              href={whatsappHref()}
+              href={whatsappHref(settings)}
               target="_blank"
               rel="noreferrer"
               size="sm"
@@ -128,7 +127,7 @@ export function SiteHeader() {
                 </Link>
               ))}
               <ButtonLink
-                href={whatsappHref()}
+                href={whatsappHref(settings)}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-2"

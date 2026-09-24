@@ -1,19 +1,22 @@
 import {
   directionsHref,
-  siteConfig,
+  phoneHref,
   whatsappHref,
 } from "@/config/site";
+import { getStoreSettings } from "@/lib/public-content";
 
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
 
-export function HomepageStoreSection() {
+export async function HomepageStoreSection() {
+  const settings = await getStoreSettings();
+
   return (
     <Section className="border-y border-border bg-surface">
       <Container>
         <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr] lg:items-end">
           <div>
-            <p className="bt-eyebrow text-secondary">Gemlik’te Beymert</p>
+            <p className="bt-eyebrow text-secondary">{settings.locationLabel} · {settings.shortName}</p>
             <h2 className="bt-display bt-balance mt-3 max-w-3xl text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl">
               Gör, sor, mağazada devam et.
             </h2>
@@ -27,17 +30,17 @@ export function HomepageStoreSection() {
           <div className="rounded-card border border-border bg-background p-5 shadow-soft sm:p-6">
             <p className="bt-eyebrow text-muted">İletişim</p>
             <a
-              href={`tel:${siteConfig.phoneE164}`}
+              href={phoneHref(settings)}
               className="bt-display mt-3 block text-3xl font-semibold transition-colors hover:text-primary"
             >
-              {siteConfig.phoneDisplay}
+              {settings.phoneDisplay}
             </a>
             <p className="mt-2 text-sm font-bold text-muted">
-              {siteConfig.addressVerification.publicLabel}
+              {settings.address}
             </p>
             <div className="mt-5 flex flex-col gap-2 sm:flex-row lg:flex-col xl:flex-row">
               <ButtonLink
-                href={whatsappHref()}
+                href={whatsappHref(settings)}
                 target="_blank"
                 rel="noreferrer"
                 size="sm"
@@ -45,7 +48,7 @@ export function HomepageStoreSection() {
                 WhatsApp
               </ButtonLink>
               <ButtonLink
-                href={directionsHref()}
+                href={directionsHref(settings)}
                 target="_blank"
                 rel="noreferrer"
                 variant="outline"

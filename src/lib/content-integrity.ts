@@ -126,21 +126,22 @@ export function assertContentIntegrity() {
       );
     }
 
-    if (
-      item.source.kind === "product" &&
-      !productSet.has(item.source.slug)
+    const source = item.source;
+    if (!source) {
+      errors.push(`gallery ${item.id}: static source is required`);
+    } else if (
+      source.kind === "product" &&
+      !productSet.has(source.slug)
     ) {
       errors.push(
-        `gallery ${item.id}: unknown source product ${item.source.slug}`,
+        `gallery ${item.id}: unknown source product ${source.slug}`,
       );
-    }
-
-    if (
-      item.source.kind === "concept" &&
-      !conceptSet.has(item.source.slug)
+    } else if (
+      source.kind === "concept" &&
+      !conceptSet.has(source.slug)
     ) {
       errors.push(
-        `gallery ${item.id}: unknown source concept ${item.source.slug}`,
+        `gallery ${item.id}: unknown source concept ${source.slug}`,
       );
     }
 

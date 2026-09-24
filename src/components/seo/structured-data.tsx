@@ -1,9 +1,17 @@
-import { directionsHref, siteConfig } from "@/config/site";
+import {
+  directionsHref,
+  siteConfig,
+  type StoreSettings,
+} from "@/config/site";
 import { absoluteUrl } from "@/lib/seo";
 
-export function StructuredData() {
+export function StructuredData({ settings }: { settings: StoreSettings }) {
   const businessId = `${absoluteUrl("/")}#business`;
   const websiteId = `${absoluteUrl("/")}#website`;
+  const sameAs = [
+    settings.socialLinks.facebook,
+    settings.socialLinks.instagram,
+  ].filter(Boolean);
 
   const graph = {
     "@context": "https://schema.org",
@@ -11,11 +19,11 @@ export function StructuredData() {
       {
         "@type": "LocalBusiness",
         "@id": businessId,
-        name: siteConfig.name,
+        name: settings.name,
         url: absoluteUrl("/"),
-        telephone: siteConfig.phoneE164,
-        sameAs: [siteConfig.facebookUrl],
-        hasMap: directionsHref(),
+        telephone: settings.phoneDisplay,
+        sameAs,
+        hasMap: directionsHref(settings),
         address: {
           "@type": "PostalAddress",
           addressLocality: siteConfig.locality.city,
@@ -31,7 +39,7 @@ export function StructuredData() {
         "@type": "WebSite",
         "@id": websiteId,
         url: absoluteUrl("/"),
-        name: siteConfig.shortName,
+        name: settings.shortName,
         inLanguage: "tr-TR",
         publisher: {
           "@id": businessId,

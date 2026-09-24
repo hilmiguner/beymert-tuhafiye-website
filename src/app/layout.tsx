@@ -8,43 +8,50 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { StructuredData } from "@/components/seo/structured-data";
 import { assertContentIntegrity } from "@/lib/content-integrity";
+import { getStoreSettings } from "@/lib/public-content";
 import { getSiteUrl } from "@/lib/seo";
 
 import "./globals.css";
 
 assertContentIntegrity();
 
-export const metadata: Metadata = {
-  metadataBase: new URL(getSiteUrl()),
-  applicationName: "Beymert",
-  title: {
-    default: "Beymert | Parti Malzemeleri & Tuhafiye Gemlik",
-    template: "%s | Beymert",
-  },
-  description:
-    "Gemlik'te parti malzemeleri, helyumlu ve folyo balonlar, doğum günü, baby shower, cinsiyet partisi, söz-nişan-düğün ürünleri, hediyelikler ve tuhafiye seçenekleri.",
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getStoreSettings();
 
-export default function RootLayout({
+  return {
+    metadataBase: new URL(getSiteUrl()),
+    applicationName: settings.shortName,
+    title: {
+      default: `${settings.shortName} | Parti Malzemeleri & Tuhafiye Gemlik`,
+      template: `%s | ${settings.shortName}`,
+    },
+    description:
+      "Gemlik'te parti malzemeleri, helyumlu ve folyo balonlar, doğum günü, baby shower, cinsiyet partisi, söz-nişan-düğün ürünleri, hediyelikler ve tuhafiye seçenekleri.",
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getStoreSettings();
+
   return (
     <html lang="tr" data-scroll-behavior="smooth">
       <body>
         <a href="#main-content" className="bt-skip-link">
           Ana içeriğe geç
         </a>
-        <SiteHeader />
+        <SiteHeader settings={settings} />
         {children}
-        <SiteFooter />
-        <FloatingWhatsappCta />
-        <StructuredData />
+        <SiteFooter settings={settings} />
+        <FloatingWhatsappCta settings={settings} />
+        <StructuredData settings={settings} />
       </body>
     </html>
   );

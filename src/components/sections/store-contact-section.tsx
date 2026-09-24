@@ -1,14 +1,17 @@
 import {
   directionsHref,
   mapEmbedHref,
-  siteConfig,
+  phoneHref,
   whatsappHref,
 } from "@/config/site";
+import { getStoreSettings } from "@/lib/public-content";
 
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
 
-export function StoreContactSection() {
+export async function StoreContactSection() {
+  const settings = await getStoreSettings();
+
   return (
     <Section className="bg-background">
       <Container>
@@ -28,10 +31,10 @@ export function StoreContactSection() {
                 <dt className="bt-eyebrow text-muted">Telefon</dt>
                 <dd className="mt-2">
                   <a
-                    href={`tel:${siteConfig.phoneE164}`}
+                    href={phoneHref(settings)}
                     className="bt-display text-2xl font-semibold transition-colors hover:text-primary"
                   >
-                    {siteConfig.phoneDisplay}
+                    {settings.phoneDisplay}
                   </a>
                 </dd>
               </div>
@@ -39,7 +42,7 @@ export function StoreContactSection() {
               <div className="border-t border-border pt-4">
                 <dt className="bt-eyebrow text-muted">Konum</dt>
                 <dd className="mt-2 text-base font-extrabold">
-                  {siteConfig.addressVerification.publicLabel}
+                  {settings.address}
                 </dd>
                 <p className="mt-1 text-sm leading-6 text-muted">
                   Yol tarifi işletme adıyla güncel harita kaydını açar.
@@ -51,18 +54,18 @@ export function StoreContactSection() {
                 <dd className="mt-2 grid gap-1 text-sm">
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-bold">
-                      {siteConfig.publicHours.weekdayLabel}
+                      {settings.publicHours.weekdayLabel}
                     </span>
                     <span className="text-muted">
-                      {siteConfig.publicHours.weekdayHours}
+                      {settings.publicHours.weekdayHours}
                     </span>
                   </div>
                   <div className="flex items-center justify-between gap-4">
                     <span className="font-bold">
-                      {siteConfig.publicHours.sundayLabel}
+                      {settings.publicHours.sundayLabel}
                     </span>
                     <span className="text-right text-muted">
-                      {siteConfig.publicHours.sundayHours}
+                      {settings.publicHours.sundayHours}
                     </span>
                   </div>
                 </dd>
@@ -75,20 +78,20 @@ export function StoreContactSection() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <ButtonLink
-                href={whatsappHref()}
+                href={whatsappHref(settings)}
                 target="_blank"
                 rel="noreferrer"
               >
                 WhatsApp’tan Yaz
               </ButtonLink>
               <ButtonLink
-                href={`tel:${siteConfig.phoneE164}`}
+                href={phoneHref(settings)}
                 variant="outline"
               >
                 Telefonla Ara
               </ButtonLink>
               <ButtonLink
-                href={directionsHref()}
+                href={directionsHref(settings)}
                 target="_blank"
                 rel="noreferrer"
                 variant="ghost"
@@ -100,8 +103,8 @@ export function StoreContactSection() {
 
           <div className="relative min-h-[22rem] border-t border-border bg-surface-muted lg:min-h-full lg:border-l lg:border-t-0">
             <iframe
-              src={mapEmbedHref()}
-              title="Beymert mağaza konumu"
+              src={mapEmbedHref(settings)}
+              title={`${settings.shortName} mağaza konumu`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="absolute inset-0 size-full border-0"

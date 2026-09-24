@@ -27,6 +27,7 @@ export type Product = {
   slug: string;
   name: string;
   categorySlug: string;
+  categoryName?: string;
   conceptSlugs: readonly string[];
   shortDescription: string;
   description: string;
@@ -38,4 +39,5 @@ export type Product = {
   newArrival: boolean;
   sortOrder: number;
   highlights: readonly string[];
+  whatsappMessage?: string;
 };

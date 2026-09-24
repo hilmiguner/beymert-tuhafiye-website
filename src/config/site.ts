@@ -1,26 +1,52 @@
-export const siteConfig = {
+export type StoreSettings = {
+  name: string;
+  shortName: string;
+  locationLabel: string;
+  address: string;
+  phoneDisplay: string;
+  whatsapp: string;
+  defaultWhatsappMessage: string;
+  publicHours: {
+    weekdayLabel: string;
+    weekdayHours: string;
+    sundayLabel: string;
+    sundayHours: string;
+  };
+  socialLinks: {
+    facebook: string;
+    instagram: string;
+  };
+  mapQuery: string;
+};
+
+export const defaultStoreSettings: StoreSettings = {
   name: "Beymert Parti Malzemeleri Tuhafiye Tasarım",
   shortName: "Beymert",
   locationLabel: "Gemlik · Bursa",
-  neighborhoodLabel: "Hamidiye · Gemlik · Bursa",
-  locality: {
-    neighborhood: "Hamidiye",
-    city: "Gemlik",
-    region: "Bursa",
-    country: "TR",
-  },
+  address: "Hamidiye · Gemlik · Bursa",
   phoneDisplay: "0543 337 70 04",
-  phoneE164: "+905433377004",
-  facebookUrl: "https://www.facebook.com/beymertasarim/",
+  whatsapp: "+905433377004",
+  defaultWhatsappMessage:
+    "Merhaba, Beymert web sitesi üzerinden ürünleriniz hakkında bilgi almak istiyorum.",
   publicHours: {
     weekdayLabel: "Pazartesi – Cumartesi",
     weekdayHours: "10:00 – 19:30",
     sundayLabel: "Pazar",
     sundayHours: "Gelmeden önce iletişime geç",
   },
-  addressVerification: {
-    status: "pending-owner-verification",
-    publicLabel: "Hamidiye · Gemlik · Bursa",
+  socialLinks: {
+    facebook: "https://www.facebook.com/beymertasarim/",
+    instagram: "",
+  },
+  mapQuery: "Beymert Parti Malzemeleri Tuhafiye Tasarım Gemlik Bursa",
+};
+
+export const siteConfig = {
+  locality: {
+    neighborhood: "Hamidiye",
+    city: "Gemlik",
+    region: "Bursa",
+    country: "TR",
   },
   nav: [
     { label: "Ürünler", href: "/urunler" },
@@ -32,20 +58,46 @@ export const siteConfig = {
   ],
 } as const;
 
-export function whatsappHref(message?: string) {
-  const text =
-    message ??
-    "Merhaba, Beymert web sitesi üzerinden ürünleriniz hakkında bilgi almak istiyorum.";
-
-  return `https://wa.me/${siteConfig.phoneE164.replace("+", "")}?text=${encodeURIComponent(text)}`;
+function digitsOnly(value: string) {
+  return value.replace(/[^0-9]/g, "");
 }
 
-export function directionsHref() {
-  const query = `${siteConfig.name} Gemlik Bursa`;
+export function phoneHref(settings: StoreSettings) {
+  const digits = digitsOnly(settings.phoneDisplay);
+  const internationalDigits =
+    digits.startsWith("0") && digits.length === 11
+      ? `90${digits.slice(1)}`
+      : digits;
+
+  return `tel:+${internationalDigits}`;
+}
+
+export function whatsappHref(
+  settingsOrMessage?: StoreSettings | string,
+  message?: string,
+) {
+  const settings =
+    typeof settingsOrMessage === "object"
+      ? settingsOrMessage
+      : defaultStoreSettings;
+  const text =
+    typeof settingsOrMessage === "string"
+      ? settingsOrMessage
+      : message ?? settings.defaultWhatsappMessage;
+
+  return `https://wa.me/${digitsOnly(settings.whatsapp)}?text=${encodeURIComponent(text)}`;
+}
+
+export function directionsHref(
+  settings: StoreSettings = defaultStoreSettings,
+) {
+  const query = settings.mapQuery || settings.name;
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
-export function mapEmbedHref() {
-  const query = encodeURIComponent(`${siteConfig.name} Gemlik Bursa`);
+export function mapEmbedHref(
+  settings: StoreSettings = defaultStoreSettings,
+) {
+  const query = encodeURIComponent(settings.mapQuery || settings.name);
   return `https://www.google.com/maps?q=${query}&output=embed`;
 }

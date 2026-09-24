@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/seo";
 
 import { ConceptCard } from "@/components/concepts/concept-card";
 import { Container, Section } from "@/components/ui/container";
-import { concepts } from "@/data/concepts";
+import { getConcepts } from "@/lib/public-content";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Konseptler",
@@ -11,7 +11,9 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/konseptler",
 });
 
-export default function ConceptsPage() {
+export default async function ConceptsPage() {
+  const concepts = await getConcepts();
+
   return (
     <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">

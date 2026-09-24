@@ -5,43 +5,30 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 import { GalleryArtwork } from "@/components/gallery/gallery-artwork";
-import { getCategoryBySlug } from "@/data/categories";
-import { getConceptBySlug } from "@/data/concepts";
-import { getProductBySlug } from "@/data/products";
 import type { GalleryItem } from "@/types/gallery";
 
 function RelationLinks({ item }: { item: GalleryItem }) {
-  const category = item.categorySlug
-    ? getCategoryBySlug(item.categorySlug)
-    : undefined;
-  const concept = item.conceptSlug
-    ? getConceptBySlug(item.conceptSlug)
-    : undefined;
-  const product = item.productSlug
-    ? getProductBySlug(item.productSlug)
-    : undefined;
-
   return (
     <div className="flex flex-wrap gap-2">
-      {concept ? (
+      {item.conceptSlug && item.conceptName ? (
         <Link
-          href={`/konseptler/${concept.slug}`}
+          href={`/konseptler/${item.conceptSlug}`}
           className="rounded-pill border border-border bg-background px-3 py-1.5 text-xs font-extrabold text-muted transition-colors hover:border-primary/30 hover:text-primary"
         >
-          {concept.name}
+          {item.conceptName}
         </Link>
       ) : null}
-      {category ? (
+      {item.categorySlug && item.categoryName ? (
         <Link
-          href={`/kategoriler/${category.slug}`}
+          href={`/kategoriler/${item.categorySlug}`}
           className="rounded-pill border border-border bg-background px-3 py-1.5 text-xs font-extrabold text-muted transition-colors hover:border-primary/30 hover:text-primary"
         >
-          {category.name}
+          {item.categoryName}
         </Link>
       ) : null}
-      {product ? (
+      {item.productSlug ? (
         <Link
-          href={`/urunler/${product.slug}`}
+          href={`/urunler/${item.productSlug}`}
           className="rounded-pill border border-border bg-background px-3 py-1.5 text-xs font-extrabold text-muted transition-colors hover:border-primary/30 hover:text-primary"
         >
           Ürünü incele

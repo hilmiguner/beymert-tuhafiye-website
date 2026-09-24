@@ -1,8 +1,4 @@
-import { ConceptMedia } from "@/components/concepts/concept-media";
 import { ContentImageView } from "@/components/media/content-image";
-import { ProductMedia } from "@/components/products/product-media";
-import { getConceptBySlug } from "@/data/concepts";
-import { getProductBySlug } from "@/data/products";
 import type { GalleryItem } from "@/types/gallery";
 
 const aspectClasses = {
@@ -28,48 +24,23 @@ export function GalleryArtwork({
       <div className={frameClass}>
         <ContentImageView
           image={item.image}
-          sizes={fill ? "100vw" : "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"}
+          sizes={
+            fill
+              ? "100vw"
+              : "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+          }
         />
       </div>
     );
   }
-
-  if (item.source.kind === "product") {
-    const product = getProductBySlug(item.source.slug);
-
-    if (!product) {
-      return null;
-    }
-
-    return (
-      <div className={frameClass}>
-        <ProductMedia
-          product={product}
-          variant={item.source.variant}
-          fill
-        />
-      </div>
-    );
-  }
-
-  const concept = getConceptBySlug(item.source.slug);
-
-  if (!concept) {
-    return null;
-  }
-
-  const scene = concept.gallery.find(
-    (itemScene) => itemScene.variant === item.source.variant,
-  );
 
   return (
-    <div className={frameClass}>
-      <ConceptMedia concept={concept} scene={scene} fill />
-      {!scene?.image && !concept.coverImage ? (
-        <span className="absolute bottom-3 right-3 rounded-pill border border-white/80 bg-white/80 px-2.5 py-1 text-[0.62rem] font-extrabold tracking-[0.1em] text-muted uppercase backdrop-blur-sm">
-          Temsili görsel
-        </span>
-      ) : null}
+    <div
+      className={`${frameClass} flex items-center justify-center p-6 text-center text-sm font-semibold text-muted`}
+      role="img"
+      aria-label={item.title}
+    >
+      Görsel hazırlanıyor.
     </div>
   );
 }

@@ -22,11 +22,13 @@ export type GalleryItem = {
   id: string;
   title: string;
   description: string;
-  source: GallerySource;
+  source?: GallerySource;
   image?: ContentImage;
   aspect: GalleryAspect;
   categorySlug?: string;
+  categoryName?: string;
   conceptSlug?: string;
+  conceptName?: string;
   productSlug?: string;
   featured: boolean;
   sortOrder: number;

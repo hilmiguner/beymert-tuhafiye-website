@@ -1,8 +1,11 @@
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
 import { whatsappHref } from "@/config/site";
+import { getStoreSettings } from "@/lib/public-content";
 
-export function FinalCtaSection() {
+export async function FinalCtaSection() {
+  const settings = await getStoreSettings();
+
   return (
     <Section>
       <Container>
@@ -13,13 +16,14 @@ export function FinalCtaSection() {
           </h2>
           <p className="mx-auto mt-5 max-w-2xl leading-7 text-muted">
             Ürün, renk veya konsept seçmekte kararsızsan WhatsApp üzerinden ne
-            hazırladığını yaz. Beymert’teki güncel seçenekler hakkında bilgi
+            hazırladığını yaz. {settings.shortName}’teki güncel seçenekler hakkında bilgi
             alabilirsin.
           </p>
           <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
             <ButtonLink
               href={whatsappHref(
-                "Merhaba, hazırladığım kutlama için Beymert’teki seçenekler hakkında bilgi almak istiyorum.",
+                settings,
+                `Merhaba, hazırladığım kutlama için ${settings.shortName}’teki seçenekler hakkında bilgi almak istiyorum.`,
               )}
               target="_blank"
               rel="noreferrer"

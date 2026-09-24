@@ -5,11 +5,11 @@ import { gsap } from "gsap";
 
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { whatsappHref } from "@/config/site";
+import { whatsappHref, type StoreSettings } from "@/config/site";
 
 const chips = ["Balon", "Doğum Günü", "Baby Shower", "Nişan & Düğün"];
 
-export function HeroSection() {
+export function HeroSection({ settings }: { settings: StoreSettings }) {
   const rootRef = useRef<HTMLElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
 
@@ -222,7 +222,7 @@ export function HeroSection() {
               data-hero-reveal
               className="bt-eyebrow max-w-full text-[0.68rem] leading-5 text-primary sm:text-xs"
             >
-              <span className="sm:hidden">Gemlik · Bursa</span>
+              <span className="sm:hidden">{settings.locationLabel}</span>
               <span className="hidden sm:inline">
                 Gemlik’te kutlamalara renk katıyoruz
               </span>
@@ -284,7 +284,7 @@ export function HeroSection() {
                 </span>
               </ButtonLink>
               <ButtonLink
-                href={whatsappHref()}
+                href={whatsappHref(settings)}
                 target="_blank"
                 rel="noreferrer"
                 variant="outline"
@@ -314,7 +314,7 @@ export function HeroSection() {
             data-hero-scene
             data-hero-reveal
             className="relative mx-auto min-w-0 w-full max-w-[35rem] lg:max-w-[30rem] xl:max-w-none"
-            aria-label="Beymert parti ürünlerini temsil eden dekoratif vitrin"
+            aria-label={`${settings.shortName} parti ürünlerini temsil eden dekoratif vitrin`}
             role="img"
           >
             <div className="bt-hero-stage relative aspect-[1.03] min-h-[22rem] overflow-hidden rounded-[1.6rem] border border-white/75 bg-surface/72 p-4 shadow-lift backdrop-blur-md sm:aspect-[0.94] sm:min-h-[34rem] sm:rounded-[2rem] sm:p-6 lg:aspect-[1.03] lg:min-h-[28rem] xl:aspect-[0.94] xl:min-h-[34rem]">
@@ -364,7 +364,7 @@ export function HeroSection() {
               >
                 <div className="flex items-center justify-between gap-4">
                   <div className="min-w-0">
-                    <span className="bt-eyebrow text-primary">Beymert</span>
+                    <span className="bt-eyebrow text-primary">{settings.shortName}</span>
                     <p className="bt-display mt-1 text-[1.35rem] leading-tight font-semibold">
                       Balon · Konsept · Tasarım
                     </p>
@@ -418,7 +418,7 @@ export function HeroSection() {
                 className="absolute hidden sm:bottom-[6%] sm:left-[28%] sm:flex sm:w-[44%] sm:translate-x-0 sm:items-center sm:justify-between sm:gap-3 sm:rounded-card sm:border sm:border-white/80 sm:bg-white/95 sm:p-5 sm:shadow-soft"
               >
                 <div>
-                  <span className="bt-eyebrow text-muted">Beymert</span>
+                  <span className="bt-eyebrow text-muted">{settings.shortName}</span>
                   <p className="mt-1 text-sm font-extrabold sm:text-base">
                     Tül · Kurdele · Hediyelik
                   </p>

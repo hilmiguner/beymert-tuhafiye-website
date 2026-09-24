@@ -9,27 +9,23 @@ import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
 import { whatsappHref } from "@/config/site";
-import { getCategoryBySlug } from "@/data/categories";
-import { concepts } from "@/data/concepts";
 import {
+  getCategoryBySlug,
+  getConcepts,
   getProductBySlug,
   getRelatedProducts,
-  products,
-} from "@/data/products";
+  getStoreSettings,
+} from "@/lib/public-content";
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     return { title: "Ürün bulunamadı" };
@@ -44,14 +40,20 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
 
-  const category = getCategoryBySlug(product.categorySlug);
-  const relatedProducts = getRelatedProducts(product);
+  const [category, relatedProducts, concepts, settings] = await Promise.all([
+    product.categorySlug
+      ? getCategoryBySlug(product.categorySlug)
+      : Promise.resolve(undefined),
+    getRelatedProducts(product),
+    getConcepts(),
+    getStoreSettings(),
+  ]);
   const relatedConcepts = concepts.filter((concept) =>
     product.conceptSlugs.includes(concept.slug),
   );
@@ -103,7 +105,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <ButtonLink
                   href={whatsappHref(
-                    `Merhaba, web sitenizde gördüğüm "${product.name}" hakkında bilgi almak istiyorum.`,
+                    settings,
+                    product.whatsappMessage ??
+                      `Merhaba, web sitenizde gördüğüm "${product.name}" hakkında bilgi almak istiyorum.`,
                   )}
                   target="_blank"
                   rel="noreferrer"
@@ -161,8 +165,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
               ) : null}
 
               <p className="mt-6 text-xs leading-5 text-muted">
-                Ürün bilgileri örnek katalog verisidir. Güncel model, renk ve
-                stok bilgisi mağazadan doğrulanmalıdır.
+                Ürün bilgileri CMS üzerinden yayınlanan güncel katalog içeriğidir.
+                Stok ve anlık renk seçenekleri için mağazadan doğrulama yapabilirsin.
               </p>
             </div>
 
