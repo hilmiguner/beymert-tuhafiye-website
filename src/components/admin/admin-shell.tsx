@@ -5,7 +5,7 @@ import { logoutAction } from "@/app/admin/actions";
 import type { CmsAdmin } from "@/lib/supabase/admin";
 
 const sections = [
-  { label: "Ürünler", href: null, status: "Yakında" },
+  { label: "Ürünler", href: "/admin/urunler", status: "Aktif" },
   { label: "Kategoriler", href: "/admin/kategoriler", status: "Aktif" },
   { label: "Konseptler", href: null, status: "Yakında" },
   { label: "Galeri", href: null, status: "Yakında" },
