@@ -10,12 +10,29 @@ const securityHeaders = [
   },
 ];
 
+const remotePatterns: NonNullable<NextConfig["images"]>["remotePatterns"] = [];
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+if (supabaseUrl) {
+  try {
+    const { hostname } = new URL(supabaseUrl);
+    remotePatterns.push({
+      protocol: "https",
+      hostname,
+      pathname: "/storage/v1/object/public/cms-media/**",
+    });
+  } catch {
+    // The environment validator reports malformed production URLs.
+  }
+}
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    remotePatterns,
   },
   async headers() {
     return [
