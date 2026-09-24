@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import type { Tables } from "@/types/database";
 
 type Concept = Tables<"concepts">;
@@ -107,16 +108,13 @@ export function ConceptForm({
           />
         </label>
 
-        <label className="block md:col-span-2">
-          <span className="mb-2 block text-sm font-extrabold">Açıklama</span>
-          <textarea
-            name="description"
-            rows={8}
-            defaultValue={concept?.description ?? ""}
-            placeholder="Konseptin atmosferini, kullanım alanlarını ve önerileri anlatın."
-            className="w-full rounded-control border border-border bg-white px-4 py-3 leading-6 outline-none transition focus:border-primary"
-          />
-        </label>
+        <RichTextEditor
+          name="descriptionRich"
+          initialValue={concept?.description_rich ?? null}
+          initialText={concept?.description ?? ""}
+          label="Açıklama"
+          placeholder="Konsept açıklamasını başlıklar, vurgu ve listelerle düzenleyebilirsiniz."
+        />
       </div>
 
       <fieldset className="rounded-card border border-border p-5">
