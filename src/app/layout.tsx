@@ -18,6 +18,8 @@ import "./globals.css";
 
 assertContentIntegrity();
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   applicationName: "Beymert",
