@@ -90,9 +90,10 @@ export default async function ConceptPreviewPage({
                 <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                   <ButtonLink
                     href={whatsappHref(
-                      'Merhaba, web sitenizdeki "' +
-                        concept.name +
-                        '" konsepti hakkında bilgi almak istiyorum.',
+                      concept.whatsapp_message ||
+                        'Merhaba, web sitenizdeki "' +
+                          concept.name +
+                          '" konsepti hakkında bilgi almak istiyorum.',
                     )}
                     target="_blank"
                     rel="noreferrer"
