@@ -25,6 +25,12 @@ const modules = [
     status: "Aktif",
     href: "/admin/galeri",
   },
+  {
+    title: "Mağaza Bilgileri",
+    description: "İletişim, adres, çalışma saatleri ve sosyal medya ayarları.",
+    status: "Aktif",
+    href: "/admin/magaza",
+  },
 ] as const;
 
 export default function AdminDashboardPage() {
@@ -36,8 +42,8 @@ export default function AdminDashboardPage() {
           İçerik yönetimi tek panelde.
         </h1>
         <p className="mt-4 max-w-2xl leading-7 text-muted">
-          CMS altyapısı hazır. Kategori, ürün, konsept ve galeri yönetimi aktif;
-          medya yükleme ve yayın akışları aynı panel üzerinden yönetiliyor.
+          CMS altyapısı hazır. Kategori, ürün, konsept, galeri ve mağaza ayarları
+          aynı panel üzerinden yönetiliyor.
         </p>
       </div>
 
