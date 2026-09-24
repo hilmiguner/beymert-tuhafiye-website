@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
 
@@ -54,6 +54,10 @@ export function ProductMediaManager({
   const [message, setMessage] = useState<string | null>(null);
   const supabase = useMemo(() => createClient(), []);
 
+  useEffect(() => {
+    setItems([...initialItems].sort((a, b) => a.sortOrder - b.sortOrder));
+  }, [initialItems]);
+
   function publicUrl(path: string) {
     return supabase.storage.from("cms-media").getPublicUrl(path).data.publicUrl;
   }
@@ -89,6 +93,7 @@ export function ProductMediaManager({
       let nextOrder =
         items.reduce((max, item) => Math.max(max, item.sortOrder), -1) + 1;
       let shouldSetCover = items.length === 0;
+      const uploadedItems: ProductMediaItem[] = [];
 
       for (const [index, file] of selected.entries()) {
         const path = `products/${productId}/${crypto.randomUUID()}.${extensionFor(file)}`;
@@ -137,10 +142,26 @@ export function ProductMediaManager({
           throw relationError;
         }
 
+        uploadedItems.push({
+          mediaId: asset.id,
+          storagePath: path,
+          altText:
+            selected.length === 1
+              ? `${productName} görseli`
+              : `${productName} görseli ${index + 1}`,
+          sortOrder: nextOrder,
+          isCover: shouldSetCover,
+        });
+
         nextOrder += 1;
         shouldSetCover = false;
       }
 
+      setItems((current) =>
+        [...current, ...uploadedItems].sort(
+          (a, b) => a.sortOrder - b.sortOrder,
+        ),
+      );
       setMessage("Fotoğraflar yüklendi.");
       router.refresh();
     } catch (error) {
