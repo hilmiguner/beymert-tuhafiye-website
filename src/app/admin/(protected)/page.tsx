@@ -22,8 +22,8 @@ const modules = [
   {
     title: "Galeri",
     description: "Mağaza ve organizasyon fotoğraflarının yayın yönetimi.",
-    status: "Sonraki",
-    href: null,
+    status: "Aktif",
+    href: "/admin/galeri",
   },
 ] as const;
 
@@ -36,9 +36,8 @@ export default function AdminDashboardPage() {
           İçerik yönetimi tek panelde.
         </h1>
         <p className="mt-4 max-w-2xl leading-7 text-muted">
-          CMS altyapısı hazır. Kategori, ürün ve konsept yönetimi aktif;
-          ürün ve konseptlerde çoklu fotoğraf yükleme, sıralama ve kapak seçimi
-          aynı panel üzerinden yönetiliyor.
+          CMS altyapısı hazır. Kategori, ürün, konsept ve galeri yönetimi aktif;
+          medya yükleme ve yayın akışları aynı panel üzerinden yönetiliyor.
         </p>
       </div>
 
