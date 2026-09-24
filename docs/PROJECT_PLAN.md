@@ -660,8 +660,8 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - [x] Ürün çoklu fotoğraf yükleme / sıralama / kapak seçimi — doğrudan Supabase Storage upload, RLS, atomik kapak seçimi ve medya temizliği canlı E2E doğrulandı; upload sonrası anlık UI güncellemesi de doğrulandı.
 - [x] Konsept CRUD — listeleme, oluşturma, düzenleme, silme, ilgili ürün ilişkileri, sıralama ve yayın durumu canlı Supabase üzerinde E2E doğrulandı.
 - [x] Konsept çoklu fotoğraf yükleme / sıralama / kapak seçimi — Storage upload, tek kapak constraint'i, atomik cover sync ve medya temizliği canlı E2E doğrulandı.
-- [x] Galeri CRUD — oluşturma, düzenleme, silme, görsel yükleme/değiştirme, kategori/konsept ilişkisi, sıralama ve yayın durumu eklendi; canlı E2E testi bekleniyor.
-- [ ] Rich-text ürün/konsept açıklama editörü.
+- [x] Galeri CRUD — oluşturma, düzenleme, silme, görsel yükleme/değiştirme, kategori/konsept ilişkisi, sıralama ve yayın durumu canlı Supabase üzerinde E2E doğrulandı; görsel önizleme state akışı da doğrulandı.
+- [x] Rich-text ürün/konsept açıklama editörü — Tiptap tabanlı toolbar, güvenli JSON doğrulama, `description_rich` saklama ve otomatik plain-text fallback eklendi; canlı E2E testi bekleniyor.
 - [x] Draft / published durum modeli — ortak draft/published/archived enum ve published_at davranışı kategori/ürün akışlarında aktif.
 - [ ] Önizleme akışı.
 - [ ] Mağaza / site ayarları yönetimi.
@@ -684,7 +684,7 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - Fotoğraflar Supabase Storage'da tutulur; metadata PostgreSQL'de tutulur.
 - Service-role anahtarı browser/client bundle içine konmaz.
 - Public site geçişi kontrollü yapılır; CMS foundation tamamlanana kadar mevcut typed static data çalışmaya devam eder.
-- Rich-text içerik için ilerleyen adımda TipTap benzeri yapı değerlendirilir.
+- Rich-text içerik için Tiptap seçildi; canonical içerik `description_rich` JSONB alanında, SEO/fallback düz metin `description` alanında tutulur.
 - İlk yetkilendirme modeli owner / editor rolleridir.
 - Görsel yüklemelerinde JPEG/PNG/WebP/AVIF kabul edilir; boyut ve optimizasyon kuralları admin upload fazında uygulanır.
 
