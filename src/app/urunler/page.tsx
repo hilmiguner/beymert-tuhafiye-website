@@ -3,8 +3,7 @@ import { buildPageMetadata } from "@/lib/seo";
 
 import { ProductCatalog } from "@/components/products/product-catalog";
 import { Container, Section } from "@/components/ui/container";
-import { categories } from "@/data/categories";
-import { products } from "@/data/products";
+import { getCategories, getProducts } from "@/lib/public-content";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Ürünler",
@@ -12,7 +11,12 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/urunler",
 });
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const [categories, products] = await Promise.all([
+    getCategories(),
+    getProducts(),
+  ]);
+
   return (
     <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">
@@ -22,9 +26,8 @@ export default function ProductsPage() {
             Kutlamanı tamamlayan detayları keşfet.
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
-            Bu aşamada katalog örnek ürün verileriyle çalışıyor. Gerçek ürün
-            fotoğrafları ve güncel mağaza envanteri içerik entegrasyonu
-            aşamasında doğrulanacak.
+            Yayındaki ürünleri kategoriye göre filtreleyebilir, detaylarını
+            inceleyebilir ve güncel bilgi için doğrudan mağazaya ulaşabilirsin.
           </p>
         </Container>
       </Section>
