@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/seo";
 
 import { GalleryExperience } from "@/components/gallery/gallery-experience";
 import { Container, Section } from "@/components/ui/container";
-import { galleryItems } from "@/data/gallery";
+import { getGalleryItems } from "@/lib/public-content";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Galeri",
@@ -11,7 +11,9 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/galeri",
 });
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const galleryItems = await getGalleryItems();
+
   return (
     <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">
