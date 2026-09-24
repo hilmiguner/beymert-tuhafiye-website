@@ -1,5 +1,6 @@
 import "@fontsource-variable/fraunces/wght.css";
 import "@fontsource-variable/nunito-sans/wght.css";
+import "@fontsource-variable/nunito-sans/wght-italic.css";
 import type { Metadata } from "next";
 
 import { FloatingWhatsappCta } from "@/components/layout/floating-whatsapp-cta";

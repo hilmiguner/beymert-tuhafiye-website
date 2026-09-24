@@ -640,23 +640,58 @@ Durum: TAMAMLANDI — açık adres ve çalışma saatlerinin işletme sahibi do�
 - [x] Final CTA
 - [x] İletişim sayfası
 
-### Phase 10 — Real Content & Content Management
+### Phase 10 — Real Content & CMS / Admin Panel
 
-Durum: BEKLEMEDE — teknik içerik/media altyapısı PR #11 ile tamamlandı; gerçek içerik girişi işletme sahibi materyallerini bekliyor.
+Durum: GELİŞTİRMEDE — operasyonel içerik yönetimi ihtiyacı netleşti; typed static content kararı Supabase tabanlı CMS yönünde revize edildi.
 
-- [ ] Gerçek ürün listesini toplama
-- [ ] Gerçek kategorileri tanımlama
-- [ ] Gerçek konseptleri tanımlama
-- [ ] Ürün fotoğraflarını optimize etme
-- [ ] Mağaza bilgilerini doğrulama
-- [x] Statik data mı Supabase mi kararını finalleştirme — V1 typed static content ile devam edecek.
-- [x] Gerekiyorsa Supabase entegrasyonu — V1 için gerekmiyor; operasyonel içerik yönetimi ihtiyacı oluşursa yeniden değerlendirilecek.
-- [x] Gerekiyorsa basit admin panel — V1 için gerekmiyor.
-- [x] Image storage stratejisi — V1 için `public/media`, Next/Image ve typed media metadata; büyüme halinde object storage değerlendirilecek.
-- [x] Product/Category/Concept/Gallery media fallback katmanı
-- [x] Content relation integrity kontrolü
+Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, galeri, mağaza bilgileri ve görselleri güvenli bir admin panel üzerinden yönetebilmesi.
 
-Admin panel yalnızca gerçek operasyon ihtiyacı varsa geliştirilir.
+#### CMS roadmap
+
+- [x] CMS mimarisini netleştirme — Next.js + Supabase Auth + PostgreSQL + Storage + RLS.
+- [x] Supabase project/environment bağlantısı — `Beymert Tuhafiye` projesi `eu-central-1` bölgesinde oluşturuldu; database migration'ları canlı projede uygulandı; Vercel Preview/Production için Supabase public config değişkenleri tanımlandı.
+- [x] Veritabanı schema + migration dosyaları — foundation + hardening migration'ları PR #16 ile eklendi ve canlı Supabase projesine uygulandı.
+- [x] Storage bucket + medya güvenlik politikaları — `cms-media` bucket tanımı ve admin-only write policy'leri migration'a eklendi.
+- [x] Admin authentication — Supabase email/password server action akışı ve owner/editor membership kontrolü eklendi; ilk doğrulanmış owner hesabı `hilmi.guner@hotmail.com` için oluşturuldu.
+- [x] /admin korumalı route altyapısı — Next.js 16 `src/proxy.ts` ve server-side admin authorization eklendi.
+- [x] Admin shell / dashboard — storefront'tan ayrılmış temel yönetim paneli kabuğu eklendi.
+- [x] Kategori CRUD — listeleme, oluşturma, düzenleme, silme, sıralama ve draft/published/archived yönetimi canlı Supabase üzerinde E2E doğrulandı.
+- [x] Ürün CRUD — listeleme, oluşturma, düzenleme, silme, kategori ilişkisi, özellikler ve yayın durumu canlı Supabase üzerinde E2E doğrulandı.
+- [x] Ürün çoklu fotoğraf yükleme / sıralama / kapak seçimi — doğrudan Supabase Storage upload, RLS, atomik kapak seçimi ve medya temizliği canlı E2E doğrulandı; upload sonrası anlık UI güncellemesi de doğrulandı.
+- [x] Konsept CRUD — listeleme, oluşturma, düzenleme, silme, ilgili ürün ilişkileri, sıralama ve yayın durumu canlı Supabase üzerinde E2E doğrulandı.
+- [x] Konsept çoklu fotoğraf yükleme / sıralama / kapak seçimi — Storage upload, tek kapak constraint'i, atomik cover sync ve medya temizliği canlı E2E doğrulandı.
+- [x] Galeri CRUD — oluşturma, düzenleme, silme, görsel yükleme/değiştirme, kategori/konsept ilişkisi, sıralama ve yayın durumu canlı Supabase üzerinde E2E doğrulandı; görsel önizleme state akışı da doğrulandı.
+- [x] Rich-text ürün/konsept açıklama editörü — Tiptap tabanlı toolbar, aktif stil durumları, gerçek italic font yüzü, güvenli JSON doğrulama, `description_rich` saklama ve otomatik plain-text fallback canlı E2E doğrulandı.
+- [x] Draft / published durum modeli — ortak draft/published/archived enum ve published_at davranışı kategori/ürün akışlarında aktif.
+- [x] Önizleme akışı — `/preview` altında admin-only, noindex ürün/konsept/galeri önizleme route'ları, düzenlemeye dönüş, custom WhatsApp mesajları ve responsive medya görünümü canlı E2E doğrulandı.
+- [x] Mağaza / site ayarları yönetimi — işletme/marka adı, konum, adres, telefon, WhatsApp, varsayılan mesaj, çalışma saatleri, harita sorgusu ve sosyal bağlantılar için singleton CMS ekranı eklendi; canlı E2E testi bekleniyor.
+- [ ] Public site veri kaynağını typed static datadan Supabase'e taşıma.
+- [ ] Mevcut mock veriyi Supabase'e migrate etme.
+- [ ] Gerçek ürün listesini toplama.
+- [ ] Gerçek kategorileri tanımlama.
+- [ ] Gerçek konseptleri tanımlama.
+- [ ] Gerçek ürün / konsept / galeri fotoğraflarını yükleme.
+- [ ] Açık adres ve çalışma saatlerini işletme sahibiyle doğrulama.
+- [ ] RLS / authorization güvenlik denetimi.
+- [ ] Dükkan sahibi gerçek kullanım testi.
+- [ ] CMS sonrası public-site regression / SEO / performans QA.
+
+#### CMS davranış kararları
+
+- Public ziyaretçi için hesap sistemi eklenmez; Auth yalnızca admin panel içindir.
+- Admin panel public navbar'da gösterilmez.
+- İçerikler taslak olarak hazırlanabilir; yalnızca published içerikler public sitede görünür.
+- Fotoğraflar Supabase Storage'da tutulur; metadata PostgreSQL'de tutulur.
+- Service-role anahtarı browser/client bundle içine konmaz.
+- Public site geçişi kontrollü yapılır; CMS foundation tamamlanana kadar mevcut typed static data çalışmaya devam eder.
+- Rich-text içerik için Tiptap seçildi; canonical içerik `description_rich` JSONB alanında, SEO/fallback düz metin `description` alanında tutulur.
+- İlk yetkilendirme modeli owner / editor rolleridir.
+- Görsel yüklemelerinde JPEG/PNG/WebP/AVIF kabul edilir; boyut ve optimizasyon kuralları admin upload fazında uygulanır.
+
+Çıkış kriteri:
+
+- Dükkan sahibi ürün, kategori, konsept, galeri, medya ve temel mağaza bilgilerini panelden güvenli biçimde yönetebilmeli.
+- Yayınlanan değişiklikler GitHub commit'i gerektirmeden public siteye yansımalı.
 
 ### Phase 11 — SEO, Accessibility & Performance
 
@@ -710,7 +745,6 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 - Kampanya landing page'leri
 - Blog / parti fikirleri
 - Instagram içerik senkronizasyonu
-- Gelişmiş CMS/admin
 - QR kampanya sayfaları
 - 3D/WebGL hero
 - Ürün videosu
@@ -732,6 +766,7 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 - Hazır UI kitleri yalnızca kaynak/component havuzu olarak kullanılır.
 - Kullanıcı harici bir servise login olmak zorunda kalmaz.
 - WhatsApp ana iletişim/dönüşüm kanallarından biridir.
+- Ürün ve konsept bazında özel WhatsApp mesajı tanımlanabilir; boş bırakılırsa varsayılan bağlamsal mesaj kullanılır.
 - Performans, animasyon gösterişinden daha yüksek önceliğe sahiptir.
 
 ### Henüz netleştirilecek kararlar
@@ -742,12 +777,10 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 - Gerçek kategori listesi
 - Gerçek konsept listesi
 - Gerçek ürün dataset'i
-- Supabase gerekliliği
-- Admin panel gerekliliği
 - Domain
 - Hosting production ayarları
 - Analytics çözümü
 
 ---
 
-Son güncelleme: 2026-09-22
+Son güncelleme: 2026-09-24
