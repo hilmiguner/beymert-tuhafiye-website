@@ -443,6 +443,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      set_concept_cover: {
+        Args: { p_concept_id: string; p_media_id: string }
+        Returns: undefined
+      }
       set_product_cover: {
         Args: { p_media_id: string; p_product_id: string }
         Returns: undefined
