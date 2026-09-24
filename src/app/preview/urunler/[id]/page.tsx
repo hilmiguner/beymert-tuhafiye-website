@@ -205,7 +205,7 @@ export default async function ProductPreviewPage({
                   <div
                     key={item.id}
                     className={
-                      "overflow-hidden rounded-card border border-border bg-surface shadow-soft " +
+                      "self-start overflow-hidden rounded-card border border-border bg-surface shadow-soft " +
                       (index === 0 ? "sm:col-span-2 lg:col-span-2" : "")
                     }
                   >
