@@ -10,23 +10,22 @@ import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
 import { whatsappHref } from "@/config/site";
-import { categories } from "@/data/categories";
-import { concepts, getConceptBySlug } from "@/data/concepts";
-import { getProductsByConcept } from "@/data/products";
+import {
+  getCategories,
+  getConceptBySlug,
+  getProductsByConcept,
+  getStoreSettings,
+} from "@/lib/public-content";
 
 type ConceptPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return concepts.map((concept) => ({ slug: concept.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: ConceptPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const concept = getConceptBySlug(slug);
+  const concept = await getConceptBySlug(slug);
 
   if (!concept) {
     return {
@@ -43,16 +42,21 @@ export async function generateMetadata({
 
 export default async function ConceptPage({ params }: ConceptPageProps) {
   const { slug } = await params;
-  const concept = getConceptBySlug(slug);
+  const concept = await getConceptBySlug(slug);
 
   if (!concept) {
     notFound();
   }
 
+  const [categories, conceptProducts, settings] = await Promise.all([
+    getCategories(),
+    getProductsByConcept(concept.slug),
+    getStoreSettings(),
+  ]);
   const relatedCategories = categories.filter((category) =>
     concept.relatedCategorySlugs.includes(category.slug),
   );
-  const relatedProducts = getProductsByConcept(concept.slug).slice(0, 4);
+  const relatedProducts = conceptProducts.slice(0, 4);
 
   return (
     <main id="main-content" tabIndex={-1}>
@@ -76,7 +80,9 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <ButtonLink
                   href={whatsappHref(
-                    `Merhaba, web sitenizdeki "${concept.name}" konsepti hakkında bilgi almak istiyorum.`,
+                    settings,
+                    concept.whatsappMessage ??
+                      `Merhaba, web sitenizdeki "${concept.name}" konsepti hakkında bilgi almak istiyorum.`,
                   )}
                   target="_blank"
                   rel="noreferrer"
@@ -154,7 +160,7 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
           <Container>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="bt-eyebrow text-secondary">Örnek ürünler</p>
+                <p className="bt-eyebrow text-secondary">İlgili ürünler</p>
                 <h2 className="bt-display mt-3 text-4xl font-semibold sm:text-5xl">
                   Bu temaya uyum sağlayan ürünler.
                 </h2>
