@@ -655,14 +655,14 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - [x] Admin authentication — Supabase email/password server action akışı ve owner/editor membership kontrolü eklendi; ilk doğrulanmış owner hesabı `hilmi.guner@hotmail.com` için oluşturuldu.
 - [x] /admin korumalı route altyapısı — Next.js 16 `src/proxy.ts` ve server-side admin authorization eklendi.
 - [x] Admin shell / dashboard — storefront'tan ayrılmış temel yönetim paneli kabuğu eklendi.
-- [x] Kategori CRUD — listeleme, oluşturma, düzenleme, silme, sıralama ve draft/published/archived yönetimi PR #16 içinde eklendi; canlı Auth/Vercel env sonrası E2E doğrulama yapılacak.
-- [ ] Ürün CRUD.
-- [ ] Ürün çoklu fotoğraf yükleme / sıralama / kapak seçimi.
+- [x] Kategori CRUD — listeleme, oluşturma, düzenleme, silme, sıralama ve draft/published/archived yönetimi canlı Supabase üzerinde E2E doğrulandı.
+- [x] Ürün CRUD — listeleme, oluşturma, düzenleme, silme, kategori ilişkisi, özellikler ve yayın durumu PR #16 içinde eklendi; canlı E2E testi bekleniyor.
+- [x] Ürün çoklu fotoğraf yükleme / sıralama / kapak seçimi — doğrudan Supabase Storage upload, RLS, atomik kapak seçimi ve medya temizliği eklendi; canlı E2E testi bekleniyor.
 - [ ] Konsept CRUD.
 - [ ] Konsept çoklu fotoğraf yükleme / sıralama / kapak seçimi.
 - [ ] Galeri CRUD.
 - [ ] Rich-text ürün/konsept açıklama editörü.
-- [ ] Draft / published durum modeli.
+- [x] Draft / published durum modeli — ortak draft/published/archived enum ve published_at davranışı kategori/ürün akışlarında aktif.
 - [ ] Önizleme akışı.
 - [ ] Mağaza / site ayarları yönetimi.
 - [ ] Public site veri kaynağını typed static datadan Supabase'e taşıma.
