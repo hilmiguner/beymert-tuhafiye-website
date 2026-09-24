@@ -21,7 +21,7 @@ export function StructuredData({ settings }: { settings: StoreSettings }) {
         "@id": businessId,
         name: settings.siteName,
         url: absoluteUrl("/"),
-        telephone: settings.whatsapp,
+        telephone: settings.phoneDisplay,
         sameAs,
         hasMap: directionsHref(settings),
         address: {
