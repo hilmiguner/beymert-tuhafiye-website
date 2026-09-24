@@ -10,8 +10,8 @@ const modules = [
   {
     title: "Ürünler",
     description: "Ürün metinleri, özellikleri, kategori ilişkileri ve görseller.",
-    status: "Sırada",
-    href: null,
+    status: "Aktif",
+    href: "/admin/urunler",
   },
   {
     title: "Konseptler",
@@ -36,9 +36,9 @@ export default function AdminDashboardPage() {
           İçerik yönetimi tek panelde.
         </h1>
         <p className="mt-4 max-w-2xl leading-7 text-muted">
-          CMS altyapısı hazır. Kategori yönetimi ilk aktif içerik modülü olarak
-          eklendi; ürün, medya, konsept ve galeri modülleri aynı yapı üzerinde
-          ilerleyecek.
+          CMS altyapısı hazır. Kategori ve ürün yönetimi aktif; ürünlerde çoklu
+          fotoğraf yükleme, sıralama ve kapak seçimi de aynı panel üzerinden
+          yönetiliyor.
         </p>
       </div>
 
