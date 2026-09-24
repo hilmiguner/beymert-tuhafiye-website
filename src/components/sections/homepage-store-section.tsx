@@ -3,6 +3,7 @@ import { Container, Section } from "@/components/ui/container";
 import {
   directionsHref,
   getStoreSettings,
+  phoneHref,
   whatsappHref,
 } from "@/lib/store-settings";
 
@@ -30,7 +31,7 @@ export async function HomepageStoreSection() {
           <div className="rounded-card border border-border bg-background p-5 shadow-soft sm:p-6">
             <p className="bt-eyebrow text-muted">İletişim</p>
             <a
-              href={`tel:${settings.whatsapp}`}
+              href={phoneHref(settings)}
               className="bt-display mt-3 block text-3xl font-semibold transition-colors hover:text-primary"
             >
               {settings.phoneDisplay}
