@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
 import type { Database, Tables } from "@/types/database";
@@ -56,10 +56,46 @@ export function GalleryEditor({
 }: GalleryEditorProps) {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
+  const previewObjectUrlRef = useRef<string | null>(null);
   const supabase = useMemo(() => createClient(), []);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [previewPath, setPreviewPath] = useState(media?.storagePath ?? null);
+  const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (previewObjectUrlRef.current) {
+        URL.revokeObjectURL(previewObjectUrlRef.current);
+      }
+    };
+  }, []);
+
+  function updateLocalPreview(file?: File) {
+    if (previewObjectUrlRef.current) {
+      URL.revokeObjectURL(previewObjectUrlRef.current);
+      previewObjectUrlRef.current = null;
+    }
+
+    if (!file) {
+      setLocalPreviewUrl(null);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    previewObjectUrlRef.current = objectUrl;
+    setLocalPreviewUrl(objectUrl);
+    setMessage(null);
+  }
+
+  function clearLocalPreview() {
+    if (previewObjectUrlRef.current) {
+      URL.revokeObjectURL(previewObjectUrlRef.current);
+      previewObjectUrlRef.current = null;
+    }
+
+    setLocalPreviewUrl(null);
+  }
 
   function publicUrl(path: string) {
     return supabase.storage.from("cms-media").getPublicUrl(path).data.publicUrl;
@@ -261,6 +297,7 @@ export function GalleryEditor({
         }
 
         setPreviewPath(uploaded?.storagePath ?? media?.storagePath ?? null);
+        clearLocalPreview();
         if (fileRef.current) fileRef.current.value = "";
         setMessage("Galeri öğesi güncellendi.");
         router.refresh();
@@ -412,14 +449,17 @@ export function GalleryEditor({
         <div>
           <p className="mb-2 text-sm font-extrabold">Galeri görseli</p>
           <div className="overflow-hidden rounded-card border border-border bg-surface-muted">
-            {previewPath ? (
+            {localPreviewUrl || previewPath ? (
               <div
                 role="img"
                 aria-label={media?.altText ?? item?.title ?? "Galeri görseli"}
                 className="aspect-[4/3] bg-cover bg-center"
                 style={{
                   backgroundImage:
-                    'url("' + publicUrl(previewPath) + '")',
+                    'url("' +
+                    (localPreviewUrl ??
+                      (previewPath ? publicUrl(previewPath) : "")) +
+                    '")',
                 }}
               />
             ) : (
@@ -435,6 +475,9 @@ export function GalleryEditor({
               ref={fileRef}
               type="file"
               accept="image/jpeg,image/png,image/webp,image/avif"
+              onChange={(event) =>
+                updateLocalPreview(event.target.files?.[0])
+              }
               className="sr-only"
             />
           </label>
