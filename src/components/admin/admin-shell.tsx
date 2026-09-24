@@ -7,7 +7,7 @@ import type { CmsAdmin } from "@/lib/supabase/admin";
 const sections = [
   { label: "Ürünler", href: "/admin/urunler", status: "Aktif" },
   { label: "Kategoriler", href: "/admin/kategoriler", status: "Aktif" },
-  { label: "Konseptler", href: null, status: "Yakında" },
+  { label: "Konseptler", href: "/admin/konseptler", status: "Aktif" },
   { label: "Galeri", href: null, status: "Yakında" },
   { label: "Mağaza Bilgileri", href: null, status: "Yakında" },
 ] as const;
