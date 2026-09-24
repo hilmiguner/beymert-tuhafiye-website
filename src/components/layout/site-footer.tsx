@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/config/site";
 import {
   directionsHref,
+  phoneHref,
   whatsappHref,
   type StoreSettings,
 } from "@/lib/store-settings";
@@ -42,7 +43,7 @@ export function SiteFooter({ settings }: { settings: StoreSettings }) {
             <p className="bt-eyebrow text-muted">İletişim</p>
             <div className="mt-4 flex flex-col gap-3">
               <a
-                href={`tel:${settings.whatsapp}`}
+                href={phoneHref(settings)}
                 className="w-fit font-bold transition-colors hover:text-primary"
               >
                 {settings.phoneDisplay}
