@@ -15,9 +15,9 @@ const modules = [
   },
   {
     title: "Konseptler",
-    description: "Özel gün konseptleri, açıklamalar, kapak ve galeri görselleri.",
-    status: "Sonraki",
-    href: null,
+    description: "Özel gün konseptleri, ilgili ürünler, kapak ve galeri görselleri.",
+    status: "Aktif",
+    href: "/admin/konseptler",
   },
   {
     title: "Galeri",
@@ -36,9 +36,9 @@ export default function AdminDashboardPage() {
           İçerik yönetimi tek panelde.
         </h1>
         <p className="mt-4 max-w-2xl leading-7 text-muted">
-          CMS altyapısı hazır. Kategori ve ürün yönetimi aktif; ürünlerde çoklu
-          fotoğraf yükleme, sıralama ve kapak seçimi de aynı panel üzerinden
-          yönetiliyor.
+          CMS altyapısı hazır. Kategori, ürün ve konsept yönetimi aktif;
+          ürün ve konseptlerde çoklu fotoğraf yükleme, sıralama ve kapak seçimi
+          aynı panel üzerinden yönetiliyor.
         </p>
       </div>
 
