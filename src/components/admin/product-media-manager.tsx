@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
 
@@ -54,9 +54,6 @@ export function ProductMediaManager({
   const [message, setMessage] = useState<string | null>(null);
   const supabase = useMemo(() => createClient(), []);
 
-  useEffect(() => {
-    setItems([...initialItems].sort((a, b) => a.sortOrder - b.sortOrder));
-  }, [initialItems]);
 
   function publicUrl(path: string) {
     return supabase.storage.from("cms-media").getPublicUrl(path).data.publicUrl;
