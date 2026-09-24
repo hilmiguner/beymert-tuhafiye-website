@@ -5,11 +5,11 @@ import { logoutAction } from "@/app/admin/actions";
 import type { CmsAdmin } from "@/lib/supabase/admin";
 
 const sections = [
-  "Ürünler",
-  "Kategoriler",
-  "Konseptler",
-  "Galeri",
-  "Mağaza Bilgileri",
+  { label: "Ürünler", href: null, status: "Yakında" },
+  { label: "Kategoriler", href: "/admin/kategoriler", status: "Aktif" },
+  { label: "Konseptler", href: null, status: "Yakında" },
+  { label: "Galeri", href: null, status: "Yakında" },
+  { label: "Mağaza Bilgileri", href: null, status: "Yakında" },
 ] as const;
 
 export function AdminShell({
@@ -54,23 +54,36 @@ export function AdminShell({
           <nav aria-label="Yönetim paneli">
             <Link
               href="/admin"
-              className="block rounded-control bg-surface-muted px-4 py-3 text-sm font-extrabold text-foreground"
+              className="block rounded-control px-4 py-3 text-sm font-extrabold text-foreground transition hover:bg-surface-muted"
             >
               Dashboard
             </Link>
 
             <div className="mt-2 space-y-1">
-              {sections.map((section) => (
-                <div
-                  key={section}
-                  className="flex items-center justify-between rounded-control px-4 py-3 text-sm font-bold text-muted"
-                >
-                  <span>{section}</span>
-                  <span className="text-[0.65rem] font-extrabold uppercase tracking-wider text-primary">
-                    Yakında
-                  </span>
-                </div>
-              ))}
+              {sections.map((section) =>
+                section.href ? (
+                  <Link
+                    key={section.label}
+                    href={section.href}
+                    className="flex items-center justify-between rounded-control px-4 py-3 text-sm font-bold text-foreground transition hover:bg-surface-muted"
+                  >
+                    <span>{section.label}</span>
+                    <span className="text-[0.65rem] font-extrabold uppercase tracking-wider text-primary">
+                      {section.status}
+                    </span>
+                  </Link>
+                ) : (
+                  <div
+                    key={section.label}
+                    className="flex items-center justify-between rounded-control px-4 py-3 text-sm font-bold text-muted"
+                  >
+                    <span>{section.label}</span>
+                    <span className="text-[0.65rem] font-extrabold uppercase tracking-wider text-primary">
+                      {section.status}
+                    </span>
+                  </div>
+                ),
+              )}
             </div>
           </nav>
         </aside>
