@@ -143,10 +143,64 @@ export async function deleteProductAction(formData: FormData) {
   }
 
   const supabase = await createClient();
+
+  const { data: mediaRelations } = await supabase
+    .from("product_media")
+    .select("media_id, media_assets(storage_path)")
+    .eq("product_id", id);
+
   const { error } = await supabase.from("products").delete().eq("id", id);
 
   if (error) {
     redirect(`/admin/urunler/${id}?error=save`);
+  }
+
+  for (const relation of mediaRelations ?? []) {
+    const mediaId = relation.media_id;
+    const storagePath = relation.media_assets?.storage_path;
+
+    const [
+      { count: productUse },
+      { count: conceptUse },
+      { count: galleryUse },
+      { count: categoryCoverUse },
+      { count: conceptCoverUse },
+    ] = await Promise.all([
+      supabase
+        .from("product_media")
+        .select("*", { count: "exact", head: true })
+        .eq("media_id", mediaId),
+      supabase
+        .from("concept_media")
+        .select("*", { count: "exact", head: true })
+        .eq("media_id", mediaId),
+      supabase
+        .from("gallery_items")
+        .select("*", { count: "exact", head: true })
+        .eq("media_id", mediaId),
+      supabase
+        .from("categories")
+        .select("*", { count: "exact", head: true })
+        .eq("cover_media_id", mediaId),
+      supabase
+        .from("concepts")
+        .select("*", { count: "exact", head: true })
+        .eq("cover_media_id", mediaId),
+    ]);
+
+    const isUnused =
+      (productUse ?? 0) === 0 &&
+      (conceptUse ?? 0) === 0 &&
+      (galleryUse ?? 0) === 0 &&
+      (categoryCoverUse ?? 0) === 0 &&
+      (conceptCoverUse ?? 0) === 0;
+
+    if (isUnused) {
+      await supabase.from("media_assets").delete().eq("id", mediaId);
+      if (storagePath) {
+        await supabase.storage.from("cms-media").remove([storagePath]);
+      }
+    }
   }
 
   revalidatePath("/admin/urunler");
