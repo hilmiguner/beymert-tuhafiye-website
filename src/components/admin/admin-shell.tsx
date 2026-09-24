@@ -9,7 +9,7 @@ const sections = [
   { label: "Kategoriler", href: "/admin/kategoriler", status: "Aktif" },
   { label: "Konseptler", href: "/admin/konseptler", status: "Aktif" },
   { label: "Galeri", href: "/admin/galeri", status: "Aktif" },
-  { label: "Mağaza Bilgileri", href: null, status: "Yakında" },
+  { label: "Mağaza Bilgileri", href: "/admin/magaza", status: "Aktif" },
 ] as const;
 
 export function AdminShell({
