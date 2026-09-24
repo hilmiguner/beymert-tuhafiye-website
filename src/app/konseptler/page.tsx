@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { buildPageMetadata } from "@/lib/seo";
 
 import { ConceptCard } from "@/components/concepts/concept-card";
 import { Container, Section } from "@/components/ui/container";
-import { concepts } from "@/data/concepts";
+import { getPublicConcepts } from "@/lib/public-concepts";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Konseptler",
-  description: "Safari, prenses, unicorn, futbol, Pink & Gold, Blue & Silver, baby shower ve Bride to Be gibi parti konseptlerini keşfedin.",
+  description:
+    "Safari, prenses, unicorn, futbol, Pink & Gold, Blue & Silver, baby shower ve Bride to Be gibi parti konseptlerini keşfedin.",
   path: "/konseptler",
 });
 
-export default function ConceptsPage() {
+export default async function ConceptsPage() {
+  const concepts = await getPublicConcepts();
+
   return (
     <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">

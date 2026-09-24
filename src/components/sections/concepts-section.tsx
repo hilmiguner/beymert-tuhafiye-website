@@ -2,9 +2,11 @@ import Link from "next/link";
 
 import { ConceptCard } from "@/components/concepts/concept-card";
 import { Container, Section } from "@/components/ui/container";
-import { concepts } from "@/data/concepts";
+import { getPublicConcepts } from "@/lib/public-concepts";
 
-export function ConceptsSection() {
+export async function ConceptsSection() {
+  const concepts = await getPublicConcepts();
+
   return (
     <Section className="bg-background">
       <Container>
