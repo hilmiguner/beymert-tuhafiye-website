@@ -66,17 +66,32 @@ export function phoneHref(settings: StoreSettings) {
   return `tel:+${digitsOnly(settings.phoneDisplay)}`;
 }
 
-export function whatsappHref(settings: StoreSettings, message?: string) {
-  const text = message ?? settings.defaultWhatsappMessage;
+export function whatsappHref(
+  settingsOrMessage?: StoreSettings | string,
+  message?: string,
+) {
+  const settings =
+    typeof settingsOrMessage === "object"
+      ? settingsOrMessage
+      : defaultStoreSettings;
+  const text =
+    typeof settingsOrMessage === "string"
+      ? settingsOrMessage
+      : message ?? settings.defaultWhatsappMessage;
+
   return `https://wa.me/${digitsOnly(settings.whatsapp)}?text=${encodeURIComponent(text)}`;
 }
 
-export function directionsHref(settings: StoreSettings) {
+export function directionsHref(
+  settings: StoreSettings = defaultStoreSettings,
+) {
   const query = settings.mapQuery || settings.name;
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
-export function mapEmbedHref(settings: StoreSettings) {
+export function mapEmbedHref(
+  settings: StoreSettings = defaultStoreSettings,
+) {
   const query = encodeURIComponent(settings.mapQuery || settings.name);
   return `https://www.google.com/maps?q=${query}&output=embed`;
 }
