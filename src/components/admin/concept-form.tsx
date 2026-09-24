@@ -115,6 +115,18 @@ export function ConceptForm({
           label="Açıklama"
           placeholder="Konsept açıklamasını başlıklar, vurgu ve listelerle düzenleyebilirsiniz."
         />
+
+        <label className="block md:col-span-2">
+          <span className="mb-2 block text-sm font-extrabold">
+            WhatsApp mesajı
+          </span>
+          <input
+            name="whatsappMessage"
+            defaultValue={concept?.whatsapp_message ?? ""}
+            placeholder="Boşsa varsayılan konsept mesajı kullanılır."
+            className="min-h-12 w-full rounded-control border border-border bg-white px-4 outline-none transition focus:border-primary"
+          />
+        </label>
       </div>
 
       <fieldset className="rounded-card border border-border p-5">
