@@ -169,6 +169,11 @@ export const getStoreSettings = cache(async (): Promise<StoreSettings> => {
   }
 });
 
+export function phoneHref(settings: StoreSettings) {
+  const phone = settings.phoneDisplay.replace(/[^\d+]/g, "");
+  return `tel:${phone}`;
+}
+
 export function whatsappHref(settings: StoreSettings, message?: string) {
   const number = settings.whatsapp.replace(/\D/g, "");
   const text = message?.trim() || settings.defaultWhatsappMessage;
