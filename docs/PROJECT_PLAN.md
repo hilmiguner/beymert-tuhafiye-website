@@ -655,7 +655,7 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - [x] Admin authentication — Supabase email/password server action akışı ve owner/editor membership kontrolü eklendi; canlı Supabase doğrulaması proje bağlantısını bekliyor.
 - [x] /admin korumalı route altyapısı — Next.js 16 `src/proxy.ts` ve server-side admin authorization eklendi.
 - [x] Admin shell / dashboard — storefront'tan ayrılmış temel yönetim paneli kabuğu eklendi.
-- [ ] Kategori CRUD.
+- [x] Kategori CRUD — listeleme, oluşturma, düzenleme, silme, sıralama ve draft/published/archived yönetimi PR #16 içinde eklendi; canlı Auth/Vercel env sonrası E2E doğrulama yapılacak.
 - [ ] Ürün CRUD.
 - [ ] Ürün çoklu fotoğraf yükleme / sıralama / kapak seçimi.
 - [ ] Konsept CRUD.
