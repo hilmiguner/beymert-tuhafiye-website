@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { siteConfig } from "@/config/site";
+import { defaultStoreSettings } from "@/config/site";
 
 function withProtocol(value: string) {
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
@@ -34,7 +34,7 @@ export function buildPageMetadata({
 }): Metadata {
   const socialTitle = absoluteTitle
     ? title
-    : `${title} | ${siteConfig.shortName}`;
+    : `${title} | ${defaultStoreSettings.shortName}`;
 
   return {
     title: absoluteTitle ? { absolute: title } : title,
@@ -45,7 +45,7 @@ export function buildPageMetadata({
     openGraph: {
       type: "website",
       locale: "tr_TR",
-      siteName: siteConfig.shortName,
+      siteName: defaultStoreSettings.shortName,
       title: socialTitle,
       description,
       url: absoluteUrl(path),
