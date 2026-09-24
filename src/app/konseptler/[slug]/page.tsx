@@ -2,17 +2,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { buildPageMetadata } from "@/lib/seo";
-
 import { CategoryCard } from "@/components/categories/category-card";
 import { ConceptMedia } from "@/components/concepts/concept-media";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
-import { whatsappHref } from "@/config/site";
-import { categories } from "@/data/categories";
 import { concepts, getConceptBySlug } from "@/data/concepts";
-import { getProductsByConcept } from "@/data/products";
+import { getPublicCategories } from "@/lib/public-categories";
+import { getPublicProductsByConcept } from "@/lib/public-products";
+import { buildPageMetadata } from "@/lib/seo";
+import { getStoreSettings, whatsappHref } from "@/lib/store-settings";
 
 type ConceptPageProps = {
   params: Promise<{ slug: string }>;
@@ -49,10 +48,14 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
     notFound();
   }
 
+  const [categories, relatedProducts, settings] = await Promise.all([
+    getPublicCategories(),
+    getPublicProductsByConcept(concept.slug),
+    getStoreSettings(),
+  ]);
   const relatedCategories = categories.filter((category) =>
     concept.relatedCategorySlugs.includes(category.slug),
   );
-  const relatedProducts = getProductsByConcept(concept.slug).slice(0, 4);
 
   return (
     <main id="main-content" tabIndex={-1}>
@@ -76,6 +79,7 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <ButtonLink
                   href={whatsappHref(
+                    settings,
                     `Merhaba, web sitenizdeki "${concept.name}" konsepti hakkında bilgi almak istiyorum.`,
                   )}
                   target="_blank"
@@ -168,7 +172,7 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
             </div>
 
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {relatedProducts.map((product) => (
+              {relatedProducts.slice(0, 4).map((product) => (
                 <ProductCard key={product.slug} product={product} />
               ))}
             </div>

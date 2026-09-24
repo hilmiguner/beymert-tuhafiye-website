@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
-import { buildPageMetadata } from "@/lib/seo";
 
 import { ProductCatalog } from "@/components/products/product-catalog";
 import { Container, Section } from "@/components/ui/container";
-import { categories } from "@/data/categories";
-import { products } from "@/data/products";
+import { getPublicCategories } from "@/lib/public-categories";
+import { getPublicProducts } from "@/lib/public-products";
+import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Ürünler",
-  description: "Beymert’in parti malzemeleri, balon, özel gün, hediyelik ve tuhafiye ürünlerini keşfedin.",
+  description:
+    "Beymert’in parti malzemeleri, balon, özel gün, hediyelik ve tuhafiye ürünlerini keşfedin.",
   path: "/urunler",
 });
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const [products, categories] = await Promise.all([
+    getPublicProducts(),
+    getPublicCategories(),
+  ]);
+
   return (
     <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">
@@ -22,9 +28,8 @@ export default function ProductsPage() {
             Kutlamanı tamamlayan detayları keşfet.
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
-            Bu aşamada katalog örnek ürün verileriyle çalışıyor. Gerçek ürün
-            fotoğrafları ve güncel mağaza envanteri içerik entegrasyonu
-            aşamasında doğrulanacak.
+            Katalog mağaza içerik yönetiminden güncellenir. Ürün, renk ve stok
+            bilgileri için güncel durumu WhatsApp üzerinden doğrulayabilirsin.
           </p>
         </Container>
       </Section>

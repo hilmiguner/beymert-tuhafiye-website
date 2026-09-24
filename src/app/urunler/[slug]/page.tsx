@@ -2,34 +2,28 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { buildPageMetadata } from "@/lib/seo";
-
-import { ProductMedia } from "@/components/products/product-media";
 import { ProductCard } from "@/components/products/product-card";
+import { ProductMedia } from "@/components/products/product-media";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
-import { whatsappHref } from "@/config/site";
-import { getCategoryBySlug } from "@/data/categories";
 import { concepts } from "@/data/concepts";
+import { getPublicCategoryBySlug } from "@/lib/public-categories";
 import {
-  getProductBySlug,
-  getRelatedProducts,
-  products,
-} from "@/data/products";
+  getPublicProductBySlug,
+  getRelatedPublicProducts,
+} from "@/lib/public-products";
+import { buildPageMetadata } from "@/lib/seo";
+import { getStoreSettings, whatsappHref } from "@/lib/store-settings";
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getPublicProductBySlug(slug);
 
   if (!product) {
     return { title: "Ürün bulunamadı" };
@@ -44,17 +38,27 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const [product, settings] = await Promise.all([
+    getPublicProductBySlug(slug),
+    getStoreSettings(),
+  ]);
 
   if (!product) {
     notFound();
   }
 
-  const category = getCategoryBySlug(product.categorySlug);
-  const relatedProducts = getRelatedProducts(product);
+  const [category, relatedProducts] = await Promise.all([
+    product.categorySlug
+      ? getPublicCategoryBySlug(product.categorySlug)
+      : Promise.resolve(undefined),
+    getRelatedPublicProducts(product),
+  ]);
   const relatedConcepts = concepts.filter((concept) =>
     product.conceptSlugs.includes(concept.slug),
   );
+  const whatsappMessage =
+    product.whatsappMessage ||
+    `Merhaba, web sitenizde gördüğüm "${product.name}" hakkında bilgi almak istiyorum.`;
 
   return (
     <main id="main-content" tabIndex={-1}>
@@ -80,7 +84,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
 
               <p className="bt-eyebrow mt-5 text-primary">
-                {category?.name ?? "Beymert"}
+                {category?.name ?? product.categoryName ?? "Beymert"}
               </p>
               <h1 className="bt-display bt-balance mt-3 text-5xl leading-[0.95] font-semibold sm:text-6xl lg:text-7xl">
                 {product.name}
@@ -89,22 +93,22 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 {product.description}
               </p>
 
-              <div className="mt-7 flex flex-wrap gap-2">
-                {product.highlights.map((highlight) => (
-                  <span
-                    key={highlight}
-                    className="rounded-pill border border-border bg-surface px-3.5 py-2 text-sm font-extrabold shadow-soft"
-                  >
-                    {highlight}
-                  </span>
-                ))}
-              </div>
+              {product.highlights.length > 0 ? (
+                <div className="mt-7 flex flex-wrap gap-2">
+                  {product.highlights.map((highlight) => (
+                    <span
+                      key={highlight}
+                      className="rounded-pill border border-border bg-surface px-3.5 py-2 text-sm font-extrabold shadow-soft"
+                    >
+                      {highlight}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <ButtonLink
-                  href={whatsappHref(
-                    `Merhaba, web sitenizde gördüğüm "${product.name}" hakkında bilgi almak istiyorum.`,
-                  )}
+                  href={whatsappHref(settings, whatsappMessage)}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -133,23 +137,25 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 Renk ve detaylar.
               </h2>
 
-              <div className="mt-6">
-                <p className="text-sm font-extrabold">Renk seçenekleri</p>
-                <div className="mt-3 flex flex-wrap gap-3">
-                  {product.colors.map((color) => (
-                    <div
-                      key={color.name}
-                      className="flex items-center gap-2 rounded-pill border border-border bg-surface px-3 py-2"
-                    >
-                      <span
-                        className="size-5 rounded-full border border-black/5"
-                        style={{ backgroundColor: color.hex }}
-                      />
-                      <span className="text-sm font-bold">{color.name}</span>
-                    </div>
-                  ))}
+              {product.colors.length > 0 ? (
+                <div className="mt-6">
+                  <p className="text-sm font-extrabold">Renk seçenekleri</p>
+                  <div className="mt-3 flex flex-wrap gap-3">
+                    {product.colors.map((color) => (
+                      <div
+                        key={color.name}
+                        className="flex items-center gap-2 rounded-pill border border-border bg-surface px-3 py-2"
+                      >
+                        <span
+                          className="size-5 rounded-full border border-black/5"
+                          style={{ backgroundColor: color.hex }}
+                        />
+                        <span className="text-sm font-bold">{color.name}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : null}
 
               {product.dimensions ? (
                 <div className="mt-6">
@@ -161,8 +167,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               ) : null}
 
               <p className="mt-6 text-xs leading-5 text-muted">
-                Ürün bilgileri örnek katalog verisidir. Güncel model, renk ve
-                stok bilgisi mağazadan doğrulanmalıdır.
+                Güncel model, renk ve stok bilgisi mağazadan doğrulanmalıdır.
               </p>
             </div>
 

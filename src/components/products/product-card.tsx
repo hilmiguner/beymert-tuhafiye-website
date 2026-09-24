@@ -5,7 +5,10 @@ import { getCategoryBySlug } from "@/data/categories";
 import type { Product } from "@/types/product";
 
 export function ProductCard({ product }: { product: Product }) {
-  const category = getCategoryBySlug(product.categorySlug);
+  const categoryName =
+    product.categoryName ??
+    getCategoryBySlug(product.categorySlug)?.name ??
+    "Beymert";
 
   return (
     <Link
@@ -32,9 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
 
       <div className="p-5">
-        <p className="bt-eyebrow text-muted">
-          {category?.name ?? "Beymert"}
-        </p>
+        <p className="bt-eyebrow text-muted">{categoryName}</p>
         <h3 className="bt-display mt-2 text-[1.7rem] leading-tight font-semibold">
           {product.name}
         </h3>
@@ -42,16 +43,18 @@ export function ProductCard({ product }: { product: Product }) {
           {product.shortDescription}
         </p>
 
-        <div className="mt-4 flex items-center gap-2">
-          {product.colors.slice(0, 4).map((color) => (
-            <span
-              key={color.name}
-              title={color.name}
-              className="size-5 rounded-full border-2 border-white shadow-[0_0_0_1px_var(--bt-border)]"
-              style={{ backgroundColor: color.hex }}
-            />
-          ))}
-        </div>
+        {product.colors.length > 0 ? (
+          <div className="mt-4 flex items-center gap-2">
+            {product.colors.slice(0, 4).map((color) => (
+              <span
+                key={color.name}
+                title={color.name}
+                className="size-5 rounded-full border-2 border-white shadow-[0_0_0_1px_var(--bt-border)]"
+                style={{ backgroundColor: color.hex }}
+              />
+            ))}
+          </div>
+        ) : null}
 
         <span className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold">
           Ürünü incele

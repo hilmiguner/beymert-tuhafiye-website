@@ -5,8 +5,8 @@ import { CategoryMedia } from "@/components/categories/category-media";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
-import { getProductsByCategory } from "@/data/products";
 import { getPublicCategoryBySlug } from "@/lib/public-categories";
+import { getPublicProductsByCategory } from "@/lib/public-products";
 import { buildPageMetadata } from "@/lib/seo";
 import { getStoreSettings, whatsappHref } from "@/lib/store-settings";
 
@@ -35,16 +35,15 @@ export async function generateMetadata({
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
-  const [category, settings] = await Promise.all([
+  const [category, settings, categoryProducts] = await Promise.all([
     getPublicCategoryBySlug(slug),
     getStoreSettings(),
+    getPublicProductsByCategory(slug),
   ]);
 
   if (!category) {
     notFound();
   }
-
-  const categoryProducts = getProductsByCategory(category.slug);
 
   return (
     <main id="main-content" tabIndex={-1}>
@@ -97,23 +96,24 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <h2 className="bt-display mt-3 text-3xl font-semibold sm:text-4xl">
                 Öne çıkan ürün grupları
               </h2>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {category.highlights.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-pill border border-border bg-surface px-3.5 py-2 text-sm font-extrabold shadow-soft"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
+              {category.highlights.length > 0 ? (
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {category.highlights.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-pill border border-border bg-surface px-3.5 py-2 text-sm font-extrabold shadow-soft"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
             </div>
 
             <div>
               <p className="text-sm leading-6 text-muted">
-                Aşağıdaki ürünler katalog yapısını göstermek için kullanılan
-                örnek içeriklerdir. Güncel ürün ve stok bilgisi mağazadan
-                doğrulanacaktır.
+                Bu kategoride yayında olan ürünleri aşağıda görebilirsin.
+                Güncel stok bilgisi mağazadan doğrulanmalıdır.
               </p>
               <div className="mt-5 grid gap-5 sm:grid-cols-2">
                 {categoryProducts.map((product) => (
