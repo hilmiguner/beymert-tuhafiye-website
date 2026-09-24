@@ -42,43 +42,26 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
-        {modules.map((module) => {
-          const content = (
-            <>
-              <div className="flex items-start justify-between gap-4">
-                <h2 className="text-xl font-extrabold">{module.title}</h2>
-                <span className="rounded-pill bg-surface-muted px-3 py-1 text-xs font-extrabold text-primary">
-                  {module.status}
-                </span>
-              </div>
-              <p className="mt-3 text-sm leading-6 text-muted">
-                {module.description}
-              </p>
-              {module.href ? (
-                <span className="mt-5 inline-block text-sm font-extrabold text-primary">
-                  Yönet →
-                </span>
-              ) : null}
-            </>
-          );
-
-          return module.href ? (
-            <Link
-              key={module.title}
-              href={module.href}
-              className="rounded-card border border-border bg-white p-6 shadow-soft transition hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lift"
-            >
-              {content}
-            </Link>
-          ) : (
-            <article
-              key={module.title}
-              className="rounded-card border border-border bg-white p-6 shadow-soft"
-            >
-              {content}
-            </article>
-          );
-        })}
+        {modules.map((module) => (
+          <Link
+            key={module.title}
+            href={module.href}
+            className="rounded-card border border-border bg-white p-6 shadow-soft transition hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lift"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <h2 className="text-xl font-extrabold">{module.title}</h2>
+              <span className="rounded-pill bg-surface-muted px-3 py-1 text-xs font-extrabold text-primary">
+                {module.status}
+              </span>
+            </div>
+            <p className="mt-3 text-sm leading-6 text-muted">
+              {module.description}
+            </p>
+            <span className="mt-5 inline-block text-sm font-extrabold text-primary">
+              Yönet →
+            </span>
+          </Link>
+        ))}
       </div>
     </section>
   );
