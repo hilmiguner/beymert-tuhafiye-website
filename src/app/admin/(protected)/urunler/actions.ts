@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { parseRichTextFormValue } from "@/lib/rich-text";
 import { toSlug } from "@/lib/slug";
 import { requireCmsAdmin } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
@@ -25,7 +26,9 @@ function parseProductForm(formData: FormData) {
   const shortDescription = String(
     formData.get("shortDescription") ?? "",
   ).trim();
-  const description = String(formData.get("description") ?? "").trim();
+  const richDescription = parseRichTextFormValue(
+    formData.get("descriptionRich"),
+  );
   const dimensions = String(formData.get("dimensions") ?? "").trim() || null;
   const whatsappMessage =
     String(formData.get("whatsappMessage") ?? "").trim() || null;
@@ -40,6 +43,7 @@ function parseProductForm(formData: FormData) {
     !name ||
     !slug ||
     !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) ||
+    !richDescription ||
     !validStatuses.has(status) ||
     !Number.isInteger(sortOrder) ||
     sortOrder < 0
@@ -52,7 +56,8 @@ function parseProductForm(formData: FormData) {
     slug,
     category_id: categoryId,
     short_description: shortDescription,
-    description,
+    description: richDescription.text,
+    description_rich: richDescription.json,
     colors,
     dimensions,
     whatsapp_message: whatsappMessage,
