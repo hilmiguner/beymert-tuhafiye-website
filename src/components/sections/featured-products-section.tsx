@@ -2,10 +2,13 @@ import Link from "next/link";
 
 import { ProductCard } from "@/components/products/product-card";
 import { Container, Section } from "@/components/ui/container";
-import { products } from "@/data/products";
+import { getPublicProducts } from "@/lib/public-products";
 
-export function FeaturedProductsSection() {
-  const featuredProducts = products.filter((product) => product.featured).slice(0, 4);
+export async function FeaturedProductsSection() {
+  const products = await getPublicProducts();
+  const featuredProducts = products
+    .filter((product) => product.featured)
+    .slice(0, 4);
 
   return (
     <Section className="border-y border-border bg-surface">
