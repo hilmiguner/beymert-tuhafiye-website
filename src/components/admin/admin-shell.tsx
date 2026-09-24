@@ -8,7 +8,7 @@ const sections = [
   { label: "Ürünler", href: "/admin/urunler", status: "Aktif" },
   { label: "Kategoriler", href: "/admin/kategoriler", status: "Aktif" },
   { label: "Konseptler", href: "/admin/konseptler", status: "Aktif" },
-  { label: "Galeri", href: null, status: "Yakında" },
+  { label: "Galeri", href: "/admin/galeri", status: "Aktif" },
   { label: "Mağaza Bilgileri", href: null, status: "Yakında" },
 ] as const;
 
