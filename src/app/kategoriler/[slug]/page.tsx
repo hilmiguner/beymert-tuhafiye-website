@@ -1,29 +1,24 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { buildPageMetadata } from "@/lib/seo";
-
 import { CategoryMedia } from "@/components/categories/category-media";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
-import { whatsappHref } from "@/config/site";
-import { categories, getCategoryBySlug } from "@/data/categories";
 import { getProductsByCategory } from "@/data/products";
+import { getPublicCategoryBySlug } from "@/lib/public-categories";
+import { buildPageMetadata } from "@/lib/seo";
+import { getStoreSettings, whatsappHref } from "@/lib/store-settings";
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return categories.map((category) => ({ slug: category.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const category = getCategoryBySlug(slug);
+  const category = await getPublicCategoryBySlug(slug);
 
   if (!category) {
     return {
@@ -40,7 +35,10 @@ export async function generateMetadata({
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
-  const category = getCategoryBySlug(slug);
+  const [category, settings] = await Promise.all([
+    getPublicCategoryBySlug(slug),
+    getStoreSettings(),
+  ]);
 
   if (!category) {
     notFound();
@@ -70,6 +68,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <ButtonLink
                   href={whatsappHref(
+                    settings,
                     `Merhaba, web sitenizdeki "${category.name}" kategorisi hakkında bilgi almak istiyorum.`,
                   )}
                   target="_blank"

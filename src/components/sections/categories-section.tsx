@@ -2,9 +2,11 @@ import Link from "next/link";
 
 import { CategoryCard } from "@/components/categories/category-card";
 import { Container, Section } from "@/components/ui/container";
-import { categories } from "@/data/categories";
+import { getPublicCategories } from "@/lib/public-categories";
 
-export function CategoriesSection() {
+export async function CategoriesSection() {
+  const categories = await getPublicCategories();
+
   return (
     <Section className="border-y border-border bg-surface">
       <Container>

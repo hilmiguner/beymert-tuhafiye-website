@@ -3,7 +3,7 @@ import { buildPageMetadata } from "@/lib/seo";
 
 import { CategoryCard } from "@/components/categories/category-card";
 import { Container, Section } from "@/components/ui/container";
-import { categories } from "@/data/categories";
+import { getPublicCategories } from "@/lib/public-categories";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Kategoriler",
@@ -11,7 +11,9 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/kategoriler",
 });
 
-export default function CategoriesPage() {
+export default async function CategoriesPage() {
+  const categories = await getPublicCategories();
+
   return (
     <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">
