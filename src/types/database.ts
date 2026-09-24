@@ -132,6 +132,7 @@ export type Database = {
           sort_order: number
           status: Database["public"]["Enums"]["cms_content_status"]
           updated_at: string
+          whatsapp_message: string | null
         }
         Insert: {
           cover_media_id?: string | null
@@ -146,6 +147,7 @@ export type Database = {
           sort_order?: number
           status?: Database["public"]["Enums"]["cms_content_status"]
           updated_at?: string
+          whatsapp_message?: string | null
         }
         Update: {
           cover_media_id?: string | null
@@ -160,6 +162,7 @@ export type Database = {
           sort_order?: number
           status?: Database["public"]["Enums"]["cms_content_status"]
           updated_at?: string
+          whatsapp_message?: string | null
         }
         Relationships: [
           {
