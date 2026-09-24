@@ -447,6 +447,10 @@ export type Database = {
         Args: { p_concept_id: string; p_media_id: string }
         Returns: undefined
       }
+      set_concept_products: {
+        Args: { p_concept_id: string; p_product_ids: string[] }
+        Returns: undefined
+      }
       set_product_cover: {
         Args: { p_media_id: string; p_product_id: string }
         Returns: undefined
