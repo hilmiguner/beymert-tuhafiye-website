@@ -443,7 +443,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      set_product_cover: {
+        Args: { p_media_id: string; p_product_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       cms_content_status: "draft" | "published" | "archived"
