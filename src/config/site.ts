@@ -63,7 +63,13 @@ function digitsOnly(value: string) {
 }
 
 export function phoneHref(settings: StoreSettings) {
-  return `tel:+${digitsOnly(settings.phoneDisplay)}`;
+  const digits = digitsOnly(settings.phoneDisplay);
+  const internationalDigits =
+    digits.startsWith("0") && digits.length === 11
+      ? `90${digits.slice(1)}`
+      : digits;
+
+  return `tel:+${internationalDigits}`;
 }
 
 export function whatsappHref(
