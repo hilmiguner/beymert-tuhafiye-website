@@ -4,7 +4,11 @@ import { buildPageMetadata } from "@/lib/seo";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { StoreContactSection } from "@/components/sections/store-contact-section";
 import { Container, Section } from "@/components/ui/container";
-import { getStoreSettings, whatsappHref } from "@/lib/store-settings";
+import {
+  getStoreSettings,
+  phoneHref,
+  whatsappHref,
+} from "@/lib/store-settings";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "İletişim",
@@ -38,7 +42,7 @@ export default async function ContactPage() {
               WhatsApp
             </a>
             <a
-              href={`tel:${settings.whatsapp}`}
+              href={phoneHref(settings)}
               className="rounded-control border border-border bg-surface px-6 py-3 text-center font-extrabold shadow-soft transition-colors hover:border-primary/35 hover:bg-surface-muted"
             >
               {settings.phoneDisplay}
