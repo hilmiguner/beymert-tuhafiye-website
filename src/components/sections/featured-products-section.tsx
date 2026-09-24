@@ -2,10 +2,12 @@ import Link from "next/link";
 
 import { ProductCard } from "@/components/products/product-card";
 import { Container, Section } from "@/components/ui/container";
-import { products } from "@/data/products";
+import { getProducts } from "@/lib/public-content";
 
-export function FeaturedProductsSection() {
+export async function FeaturedProductsSection() {
+  const products = await getProducts();
   const featuredProducts = products.filter((product) => product.featured).slice(0, 4);
+  if (featuredProducts.length === 0) return null;
 
   return (
     <Section className="border-y border-border bg-surface">
