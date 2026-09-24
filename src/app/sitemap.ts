@@ -1,11 +1,13 @@
 import type { MetadataRoute } from "next";
 
-import { categories } from "@/data/categories";
 import { concepts } from "@/data/concepts";
 import { products } from "@/data/products";
+import { getPublicCategories } from "@/lib/public-categories";
 import { absoluteUrl } from "@/lib/seo";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const categories = await getPublicCategories();
+
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl("/"), changeFrequency: "weekly", priority: 1 },
     { url: absoluteUrl("/urunler"), changeFrequency: "weekly", priority: 0.9 },

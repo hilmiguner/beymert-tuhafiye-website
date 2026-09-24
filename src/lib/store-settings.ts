@@ -1,12 +1,8 @@
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { cache } from "react";
 
 import { siteConfig } from "@/config/site";
-import {
-  getSupabaseConfig,
-  isSupabaseConfigured,
-} from "@/lib/supabase/config";
-import type { Database, Json } from "@/types/database";
+import { createPublicSupabaseClient } from "@/lib/supabase/public";
+import type { Json } from "@/types/database";
 
 export type StoreSettings = {
   siteName: string;
@@ -71,25 +67,12 @@ function textOrFallback(value: string | null, fallback: string) {
 }
 
 export const getStoreSettings = cache(async (): Promise<StoreSettings> => {
-  if (!isSupabaseConfigured()) {
-    return fallbackStoreSettings;
-  }
-
   try {
-    const { url, publishableKey } = getSupabaseConfig();
-    const noStoreFetch: typeof fetch = (input, init) =>
-      fetch(input, { ...init, cache: "no-store" });
+    const supabase = createPublicSupabaseClient();
 
-    const supabase = createSupabaseClient<Database>(url, publishableKey, {
-      auth: {
-        autoRefreshToken: false,
-        detectSessionInUrl: false,
-        persistSession: false,
-      },
-      global: {
-        fetch: noStoreFetch,
-      },
-    });
+    if (!supabase) {
+      return fallbackStoreSettings;
+    }
 
     const { data, error } = await supabase
       .from("store_settings")
