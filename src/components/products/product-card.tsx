@@ -1,12 +1,9 @@
 import Link from "next/link";
 
 import { ProductMedia } from "@/components/products/product-media";
-import { getCategoryBySlug } from "@/data/categories";
 import type { Product } from "@/types/product";
 
 export function ProductCard({ product }: { product: Product }) {
-  const category = getCategoryBySlug(product.categorySlug);
-
   return (
     <Link
       href={`/urunler/${product.slug}`}
@@ -33,7 +30,7 @@ export function ProductCard({ product }: { product: Product }) {
 
       <div className="p-5">
         <p className="bt-eyebrow text-muted">
-          {category?.name ?? "Beymert"}
+          {product.categoryName ?? "Beymert"}
         </p>
         <h3 className="bt-display mt-2 text-[1.7rem] leading-tight font-semibold">
           {product.name}
