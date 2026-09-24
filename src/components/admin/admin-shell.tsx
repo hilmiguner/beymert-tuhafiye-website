@@ -60,30 +60,18 @@ export function AdminShell({
             </Link>
 
             <div className="mt-2 space-y-1">
-              {sections.map((section) =>
-                section.href ? (
-                  <Link
-                    key={section.label}
-                    href={section.href}
-                    className="flex items-center justify-between rounded-control px-4 py-3 text-sm font-bold text-foreground transition hover:bg-surface-muted"
-                  >
-                    <span>{section.label}</span>
-                    <span className="text-[0.65rem] font-extrabold uppercase tracking-wider text-primary">
-                      {section.status}
-                    </span>
-                  </Link>
-                ) : (
-                  <div
-                    key={section.label}
-                    className="flex items-center justify-between rounded-control px-4 py-3 text-sm font-bold text-muted"
-                  >
-                    <span>{section.label}</span>
-                    <span className="text-[0.65rem] font-extrabold uppercase tracking-wider text-primary">
-                      {section.status}
-                    </span>
-                  </div>
-                ),
-              )}
+              {sections.map((section) => (
+                <Link
+                  key={section.label}
+                  href={section.href}
+                  className="flex items-center justify-between rounded-control px-4 py-3 text-sm font-bold text-foreground transition hover:bg-surface-muted"
+                >
+                  <span>{section.label}</span>
+                  <span className="text-[0.65rem] font-extrabold uppercase tracking-wider text-primary">
+                    {section.status}
+                  </span>
+                </Link>
+              ))}
             </div>
           </nav>
         </aside>
