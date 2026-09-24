@@ -41,8 +41,8 @@ export default async function StoreSettingsPage({
         </h1>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-muted">
           İletişim, adres, çalışma saatleri ve sosyal bağlantıları tek noktadan
-          yönetin. Bu değerler CMS veritabanına kaydedilir; public site bunları
-          bir sonraki veri kaynağı geçişinde doğrudan kullanacak.
+          yönetin. Bu değerler CMS veritabanına kaydedilir ve public site
+          tarafından doğrudan kullanılır.
         </p>
 
         {success === "saved" ? (
