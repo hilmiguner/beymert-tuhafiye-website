@@ -18,6 +18,7 @@ import "./globals.css";
 
 assertContentIntegrity();
 
+// Store settings are managed at runtime through the Supabase-backed CMS.
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
