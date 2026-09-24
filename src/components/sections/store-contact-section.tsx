@@ -4,6 +4,7 @@ import {
   directionsHref,
   getStoreSettings,
   mapEmbedHref,
+  phoneHref,
   whatsappHref,
 } from "@/lib/store-settings";
 
@@ -29,7 +30,7 @@ export async function StoreContactSection() {
                 <dt className="bt-eyebrow text-muted">Telefon</dt>
                 <dd className="mt-2">
                   <a
-                    href={`tel:${settings.whatsapp}`}
+                    href={phoneHref(settings)}
                     className="bt-display text-2xl font-semibold transition-colors hover:text-primary"
                   >
                     {settings.phoneDisplay}
@@ -83,7 +84,7 @@ export async function StoreContactSection() {
                 WhatsApp’tan Yaz
               </ButtonLink>
               <ButtonLink
-                href={`tel:${settings.whatsapp}`}
+                href={phoneHref(settings)}
                 variant="outline"
               >
                 Telefonla Ara
