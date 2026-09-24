@@ -34,4 +34,5 @@ export type Concept = {
   relatedCategorySlugs: readonly string[];
   gallery: readonly ConceptGalleryScene[];
   sortOrder: number;
+  whatsappMessage?: string;
 };
