@@ -8,22 +8,21 @@ import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
 import { whatsappHref } from "@/config/site";
-import { categories, getCategoryBySlug } from "@/data/categories";
-import { getProductsByCategory } from "@/data/products";
+import {
+  getCategoryBySlug,
+  getProductsByCategory,
+  getStoreSettings,
+} from "@/lib/public-content";
 
 type CategoryPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return categories.map((category) => ({ slug: category.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const category = getCategoryBySlug(slug);
+  const category = await getCategoryBySlug(slug);
 
   if (!category) {
     return {
@@ -40,13 +39,16 @@ export async function generateMetadata({
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
-  const category = getCategoryBySlug(slug);
+  const category = await getCategoryBySlug(slug);
 
   if (!category) {
     notFound();
   }
 
-  const categoryProducts = getProductsByCategory(category.slug);
+  const [categoryProducts, settings] = await Promise.all([
+    getProductsByCategory(category.slug),
+    getStoreSettings(),
+  ]);
 
   return (
     <main id="main-content" tabIndex={-1}>
@@ -70,6 +72,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <ButtonLink
                   href={whatsappHref(
+                    settings,
                     `Merhaba, web sitenizdeki "${category.name}" kategorisi hakkında bilgi almak istiyorum.`,
                   )}
                   target="_blank"
@@ -112,9 +115,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
             <div>
               <p className="text-sm leading-6 text-muted">
-                Aşağıdaki ürünler katalog yapısını göstermek için kullanılan
-                örnek içeriklerdir. Güncel ürün ve stok bilgisi mağazadan
-                doğrulanacaktır.
+                Bu kategoride yayında olan ürünleri inceleyebilirsin. Güncel
+                stok, renk ve uygulama detayları için mağazadan bilgi alabilirsin.
               </p>
               <div className="mt-5 grid gap-5 sm:grid-cols-2">
                 {categoryProducts.map((product) => (
