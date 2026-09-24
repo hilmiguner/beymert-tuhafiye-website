@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import {
@@ -70,11 +71,23 @@ export default async function EditConceptPage({
   return (
     <section className="space-y-6">
       <div className="rounded-[2rem] border border-border bg-white p-6 shadow-soft sm:p-8">
-        <p className="bt-eyebrow text-primary">Konseptler</p>
-        <h1 className="bt-display mt-2 text-4xl font-semibold">{concept.name}</h1>
-        <p className="mt-2 font-mono text-xs text-muted">
-          /konseptler/{concept.slug}
-        </p>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="bt-eyebrow text-primary">Konseptler</p>
+            <h1 className="bt-display mt-2 text-4xl font-semibold">{concept.name}</h1>
+            <p className="mt-2 font-mono text-xs text-muted">
+              /konseptler/{concept.slug}
+            </p>
+          </div>
+          <Link
+            href={"/preview/konseptler/" + concept.id}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-control border border-border bg-white px-5 text-sm font-extrabold text-primary transition hover:bg-surface-muted"
+          >
+            Önizle ↗
+          </Link>
+        </div>
 
         {success && successMessages[success] ? (
           <div className="mt-5 rounded-control border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-900">
