@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import type { Tables } from "@/types/database";
 
 type Product = Tables<"products">;
@@ -88,16 +89,13 @@ export function ProductForm({
           />
         </label>
 
-        <label className="block md:col-span-2">
-          <span className="mb-2 block text-sm font-extrabold">Açıklama</span>
-          <textarea
-            name="description"
-            rows={8}
-            defaultValue={product?.description ?? ""}
-            placeholder="Ürün detaylarını yazın."
-            className="w-full rounded-control border border-border bg-white px-4 py-3 leading-6 outline-none transition focus:border-primary"
-          />
-        </label>
+        <RichTextEditor
+          name="descriptionRich"
+          initialValue={product?.description_rich ?? null}
+          initialText={product?.description ?? ""}
+          label="Açıklama"
+          placeholder="Ürün detaylarını biçimlendirebilir; başlık, kalın/italik metin ve listeler kullanabilirsiniz."
+        />
 
         <label className="block">
           <span className="mb-2 block text-sm font-extrabold">Renkler</span>
