@@ -85,7 +85,7 @@ export async function StoreContactSection() {
                 WhatsApp’tan Yaz
               </ButtonLink>
               <ButtonLink
-                href={`tel:${siteConfig.phoneE164}`}
+                href={phoneHref(settings)}
                 variant="outline"
               >
                 Telefonla Ara
