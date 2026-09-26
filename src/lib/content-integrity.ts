@@ -127,7 +127,7 @@ export function assertContentIntegrity() {
     }
 
     if (
-      item.source.kind === "product" &&
+      item.source?.kind === "product" &&
       !productSet.has(item.source.slug)
     ) {
       errors.push(
@@ -136,7 +136,7 @@ export function assertContentIntegrity() {
     }
 
     if (
-      item.source.kind === "concept" &&
+      item.source?.kind === "concept" &&
       !conceptSet.has(item.source.slug)
     ) {
       errors.push(
