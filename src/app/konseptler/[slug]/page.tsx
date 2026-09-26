@@ -7,10 +7,8 @@ import { ConceptMedia } from "@/components/concepts/concept-media";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
-import {
-  getPublicConceptBySlug,
-} from "@/lib/public-concepts";
 import { getPublicCategories } from "@/lib/public-categories";
+import { getPublicConceptBySlug } from "@/lib/public-concepts";
 import { getPublicProductsByConcept } from "@/lib/public-products";
 import { buildPageMetadata } from "@/lib/seo";
 import { getStoreSettings, whatsappHref } from "@/lib/store-settings";
@@ -107,20 +105,12 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
             </h2>
 
             <div className="mt-8 grid gap-4 md:grid-cols-3">
-              {concept.gallery.map((scene) => (
+              {concept.gallery.map((scene, index) => (
                 <div
-                  key={scene.title}
+                  key={`${scene.variant}-${index}`}
                   className="overflow-hidden rounded-card border border-border bg-surface shadow-soft"
                 >
                   <ConceptMedia concept={concept} scene={scene} />
-                  <div className="border-t border-border p-5">
-                    <h3 className="bt-display text-2xl font-semibold">
-                      {scene.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-6 text-muted">
-                      {scene.description}
-                    </p>
-                  </div>
                 </div>
               ))}
             </div>
