@@ -21,20 +21,24 @@ assertContentIntegrity();
 // Store settings are managed at runtime through the Supabase-backed CMS.
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(getSiteUrl()),
-  applicationName: "Beymert",
-  title: {
-    default: "Beymert | Parti Malzemeleri & Tuhafiye Gemlik",
-    template: "%s | Beymert",
-  },
-  description:
-    "Gemlik'te parti malzemeleri, helyumlu ve folyo balonlar, doğum günü, baby shower, cinsiyet partisi, söz-nişan-düğün ürünleri, hediyelikler ve tuhafiye seçenekleri.",
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getStoreSettings();
+
+  return {
+    metadataBase: new URL(getSiteUrl()),
+    applicationName: settings.shortName,
+    title: {
+      default: `${settings.shortName} | Parti Malzemeleri & Tuhafiye Gemlik`,
+      template: `%s | ${settings.shortName}`,
+    },
+    description:
+      "Gemlik'te parti malzemeleri, helyumlu ve folyo balonlar, doğum günü, baby shower, cinsiyet partisi, söz-nişan-düğün ürünleri, hediyelikler ve tuhafiye seçenekleri.",
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default async function RootLayout({
   children,
