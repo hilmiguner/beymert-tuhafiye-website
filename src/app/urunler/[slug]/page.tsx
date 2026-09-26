@@ -85,7 +85,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
 
               <p className="bt-eyebrow mt-5 text-primary">
-                {category?.name ?? product.categoryName ?? "Beymert"}
+                {category?.name ?? product.categoryName ?? settings.shortName}
               </p>
               <h1 className="bt-display bt-balance mt-3 text-5xl leading-[0.95] font-semibold sm:text-6xl lg:text-7xl">
                 {product.name}
