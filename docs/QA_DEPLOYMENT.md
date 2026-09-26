@@ -28,6 +28,7 @@ Sırasıyla:
 - lint
 - typecheck
 - build
+- production server üzerinde CMS-aware smoke test
 
 çalıştırır.
 
@@ -213,7 +214,7 @@ Teknik deployment yapılabilir; fakat bu içerikler doğrulanmadan public final 
 Tamamlanan teknik kontroller:
 
 - [x] Lokal `pnpm check`
-- [x] GitHub Actions Quality Gate
+- [x] GitHub Actions Quality Gate — lint + typecheck + build + production HTTP smoke
 - [x] Vercel production deployment READY
 - [x] Production `qa:smoke`
 - [x] Sitemap route taraması
