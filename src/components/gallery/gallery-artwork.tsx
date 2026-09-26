@@ -28,10 +28,18 @@ export function GalleryArtwork({
       <div className={frameClass}>
         <ContentImageView
           image={item.image}
-          sizes={fill ? "100vw" : "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"}
+          sizes={
+            fill
+              ? "100vw"
+              : "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+          }
         />
       </div>
     );
+  }
+
+  if (!item.source) {
+    return null;
   }
 
   if (item.source.kind === "product") {
@@ -59,7 +67,7 @@ export function GalleryArtwork({
   }
 
   const scene = concept.gallery.find(
-    (itemScene) => itemScene.variant === item.source.variant,
+    (itemScene) => itemScene.variant === item.source!.variant,
   );
 
   return (

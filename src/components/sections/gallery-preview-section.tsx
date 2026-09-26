@@ -2,10 +2,15 @@ import Link from "next/link";
 
 import { GalleryArtwork } from "@/components/gallery/gallery-artwork";
 import { Container, Section } from "@/components/ui/container";
-import { galleryItems } from "@/data/gallery";
+import { getPublicGalleryItems } from "@/lib/public-gallery";
 
-export function GalleryPreviewSection() {
-  const previewItems = galleryItems.filter((item) => item.featured).slice(0, 4);
+export async function GalleryPreviewSection() {
+  const galleryItems = await getPublicGalleryItems();
+  const previewItems = galleryItems.slice(0, 4);
+
+  if (previewItems.length === 0) {
+    return null;
+  }
 
   return (
     <Section className="bg-background">

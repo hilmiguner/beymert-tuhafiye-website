@@ -60,6 +60,9 @@ export function GalleryEditor({
   const supabase = useMemo(() => createClient(), []);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [statusValue, setStatusValue] = useState<ContentStatus>(
+    item?.status ?? "draft",
+  );
   const [previewPath, setPreviewPath] = useState(media?.storagePath ?? null);
   const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null);
 
@@ -299,6 +302,7 @@ export function GalleryEditor({
         setPreviewPath(uploaded?.storagePath ?? media?.storagePath ?? null);
         clearLocalPreview();
         if (fileRef.current) fileRef.current.value = "";
+        setStatusValue(status);
         setMessage("Galeri öğesi güncellendi.");
         router.refresh();
       } else {
@@ -412,7 +416,10 @@ export function GalleryEditor({
             <span className="mb-2 block text-sm font-extrabold">Yayın durumu</span>
             <select
               name="status"
-              defaultValue={item?.status ?? "draft"}
+              value={statusValue}
+              onChange={(event) =>
+                setStatusValue(event.target.value as ContentStatus)
+              }
               className="min-h-12 w-full rounded-control border border-border bg-white px-4 outline-none transition focus:border-primary"
             >
               <option value="draft">Taslak</option>
