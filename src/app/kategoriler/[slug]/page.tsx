@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { CategoryMedia } from "@/components/categories/category-media";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
@@ -27,7 +28,7 @@ export async function generateMetadata({
   }
 
   return buildPageMetadata({
-    title: category.name,
+    title: `${category.name} | Gemlik`,
     description: category.shortDescription,
     path: `/kategoriler/${category.slug}`,
   });
@@ -47,6 +48,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <main id="main-content" tabIndex={-1}>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Ana Sayfa", path: "/" },
+          { name: "Kategoriler", path: "/kategoriler" },
+          { name: category.name, path: `/kategoriler/${category.slug}` },
+        ]}
+      />
       <Section className="bt-brand-glow border-b border-border">
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.85fr]">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CategoryCard } from "@/components/categories/category-card";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { ConceptMedia } from "@/components/concepts/concept-media";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
@@ -58,6 +59,13 @@ export default async function ConceptPage({ params }: ConceptPageProps) {
 
   return (
     <main id="main-content" tabIndex={-1}>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Ana Sayfa", path: "/" },
+          { name: "Konseptler", path: "/konseptler" },
+          { name: concept.name, path: `/konseptler/${concept.slug}` },
+        ]}
+      />
       <Section className="border-b border-border bg-surface-muted/35">
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
