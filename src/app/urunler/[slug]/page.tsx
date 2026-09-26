@@ -6,8 +6,8 @@ import { ProductCard } from "@/components/products/product-card";
 import { ProductMedia } from "@/components/products/product-media";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
-import { concepts } from "@/data/concepts";
 import { getPublicCategoryBySlug } from "@/lib/public-categories";
+import { getPublicConcepts } from "@/lib/public-concepts";
 import {
   getPublicProductBySlug,
   getRelatedPublicProducts,
@@ -38,9 +38,10 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const [product, settings] = await Promise.all([
+  const [product, settings, concepts] = await Promise.all([
     getPublicProductBySlug(slug),
     getStoreSettings(),
+    getPublicConcepts(),
   ]);
 
   if (!product) {
