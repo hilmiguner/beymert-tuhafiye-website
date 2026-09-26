@@ -59,14 +59,33 @@ $env:SMOKE_BASE_URL="https://example.com"
 pnpm qa:smoke
 ```
 
+Production CMS regression için önerilen ek kontroller:
+
+```powershell
+$env:SMOKE_BASE_URL="https://example.com"
+$env:SMOKE_CANONICAL_ORIGIN="https://example.com"
+$env:SMOKE_REQUIRE_ADMIN_AUTH="true"
+$env:SMOKE_EXPECT_PATHS="/urunler/ornek-urun,/konseptler/ornek-konsept"
+pnpm qa:smoke
+```
+
+`SMOKE_EXPECT_PATHS` virgülle ayrılmış opsiyonel bir listedir. Gerçek CMS içeriği değiştikçe örnek slug'lar güncellenebilir.
+
 Smoke test:
 
 - sitemap.xml'i okur
 - sitemap'teki bütün route'ları açar
+- CMS kaynaklı ürün/kategori/konsept detail route ailelerinin sitemap'te bulunduğunu doğrular
+- opsiyonel `SMOKE_EXPECT_PATHS` ile belirli CMS route'larının sitemap'e gerçekten yansıdığını kontrol eder
+- public HTML sayfalarında title, meta description, canonical ve Open Graph URL kontrolü yapar
+- sitemap'te admin/preview gibi private route'ların bulunmadığını doğrular
 - HTML sayfalarındaki internal linkleri keşfeder
 - internal link status kodlarını kontrol eder
-- robots.txt'i kontrol eder
+- robots.txt içinde sitemap ve `/admin` + `/preview` disallow kurallarını kontrol eder
+- anonymous `/admin` isteğinin login/setup route'una yönlendirildiğini kontrol eder
+- admin giriş/setup sayfasının `noindex` olduğunu doğrular
 - temel security header'larını kontrol eder
+- ana sayfada Türkçe `lang` ve JSON-LD structured data bulunduğunu kontrol eder
 - bilinmeyen route'un 404 döndürdüğünü kontrol eder
 
 ## 3. Production environment
@@ -202,6 +221,10 @@ Tamamlanan teknik kontroller:
 - [x] robots.txt kontrolü
 - [x] Security header kontrolü
 - [x] Intentional 404 kontrolü
+- [x] CMS-aware sitemap route family kontrolü — smoke teste eklendi
+- [x] Public metadata/canonical/OG URL kontrolü — smoke teste eklendi
+- [x] Admin auth redirect + noindex kontrolü — smoke teste eklendi
+- [x] robots admin/preview disallow kontrolü — smoke teste eklendi
 - [x] Vercel runtime error kontrolü — son 24 saatte hata yok
 
 Aktif manuel QA matrisi:
