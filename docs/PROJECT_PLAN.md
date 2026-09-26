@@ -642,7 +642,7 @@ Durum: TAMAMLANDI — açık adres ve çalışma saatlerinin işletme sahibi do�
 
 ### Phase 10 — Real Content & CMS / Admin Panel
 
-Durum: GELİŞTİRMEDE — operasyonel içerik yönetimi ihtiyacı netleşti; typed static content kararı Supabase tabanlı CMS yönünde revize edildi.
+Durum: GELİŞTİRMEDE — CMS altyapısı, public Supabase veri geçişi ve RLS/authorization hardening tamamlandı; gerçek işletme içeriği, owner doğrulamaları ve final regression QA devam ediyor.
 
 Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, galeri, mağaza bilgileri ve görselleri güvenli bir admin panel üzerinden yönetebilmesi.
 
@@ -664,15 +664,15 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - [x] Rich-text ürün/konsept açıklama editörü — Tiptap tabanlı toolbar, aktif stil durumları, gerçek italic font yüzü, güvenli JSON doğrulama, `description_rich` saklama ve otomatik plain-text fallback canlı E2E doğrulandı.
 - [x] Draft / published durum modeli — ortak draft/published/archived enum ve published_at davranışı kategori/ürün akışlarında aktif.
 - [x] Önizleme akışı — `/preview` altında admin-only, noindex ürün/konsept/galeri önizleme route'ları, düzenlemeye dönüş, custom WhatsApp mesajları ve responsive medya görünümü canlı E2E doğrulandı.
-- [x] Mağaza / site ayarları yönetimi — işletme/marka adı, konum, adres, telefon, WhatsApp, varsayılan mesaj, çalışma saatleri, harita sorgusu ve sosyal bağlantılar için singleton CMS ekranı eklendi; canlı E2E testi bekleniyor.
-- [ ] Public site veri kaynağını typed static datadan Supabase'e taşıma.
-- [ ] Mevcut mock veriyi Supabase'e migrate etme.
+- [x] Mağaza / site ayarları yönetimi — işletme/marka adı, konum, adres, telefon, WhatsApp, varsayılan mesaj, çalışma saatleri, harita sorgusu ve sosyal bağlantılar için singleton CMS ekranı eklendi; canlı E2E doğrulandı ve public site ayarları redeploy gerektirmeden kullanıyor.
+- [x] Public site veri kaynağını typed static datadan Supabase'e taşıma — mağaza ayarları, kategoriler, ürünler, konseptler ve galeri published içerik modeliyle public siteye bağlandı; static veri yalnızca bağlantı/sorgu hatası fallback'i olarak tutuluyor.
+- [x] Mevcut mock veriyi Supabase'e migrate etme — kategori, ürün ve konsept başlangıç verileri CMS'e taşındı; eski temsili galeri mockları public kaynak olmaktan çıkarıldı.
 - [ ] Gerçek ürün listesini toplama.
 - [ ] Gerçek kategorileri tanımlama.
 - [ ] Gerçek konseptleri tanımlama.
 - [ ] Gerçek ürün / konsept / galeri fotoğraflarını yükleme.
 - [ ] Açık adres ve çalışma saatlerini işletme sahibiyle doğrulama.
-- [ ] RLS / authorization güvenlik denetimi.
+- [x] RLS / authorization güvenlik denetimi — public tabloların RLS/policy/grant yüzeyi denetlendi; anon grant'leri read-only seviyesine indirildi, CMS RPC execute izinleri anon'dan kaldırıldı, future postgres default privileges harden edildi ve draft medya metadata'sının anon tarafından listelenmesi engellendi. Supabase Security Advisor'da yalnız hesap seviyesindeki leaked-password-protection uyarısı kaldı.
 - [ ] Dükkan sahibi gerçek kullanım testi.
 - [ ] CMS sonrası public-site regression / SEO / performans QA.
 
@@ -783,4 +783,4 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 
 ---
 
-Son güncelleme: 2026-09-24
+Son güncelleme: 2026-09-26
