@@ -9,18 +9,30 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { TrustSection } from "@/components/sections/trust-section";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { buildPageMetadata } from "@/lib/seo";
+import { getStoreSettings, whatsappHref } from "@/lib/store-settings";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Beymert | Parti Malzemeleri & Tuhafiye Gemlik",
-  description: "Gemlik'te parti malzemeleri, helyumlu ve folyo balonlar, doğum günü, baby shower, cinsiyet partisi, söz-nişan-düğün ürünleri, hediyelikler ve tuhafiye seçenekleri.",
-  path: "/",
-  absoluteTitle: true,
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getStoreSettings();
 
-export default function Home() {
+  return buildPageMetadata({
+    title: `${settings.shortName} | Parti Malzemeleri & Tuhafiye Gemlik`,
+    description:
+      "Gemlik'te parti malzemeleri, helyumlu ve folyo balonlar, doğum günü, baby shower, cinsiyet partisi, söz-nişan-düğün ürünleri, hediyelikler ve tuhafiye seçenekleri.",
+    path: "/",
+    absoluteTitle: true,
+  });
+}
+
+export default async function Home() {
+  const settings = await getStoreSettings();
+  const whatsappUrl = whatsappHref(settings);
   return (
     <main id="main-content" tabIndex={-1}>
-      <HeroSection />
+      <HeroSection
+        shortName={settings.shortName}
+        locationLabel={settings.locationLabel}
+        whatsappUrl={whatsappUrl}
+      />
       <CategoriesSection />
       <ConceptsSection />
       <FeaturedProductsSection />
