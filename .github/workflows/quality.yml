@@ -42,3 +42,26 @@ jobs:
 
       - name: Production build
         run: pnpm build
+
+      - name: Production smoke test
+        shell: bash
+        run: |
+          pnpm start > /tmp/beymert-next.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+
+          ready=false
+          for attempt in {1..30}; do
+            if curl --fail --silent --show-error http://127.0.0.1:3000/ > /dev/null; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$ready" != "true" ]; then
+            cat /tmp/beymert-next.log
+            exit 1
+          fi
+
+          SMOKE_BASE_URL=http://127.0.0.1:3000 pnpm qa:smoke
