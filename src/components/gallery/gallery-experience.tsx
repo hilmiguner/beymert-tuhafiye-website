@@ -11,32 +11,35 @@ import { getProductBySlug } from "@/data/products";
 import type { GalleryItem } from "@/types/gallery";
 
 function RelationLinks({ item }: { item: GalleryItem }) {
-  const category = item.categorySlug
+  const fallbackCategory = item.categorySlug
     ? getCategoryBySlug(item.categorySlug)
     : undefined;
-  const concept = item.conceptSlug
+  const fallbackConcept = item.conceptSlug
     ? getConceptBySlug(item.conceptSlug)
     : undefined;
   const product = item.productSlug
     ? getProductBySlug(item.productSlug)
     : undefined;
 
+  const categoryName = item.categoryName ?? fallbackCategory?.name;
+  const conceptName = item.conceptName ?? fallbackConcept?.name;
+
   return (
     <div className="flex flex-wrap gap-2">
-      {concept ? (
+      {item.conceptSlug && conceptName ? (
         <Link
-          href={`/konseptler/${concept.slug}`}
+          href={`/konseptler/${item.conceptSlug}`}
           className="rounded-pill border border-border bg-background px-3 py-1.5 text-xs font-extrabold text-muted transition-colors hover:border-primary/30 hover:text-primary"
         >
-          {concept.name}
+          {conceptName}
         </Link>
       ) : null}
-      {category ? (
+      {item.categorySlug && categoryName ? (
         <Link
-          href={`/kategoriler/${category.slug}`}
+          href={`/kategoriler/${item.categorySlug}`}
           className="rounded-pill border border-border bg-background px-3 py-1.5 text-xs font-extrabold text-muted transition-colors hover:border-primary/30 hover:text-primary"
         >
-          {category.name}
+          {categoryName}
         </Link>
       ) : null}
       {product ? (
@@ -315,12 +318,6 @@ export function GalleryExperience({
                   </p>
                   <RelationLinks item={activeItem} />
                 </div>
-
-                <p className="mt-7 text-xs leading-5 text-muted">
-                  Bu aşamadaki galeri görselleri temsili geliştirme
-                  görselleridir. Gerçek Beymert kurulum fotoğrafları içerik
-                  entegrasyonu aşamasında eklenecek.
-                </p>
 
                 <p className="mt-5 text-xs font-bold text-muted lg:hidden">
                   Sonraki veya önceki görsel için yatay kaydırabilirsin.
