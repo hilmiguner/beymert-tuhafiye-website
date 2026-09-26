@@ -67,10 +67,6 @@ export function GalleryEditor({
   const [localPreviewUrl, setLocalPreviewUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    setStatusValue(item?.status ?? "draft");
-  }, [item?.status]);
-
-  useEffect(() => {
     return () => {
       if (previewObjectUrlRef.current) {
         URL.revokeObjectURL(previewObjectUrlRef.current);
