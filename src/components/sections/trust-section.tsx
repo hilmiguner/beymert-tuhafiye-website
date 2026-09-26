@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Container, Section } from "@/components/ui/container";
+import { getStoreSettings } from "@/lib/store-settings";
 
 const reasons = [
   {
@@ -23,18 +24,19 @@ const reasons = [
   },
 ] as const;
 
-export function TrustSection() {
+export async function TrustSection() {
+  const settings = await getStoreSettings();
   return (
     <Section className="border-y border-border bg-surface">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div className="max-w-xl">
-            <p className="bt-eyebrow text-secondary">Neden Beymert?</p>
+            <p className="bt-eyebrow text-secondary">Neden {settings.shortName}?</p>
             <h2 className="bt-display bt-balance mt-3 text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl">
               Ürün değil, kutlamanın tamamını düşün.
             </h2>
             <p className="mt-5 leading-7 text-muted">
-              Beymert’in dijital vitrini; ürünleri tek tek listelemekten çok
+              {settings.shortName}’in dijital vitrini; ürünleri tek tek listelemekten çok
               hangi parçaların birlikte iyi çalışabileceğini göstermeyi
               amaçlıyor.
             </p>
@@ -42,7 +44,7 @@ export function TrustSection() {
               href="/hakkimizda"
               className="mt-6 inline-flex items-center gap-2 text-sm font-extrabold text-primary hover:text-primary-hover"
             >
-              Beymert’i tanı
+              {settings.shortName}’i tanı
               <span aria-hidden="true">→</span>
             </Link>
           </div>
