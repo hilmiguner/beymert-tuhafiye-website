@@ -7,6 +7,7 @@ import { GalleryPreviewSection } from "@/components/sections/gallery-preview-sec
 import { HomepageStoreSection } from "@/components/sections/homepage-store-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { TrustSection } from "@/components/sections/trust-section";
+import { LocalSeoSection } from "@/components/sections/local-seo-section";
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { buildPageMetadata } from "@/lib/seo";
 import { getStoreSettings, whatsappHref } from "@/lib/store-settings";
@@ -15,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getStoreSettings();
 
   return buildPageMetadata({
-    title: `${settings.shortName} | Parti Malzemeleri & Tuhafiye Gemlik`,
+    title: `Gemlik Parti Malzemeleri & Tuhafiye | ${settings.shortName}`,
     description:
       "Gemlik'te parti malzemeleri, helyumlu ve folyo balonlar, doğum günü, baby shower, cinsiyet partisi, söz-nişan-düğün ürünleri, hediyelikler ve tuhafiye seçenekleri.",
     path: "/",
@@ -38,6 +39,7 @@ export default async function Home() {
       <FeaturedProductsSection />
       <AnimatedShowcaseSection />
       <GalleryPreviewSection />
+      <LocalSeoSection />
       <TrustSection />
       <HomepageStoreSection />
       <FinalCtaSection />

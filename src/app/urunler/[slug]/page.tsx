@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ProductCard } from "@/components/products/product-card";
+import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { ProductMedia } from "@/components/products/product-media";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
@@ -63,6 +64,21 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <main id="main-content" tabIndex={-1}>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Ana Sayfa", path: "/" },
+          { name: "Ürünler", path: "/urunler" },
+          ...(category
+            ? [
+                {
+                  name: category.name,
+                  path: `/kategoriler/${category.slug}`,
+                },
+              ]
+            : []),
+          { name: product.name, path: `/urunler/${product.slug}` },
+        ]}
+      />
       <Section className="border-b border-border bg-surface-muted/30">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">

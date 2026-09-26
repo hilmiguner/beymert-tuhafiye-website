@@ -15,6 +15,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl("/"), changeFrequency: "weekly", priority: 1 },
     { url: absoluteUrl("/urunler"), changeFrequency: "weekly", priority: 0.9 },
+    {
+      url: absoluteUrl("/gemlik-parti-malzemeleri"),
+      changeFrequency: "monthly",
+      priority: 0.95,
+    },
+    {
+      url: absoluteUrl("/gemlik-tuhafiye"),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     { url: absoluteUrl("/kategoriler"), changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl("/konseptler"), changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl("/galeri"), changeFrequency: "monthly", priority: 0.75 },

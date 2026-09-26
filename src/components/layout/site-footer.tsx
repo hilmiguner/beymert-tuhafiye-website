@@ -36,6 +36,18 @@ export function SiteFooter({ settings }: { settings: StoreSettings }) {
                   {item.label}
                 </Link>
               ))}
+              <Link
+                href="/gemlik-parti-malzemeleri"
+                className="w-fit font-bold transition-colors hover:text-primary"
+              >
+                Gemlik Parti Malzemeleri
+              </Link>
+              <Link
+                href="/gemlik-tuhafiye"
+                className="w-fit font-bold transition-colors hover:text-primary"
+              >
+                Gemlik Tuhafiye
+              </Link>
             </div>
           </div>
 
