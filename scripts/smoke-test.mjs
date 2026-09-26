@@ -106,13 +106,13 @@ function extractInternalLinks(html) {
 
 function getAttribute(tag, name) {
   const match = tag.match(
-    new RegExp(`\\\\b${name}\\\\s*=\\\\s*["']([^"']*)["']`, "i"),
+    new RegExp(String.raw`\b${name}\s*=\s*["']([^"']*)["']`, "i"),
   );
   return match?.[1] ?? null;
 }
 
 function findTag(html, tagName, predicate) {
-  const expression = new RegExp(`<${tagName}\\\\b[^>]*>`, "gi");
+  const expression = new RegExp(String.raw`<${tagName}\b[^>]*>`, "gi");
 
   for (const match of html.matchAll(expression)) {
     if (predicate(match[0])) {
