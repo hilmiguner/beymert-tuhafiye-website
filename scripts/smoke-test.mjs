@@ -13,14 +13,14 @@ const expectedPaths = (process.env.SMOKE_EXPECT_PATHS ?? "")
   .split(",")
   .map((value) => value.trim())
   .filter(Boolean)
-  .map((value) => (value.startsWith("/") ? value : \`/\${value}\`));
+  .map((value) => (value.startsWith("/") ? value : `/${value}`));
 
 function line(message = "") {
-  process.stdout.write(\`\${message}\n\`);
+  process.stdout.write(`${message}\n`);
 }
 
 function fail(message) {
-  process.stderr.write(\`ERROR: \${message}\n\`);
+  process.stderr.write(`ERROR: ${message}\n`);
   process.exitCode = 1;
 }
 
@@ -29,7 +29,7 @@ async function fetchPath(pathname, { redirect = "follow" } = {}) {
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    return await fetch(\`\${baseUrl}\${pathname}\`, {
+    return await fetch(`${baseUrl}${pathname}`, {
       redirect,
       signal: controller.signal,
       headers: {
@@ -38,7 +38,7 @@ async function fetchPath(pathname, { redirect = "follow" } = {}) {
     });
   } catch (error) {
     fail(
-      \`\${pathname} -> \${error instanceof Error ? error.message : String(error)}\`,
+      `${pathname} -> ${error instanceof Error ? error.message : String(error)}`,
     );
     return null;
   } finally {
@@ -55,14 +55,14 @@ async function request(pathname, expectedStatus) {
 
   if (expectedStatus !== undefined) {
     if (response.status !== expectedStatus) {
-      fail(\`\${pathname} -> \${response.status}, expected \${expectedStatus}\`);
+      fail(`${pathname} -> ${response.status}, expected ${expectedStatus}`);
     } else {
-      line(\`OK  \${response.status} \${pathname}\`);
+      line(`OK  ${response.status} ${pathname}`);
     }
   } else if (!response.ok) {
-    fail(\`\${pathname} -> \${response.status}\`);
+    fail(`${pathname} -> ${response.status}`);
   } else {
-    line(\`OK  \${response.status} \${pathname}\`);
+    line(`OK  ${response.status} ${pathname}`);
   }
 
   return response;
@@ -75,11 +75,11 @@ function extractSitemapEntries(xml) {
     try {
       const url = new URL(match[1]);
       entries.push({
-        path: \`\${url.pathname}\${url.search}\`,
+        path: `${url.pathname}${url.search}`,
         origin: url.origin,
       });
     } catch {
-      fail(\`Invalid sitemap URL: \${match[1]}\`);
+      fail(`Invalid sitemap URL: ${match[1]}`);
     }
   }
 
@@ -106,13 +106,13 @@ function extractInternalLinks(html) {
 
 function getAttribute(tag, name) {
   const match = tag.match(
-    new RegExp(\`\\\\b\${name}\\\\s*=\\\\s*["']([^"']*)["']\`, "i"),
+    new RegExp(`\\\\b${name}\\\\s*=\\\\s*["']([^"']*)["']`, "i"),
   );
   return match?.[1] ?? null;
 }
 
 function findTag(html, tagName, predicate) {
-  const expression = new RegExp(\`<\${tagName}\\\\b[^>]*>\`, "gi");
+  const expression = new RegExp(`<${tagName}\\\\b[^>]*>`, "gi");
 
   for (const match of html.matchAll(expression)) {
     if (predicate(match[0])) {
@@ -138,7 +138,7 @@ function hasNoindex(html) {
 function assertPublicMetadata(html, pathname) {
   const title = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.trim();
   if (!title) {
-    fail(\`\${pathname}: missing or empty <title>\`);
+    fail(`${pathname}: missing or empty <title>`);
   }
 
   const descriptionTag = findTag(
@@ -147,7 +147,7 @@ function assertPublicMetadata(html, pathname) {
     (tag) => getAttribute(tag, "name")?.toLowerCase() === "description",
   );
   if (!getAttribute(descriptionTag ?? "", "content")?.trim()) {
-    fail(\`\${pathname}: missing meta description\`);
+    fail(`${pathname}: missing meta description`);
   }
 
   const canonicalTag = findTag(html, "link", (tag) =>
@@ -159,7 +159,7 @@ function assertPublicMetadata(html, pathname) {
   const canonicalHref = getAttribute(canonicalTag ?? "", "href");
 
   if (!canonicalHref) {
-    fail(\`\${pathname}: missing canonical URL\`);
+    fail(`${pathname}: missing canonical URL`);
   } else {
     try {
       const canonical = new URL(canonicalHref, baseUrl);
@@ -167,7 +167,7 @@ function assertPublicMetadata(html, pathname) {
 
       if (canonical.pathname !== expectedPath) {
         fail(
-          \`\${pathname}: canonical path \${canonical.pathname} does not match \${expectedPath}\`,
+          `${pathname}: canonical path ${canonical.pathname} does not match ${expectedPath}`,
         );
       }
 
@@ -176,11 +176,11 @@ function assertPublicMetadata(html, pathname) {
         canonical.origin !== expectedCanonicalOrigin
       ) {
         fail(
-          \`\${pathname}: canonical origin \${canonical.origin} does not match \${expectedCanonicalOrigin}\`,
+          `${pathname}: canonical origin ${canonical.origin} does not match ${expectedCanonicalOrigin}`,
         );
       }
     } catch {
-      fail(\`\${pathname}: invalid canonical URL \${canonicalHref}\`);
+      fail(`${pathname}: invalid canonical URL ${canonicalHref}`);
     }
   }
 
@@ -190,11 +190,11 @@ function assertPublicMetadata(html, pathname) {
     (tag) => getAttribute(tag, "property")?.toLowerCase() === "og:url",
   );
   if (!getAttribute(ogUrlTag ?? "", "content")) {
-    fail(\`\${pathname}: missing Open Graph URL\`);
+    fail(`${pathname}: missing Open Graph URL`);
   }
 
   if (hasNoindex(html)) {
-    fail(\`\${pathname}: public sitemap route is marked noindex\`);
+    fail(`${pathname}: public sitemap route is marked noindex`);
   }
 }
 
@@ -202,13 +202,13 @@ function assertRouteFamily(routePaths, prefix, label) {
   const count = [...routePaths].filter((path) => path.startsWith(prefix)).length;
 
   if (count === 0) {
-    fail(\`sitemap.xml does not contain a dynamic \${label} route (\${prefix}*)\`);
+    fail(`sitemap.xml does not contain a dynamic ${label} route (${prefix}*)`);
   } else {
-    line(\`OK  sitemap \${label} detail routes: \${count}\`);
+    line(`OK  sitemap ${label} detail routes: ${count}`);
   }
 }
 
-line(\`Beymert smoke test: \${baseUrl}\`);
+line(`Beymert smoke test: ${baseUrl}`);
 
 const sitemapResponse = await request("/sitemap.xml");
 if (!sitemapResponse) {
@@ -223,16 +223,16 @@ if (routePaths.size === 0) {
   fail("sitemap.xml did not contain any routes");
 }
 
-line(\`Sitemap routes: \${routePaths.size}\`);
+line(`Sitemap routes: ${routePaths.size}`);
 
 for (const entry of sitemapEntries) {
   if (entry.path.startsWith("/admin") || entry.path.startsWith("/preview")) {
-    fail(\`Sensitive route leaked into sitemap: \${entry.path}\`);
+    fail(`Sensitive route leaked into sitemap: ${entry.path}`);
   }
 
   if (expectedCanonicalOrigin && entry.origin !== expectedCanonicalOrigin) {
     fail(
-      \`Sitemap origin \${entry.origin} does not match \${expectedCanonicalOrigin} for \${entry.path}\`,
+      `Sitemap origin ${entry.origin} does not match ${expectedCanonicalOrigin} for ${entry.path}`,
     );
   }
 }
@@ -243,9 +243,9 @@ assertRouteFamily(routePaths, "/konseptler/", "concept");
 
 for (const expectedPath of expectedPaths) {
   if (!routePaths.has(expectedPath)) {
-    fail(\`Expected CMS route missing from sitemap: \${expectedPath}\`);
+    fail(`Expected CMS route missing from sitemap: ${expectedPath}`);
   } else {
-    line(\`OK  expected CMS route \${expectedPath}\`);
+    line(`OK  expected CMS route ${expectedPath}`);
   }
 }
 
@@ -271,7 +271,7 @@ for (const pathname of routePaths) {
   }
 }
 
-line(\`Internal links discovered: \${discoveredLinks.size}\`);
+line(`Internal links discovered: ${discoveredLinks.size}`);
 
 for (const href of discoveredLinks) {
   await request(href);
@@ -303,9 +303,9 @@ if (rootResponse?.ok) {
   for (const [name, expected] of expectedHeaders) {
     const actual = rootResponse.headers.get(name);
     if (actual?.toLowerCase() !== expected.toLowerCase()) {
-      fail(\`Header \${name}: got \${actual ?? "<missing>"}, expected \${expected}\`);
+      fail(`Header ${name}: got ${actual ?? "<missing>"}, expected ${expected}`);
     } else {
-      line(\`OK  header \${name}\`);
+      line(`OK  header ${name}`);
     }
   }
 
@@ -321,7 +321,7 @@ if (rootResponse?.ok) {
 const adminResponse = await fetchPath("/admin", { redirect: "manual" });
 if (adminResponse) {
   if (![307, 308].includes(adminResponse.status)) {
-    fail(\`/admin -> \${adminResponse.status}, expected redirect\`);
+    fail(`/admin -> ${adminResponse.status}, expected redirect`);
   } else {
     const location = adminResponse.headers.get("location");
     const redirectPath = location
@@ -333,18 +333,18 @@ if (adminResponse) {
 
     if (!redirectPath || !allowedTargets.includes(redirectPath)) {
       fail(
-        \`/admin redirects to \${redirectPath ?? "<missing>"}, expected \${allowedTargets.join(" or ")}\`,
+        `/admin redirects to ${redirectPath ?? "<missing>"}, expected ${allowedTargets.join(" or ")}`,
       );
     } else {
-      line(\`OK  admin redirect -> \${redirectPath}\`);
+      line(`OK  admin redirect -> ${redirectPath}`);
 
       const authPageResponse = await request(redirectPath);
       if (authPageResponse?.ok) {
         const authHtml = await authPageResponse.text();
         if (!hasNoindex(authHtml)) {
-          fail(\`\${redirectPath}: admin auth page is not marked noindex\`);
+          fail(`${redirectPath}: admin auth page is not marked noindex`);
         } else {
-          line(\`OK  \${redirectPath} noindex\`);
+          line(`OK  ${redirectPath} noindex`);
         }
       }
     }
