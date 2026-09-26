@@ -4,15 +4,23 @@ import { buildPageMetadata } from "@/lib/seo";
 import { CategoryCard } from "@/components/categories/category-card";
 import { Container, Section } from "@/components/ui/container";
 import { getPublicCategories } from "@/lib/public-categories";
+import { getStoreSettings } from "@/lib/store-settings";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Kategoriler",
-  description: "Beymert’in balon, doğum günü, baby shower, söz-nişan-düğün, hediyelik ve tuhafiye kategorilerini keşfedin.",
-  path: "/kategoriler",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getStoreSettings();
+
+  return buildPageMetadata({
+    title: "Kategoriler",
+    description: `${settings.shortName}’in balon, doğum günü, baby shower, söz-nişan-düğün, hediyelik ve tuhafiye kategorilerini keşfedin.`,
+    path: "/kategoriler",
+  });
+}
 
 export default async function CategoriesPage() {
-  const categories = await getPublicCategories();
+  const [categories, settings] = await Promise.all([
+    getPublicCategories(),
+    getStoreSettings(),
+  ]);
 
   return (
     <main id="main-content" tabIndex={-1}>
@@ -23,7 +31,7 @@ export default async function CategoriesPage() {
             Aradığın kutlama detayına buradan başla.
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
-            Beymert’in ana ürün kategorilerini incele; detay sayfasından ürün
+            {settings.shortName}’in ana ürün kategorilerini incele; detay sayfasından ürün
             grubu hakkında bilgi al veya WhatsApp üzerinden bize ulaş.
           </p>
         </Container>

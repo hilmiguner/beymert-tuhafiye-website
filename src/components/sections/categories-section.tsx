@@ -3,16 +3,20 @@ import Link from "next/link";
 import { CategoryCard } from "@/components/categories/category-card";
 import { Container, Section } from "@/components/ui/container";
 import { getPublicCategories } from "@/lib/public-categories";
+import { getStoreSettings } from "@/lib/store-settings";
 
 export async function CategoriesSection() {
-  const categories = await getPublicCategories();
+  const [categories, settings] = await Promise.all([
+    getPublicCategories(),
+    getStoreSettings(),
+  ]);
 
   return (
     <Section className="border-y border-border bg-surface">
       <Container>
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
-            <p className="bt-eyebrow text-secondary">Beymert’te neler var?</p>
+            <p className="bt-eyebrow text-secondary">{settings.shortName}’te neler var?</p>
             <h2 className="bt-display bt-balance mt-3 text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl">
               Kutlamanı kategoriden başlayarak keşfet.
             </h2>
@@ -21,7 +25,7 @@ export async function CategoriesSection() {
           <div className="max-w-lg">
             <p className="leading-7 text-muted">
               Balondan özel gün hazırlıklarına, kişiye özel hediyeliklerden
-              tuhafiye ürünlerine kadar Beymert’in ana ürün gruplarını incele.
+              tuhafiye ürünlerine kadar {settings.shortName}’in ana ürün gruplarını incele.
             </p>
             <Link
               href="/kategoriler"

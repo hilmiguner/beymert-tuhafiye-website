@@ -5,13 +5,17 @@ import { Container, Section } from "@/components/ui/container";
 import { getPublicCategories } from "@/lib/public-categories";
 import { getPublicProducts } from "@/lib/public-products";
 import { buildPageMetadata } from "@/lib/seo";
+import { getStoreSettings } from "@/lib/store-settings";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Ürünler",
-  description:
-    "Beymert’in parti malzemeleri, balon, özel gün, hediyelik ve tuhafiye ürünlerini keşfedin.",
-  path: "/urunler",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getStoreSettings();
+
+  return buildPageMetadata({
+    title: "Ürünler",
+    description: `${settings.shortName}’in parti malzemeleri, balon, özel gün, hediyelik ve tuhafiye ürünlerini keşfedin.`,
+    path: "/urunler",
+  });
+}
 
 export default async function ProductsPage() {
   const [products, categories] = await Promise.all([

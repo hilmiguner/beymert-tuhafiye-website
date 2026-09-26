@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { siteConfig } from "@/config/site";
+import { getStoreSettings } from "@/lib/store-settings";
 
 function withProtocol(value: string) {
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
@@ -21,7 +21,7 @@ export function absoluteUrl(path = "/") {
   return `${getSiteUrl()}${normalizedPath === "/" ? "" : normalizedPath}`;
 }
 
-export function buildPageMetadata({
+export async function buildPageMetadata({
   title,
   description,
   path,
@@ -31,10 +31,11 @@ export function buildPageMetadata({
   description: string;
   path: string;
   absoluteTitle?: boolean;
-}): Metadata {
+}): Promise<Metadata> {
+  const settings = await getStoreSettings();
   const socialTitle = absoluteTitle
     ? title
-    : `${title} | ${siteConfig.shortName}`;
+    : `${title} | ${settings.shortName}`;
 
   return {
     title: absoluteTitle ? { absolute: title } : title,
@@ -45,7 +46,7 @@ export function buildPageMetadata({
     openGraph: {
       type: "website",
       locale: "tr_TR",
-      siteName: siteConfig.shortName,
+      siteName: settings.shortName,
       title: socialTitle,
       description,
       url: absoluteUrl(path),

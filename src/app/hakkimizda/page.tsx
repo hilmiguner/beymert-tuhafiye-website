@@ -1,15 +1,20 @@
 import type { Metadata } from "next";
 import { buildPageMetadata } from "@/lib/seo";
+import { getStoreSettings } from "@/lib/store-settings";
 
 import { FinalCtaSection } from "@/components/sections/final-cta-section";
 import { TrustSection } from "@/components/sections/trust-section";
 import { Container, Section } from "@/components/ui/container";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Hakkımızda",
-  description: "Beymert Parti Malzemeleri Tuhafiye Tasarım’ın Gemlik’te sunduğu parti malzemeleri, özel gün konseptleri, hediyelik ve tuhafiye yaklaşımını tanıyın.",
-  path: "/hakkimizda",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getStoreSettings();
+
+  return buildPageMetadata({
+    title: "Hakkımızda",
+    description: `${settings.siteName}’ın Gemlik’te sunduğu parti malzemeleri, özel gün konseptleri, hediyelik ve tuhafiye yaklaşımını tanıyın.`,
+    path: "/hakkimizda",
+  });
+}
 
 const values = [
   {
@@ -29,7 +34,8 @@ const values = [
   },
 ] as const;
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await getStoreSettings();
   return (
     <main id="main-content" tabIndex={-1}>
       <Section className="bt-brand-glow border-b border-border">
@@ -39,7 +45,7 @@ export default function AboutPage() {
             Kutlamaların küçük detaylarını bir araya getiren Gemlik vitrini.
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-muted sm:text-lg">
-            Beymert Parti Malzemeleri Tuhafiye Tasarım; parti malzemeleri,
+            {settings.siteName}; parti malzemeleri,
             balonlar, özel gün hazırlıkları, kişiye özel hediyelikler ve seçili
             tuhafiye ürünlerini aynı çatı altında buluşturur.
           </p>

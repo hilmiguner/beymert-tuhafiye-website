@@ -5,12 +5,14 @@ import { Container, Section } from "@/components/ui/container";
 import { getPublicConcepts } from "@/lib/public-concepts";
 import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Konseptler",
-  description:
-    "Safari, prenses, unicorn, futbol, Pink & Gold, Blue & Silver, baby shower ve Bride to Be gibi parti konseptlerini keşfedin.",
-  path: "/konseptler",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  return buildPageMetadata({
+    title: "Konseptler",
+    description:
+      "Safari, prenses, unicorn, futbol, Pink & Gold, Blue & Silver, baby shower ve Bride to Be gibi parti konseptlerini keşfedin.",
+    path: "/konseptler",
+  });
+}
 
 export default async function ConceptsPage() {
   const concepts = await getPublicConcepts();

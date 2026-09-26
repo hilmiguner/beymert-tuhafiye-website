@@ -10,11 +10,15 @@ import {
   whatsappHref,
 } from "@/lib/store-settings";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "İletişim",
-  description: "Beymert Parti Malzemeleri Tuhafiye Tasarım ile telefon, WhatsApp ve mağaza ziyareti için iletişime geçin.",
-  path: "/iletisim",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getStoreSettings();
+
+  return buildPageMetadata({
+    title: "İletişim",
+    description: `${settings.siteName} ile telefon, WhatsApp ve mağaza ziyareti için iletişime geçin.`,
+    path: "/iletisim",
+  });
+}
 
 export default async function ContactPage() {
   const settings = await getStoreSettings();
