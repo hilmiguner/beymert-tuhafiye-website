@@ -33,7 +33,7 @@ export const fallbackStoreSettings: StoreSettings = {
   phoneDisplay: siteConfig.phoneDisplay,
   whatsapp: siteConfig.phoneE164,
   defaultWhatsappMessage:
-    "Merhaba, Beymert web sitesi üzerinden ürünleriniz hakkında bilgi almak istiyorum.",
+    "Merhaba, Beymert Tuhafiye web sitesi üzerinden ürünleriniz hakkında bilgi almak istiyorum.",
   openingHours: {
     weekdayLabel: siteConfig.publicHours.weekdayLabel,
     weekdayHours: siteConfig.publicHours.weekdayHours,

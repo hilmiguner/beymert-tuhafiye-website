@@ -777,7 +777,7 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 - Gerçek kategori listesi
 - Gerçek konsept listesi
 - Gerçek ürün dataset'i
-- Domain
+- Domain — `beymerttuhafiye.com` seçildi; satın alma ve Vercel bağlantısı bekleniyor.
 - Hosting production ayarları
 - Analytics çözümü
 
