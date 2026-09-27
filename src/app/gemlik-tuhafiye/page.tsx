@@ -15,7 +15,7 @@ import {
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
-    title: "Gemlik Tuhafiye | Tül, Kurdele & Özel Gün Detayları",
+    title: "Gemlik Tuhafiye | Tül & Kurdele",
     description:
       "Gemlik tuhafiye ürünleri için tül, saten kurdele, süsleme ve özel gün hazırlıklarında kullanılan tamamlayıcı ürünleri Beymert’te keşfedin.",
     path: "/gemlik-tuhafiye",
@@ -121,6 +121,84 @@ export default async function GemlikNotionsPage() {
                 ziyaretini planlayabilirsin.
               </p>
             </div>
+          </div>
+        </Container>
+      </Section>
+
+
+      <Section>
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            <div>
+              <p className="bt-eyebrow text-primary">Tül ve kurdele seçimi</p>
+              <h2 className="bt-display mt-3 text-4xl font-semibold sm:text-5xl">
+                Kullanım amacına göre doğru ürünü seç.
+              </h2>
+            </div>
+            <div className="space-y-4 leading-7 text-muted">
+              <p>
+                Tül ve kurdele seçerken yalnızca renge değil, hazırlığın türüne
+                ve kullanılacağı alana da bakmak gerekir. Hediye paketleme,
+                masa süslemesi, nişan-söz hazırlığı veya doğum günü dekoru için
+                ihtiyaç duyulan genişlik, doku ve miktar değişebilir.
+              </p>
+              <p>
+                Gemlik’te belirli bir renk tonu arıyorsan ürünün mağazada
+                görülmesi özellikle faydalıdır. Ekran renkleri ile gerçek ürün
+                tonu arasında fark olabileceği için, konseptine yakın tonları
+                yan yana karşılaştırarak seçim yapabilirsin.
+              </p>
+              <p>
+                Tül ve kurdeleyi balon, hediyelik veya masa dekoruyla birlikte
+                planlıyorsan{" "}
+                <Link
+                  href="/gemlik-parti-malzemeleri"
+                  className="font-extrabold text-primary hover:text-primary-hover"
+                >
+                  Gemlik parti malzemeleri
+                </Link>{" "}
+                sayfasından tamamlayıcı ürün gruplarını da inceleyebilirsin.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <Section className="border-y border-border bg-surface-muted/35">
+        <Container>
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              [
+                "Hediye ve paketleme",
+                "Kurdele ve tül; hediye kutusu, paketleme ve sunum detaylarında renk bütünlüğü oluşturmak için kullanılabilir.",
+              ],
+              [
+                "Söz, nişan ve düğün",
+                "Masa, tepsi, hediyelik ve küçük dekor detaylarında konsepte uygun tonlarla tamamlayıcı bir görünüm sağlanabilir.",
+              ],
+              [
+                "Doğum günü ve kutlama",
+                "Balon ve masa ürünlerinin yanında tül ve kurdele kullanarak aynı renk ailesinde daha bütünlüklü bir hazırlık yapılabilir.",
+              ],
+            ].map(([title, description]) => (
+              <article
+                key={title}
+                className="rounded-card border border-border bg-surface p-6 shadow-soft"
+              >
+                <h2 className="bt-display text-3xl font-semibold">{title}</h2>
+                <p className="mt-4 text-sm leading-7 text-muted sm:text-base">
+                  {description}
+                </p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-8">
+            <Link
+              href="/kategoriler/tul-kurdele-tuhafiye"
+              className="text-sm font-extrabold text-primary hover:text-primary-hover"
+            >
+              Tül, kurdele ve tuhafiye kategorisini incele →
+            </Link>
           </div>
         </Container>
       </Section>

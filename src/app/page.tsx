@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
     title: `Gemlik Parti Malzemeleri & Tuhafiye | ${settings.shortName}`,
     description:
-      "Gemlik'te parti malzemeleri, helyumlu ve folyo balonlar, doğum günü, baby shower, cinsiyet partisi, söz-nişan-düğün ürünleri, hediyelikler ve tuhafiye seçenekleri.",
+      "Gemlik’te parti malzemeleri, balon, doğum günü, baby shower, söz-nişan-düğün ürünleri, hediyelikler, tül ve kurdele seçeneklerini keşfedin.",
     path: "/",
     absoluteTitle: true,
   });

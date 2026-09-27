@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getStoreSettings();
 
   return buildPageMetadata({
-    title: "Ürünler",
+    title: "Gemlik Parti & Tuhafiye Ürünleri",
     description: `${settings.shortName}’in parti malzemeleri, balon, özel gün, hediyelik ve tuhafiye ürünlerini keşfedin.`,
     path: "/urunler",
   });
@@ -32,8 +32,10 @@ export default async function ProductsPage() {
             Kutlamanı tamamlayan detayları keşfet.
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
-            Katalog mağaza içerik yönetiminden güncellenir. Ürün, renk ve stok
-            bilgileri için güncel durumu WhatsApp üzerinden doğrulayabilirsin.
+            Gemlik’te parti malzemeleri, balon, özel gün, hediyelik ve
+            tuhafiye ürünlerini kategori bazında inceleyebilirsin. Katalog
+            mağaza içerik yönetiminden güncellenir; renk ve stok bilgileri için
+            güncel durumu WhatsApp üzerinden doğrulayabilirsin.
           </p>
         </Container>
       </Section>
