@@ -1,6 +1,7 @@
 export const siteConfig = {
-  name: "Beymert Parti Malzemeleri Tuhafiye Tasarım",
-  shortName: "Beymert",
+  name: "Beymert Tuhafiye",
+  shortName: "Beymert Tuhafiye",
+  canonicalOrigin: "https://www.beymerttuhafiye.com",
   locationLabel: "Gemlik · Bursa",
   neighborhoodLabel: "Hamidiye · Gemlik · Bursa",
   locality: {
@@ -35,7 +36,7 @@ export const siteConfig = {
 export function whatsappHref(message?: string) {
   const text =
     message ??
-    "Merhaba, Beymert web sitesi üzerinden ürünleriniz hakkında bilgi almak istiyorum.";
+    "Merhaba, Beymert Tuhafiye web sitesi üzerinden ürünleriniz hakkında bilgi almak istiyorum.";
 
   return `https://wa.me/${siteConfig.phoneE164.replace("+", "")}?text=${encodeURIComponent(text)}`;
 }

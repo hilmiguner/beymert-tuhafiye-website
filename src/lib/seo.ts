@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { siteConfig } from "@/config/site";
 import { getStoreSettings } from "@/lib/store-settings";
 
 function withProtocol(value: string) {
@@ -7,6 +8,10 @@ function withProtocol(value: string) {
 }
 
 export function getSiteUrl() {
+  if (process.env.VERCEL === "1") {
+    return siteConfig.canonicalOrigin;
+  }
+
   const candidate =
     process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
     process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() ||

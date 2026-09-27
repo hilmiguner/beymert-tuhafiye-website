@@ -730,7 +730,7 @@ Durum: QA DEVAM EDİYOR — production deployment ve smoke test tamamlandı; bro
 - [x] Production build — lokal `pnpm check` ve GitHub Actions Quality Gate geçti.
 - [ ] Environment variables — contract ve `qa:env` doğrulaması hazır; final domain değeri deployment sırasında girilecek.
 - [x] Vercel deployment — `beymert-tuhafiye-website.vercel.app` production deployment READY.
-- [ ] Domain bağlantısı
+- [x] Domain bağlantısı — `beymerttuhafiye.com` ve `www.beymerttuhafiye.com` production'a bağlı; apex → www 308 doğrulandı.
 - [x] Production smoke test — canlı Vercel URL üzerinde `Smoke test PASSED`.
 - [ ] Analytics kararı
 - [ ] Search Console / sitemap gönderimi
@@ -777,7 +777,7 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 - Gerçek kategori listesi
 - Gerçek konsept listesi
 - Gerçek ürün dataset'i
-- Domain
+- Domain — `beymerttuhafiye.com` satın alındı; Vercel bağlantısı ve HTTPS doğrulandı. Canonical host `www.beymerttuhafiye.com`, apex → www 308.
 - Hosting production ayarları
 - Analytics çözümü
 
