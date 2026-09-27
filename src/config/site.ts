@@ -1,6 +1,7 @@
 export const siteConfig = {
   name: "Beymert Tuhafiye",
   shortName: "Beymert Tuhafiye",
+  canonicalOrigin: "https://www.beymerttuhafiye.com",
   locationLabel: "Gemlik · Bursa",
   neighborhoodLabel: "Hamidiye · Gemlik · Bursa",
   locality: {

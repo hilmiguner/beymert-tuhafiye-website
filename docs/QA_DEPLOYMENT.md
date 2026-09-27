@@ -97,9 +97,9 @@ Production canonical origin:
 
 Final değer:
 
-`https://beymerttuhafiye.com`
+`https://www.beymerttuhafiye.com`
 
-Vercel production environment'ta yalnız domain Vercel'e bağlandıktan ve HTTPS READY olduktan sonra tanımlanmalıdır. `www.beymerttuhafiye.com` kalıcı olarak apex domaine yönlendirilir.
+Vercel production environment'ta yalnız domain Vercel'e bağlandıktan ve HTTPS READY olduktan sonra tanımlanmalıdır. `beymerttuhafiye.com` Vercel seviyesinde kalıcı olarak `www.beymerttuhafiye.com` adresine yönlendirilir.
 
 Kontrol:
 
@@ -165,11 +165,11 @@ kontrol edilir.
 6. Preview üzerinde `SMOKE_BASE_URL` ile smoke test çalıştırılır.
 7. Gerçek içerik / adres / saat doğrulaması tamamlanır.
 8. `beymerttuhafiye.com` Vercel'e bağlanır ve HTTPS READY doğrulanır.
-9. `www.beymerttuhafiye.com` bağlanır; apex domaine 308 redirect doğrulanır.
-10. `NEXT_PUBLIC_SITE_URL=https://beymerttuhafiye.com` olarak production environment'a girilir.
+9. `www.beymerttuhafiye.com` primary/canonical host olarak kullanılır; apex → www 308 redirect doğrulanır.
+10. Vercel canonical origin kod seviyesinde `https://www.beymerttuhafiye.com` olarak doğrulanır; stale `NEXT_PUBLIC_SITE_URL` değeri canonical'ı değiştiremez.
 11. Production redeploy yapılır.
 12. sitemap.xml / robots.txt / canonical / Open Graph / JSON-LD origin kontrol edilir.
-13. Google Search Console'da `sc-domain:beymerttuhafiye.com` doğrulanır ve sitemap gönderilir.
+13. Google Search Console'da `sc-domain:beymerttuhafiye.com` doğrulanır ve `https://www.beymerttuhafiye.com/sitemap.xml` gönderilir.
 14. Ana sayfa, `/gemlik-parti-malzemeleri` ve `/gemlik-tuhafiye` URL Inspection ile kontrol edilir.
 15. Lighthouse çalıştırılır.
 

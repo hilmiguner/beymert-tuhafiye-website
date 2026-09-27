@@ -1,13 +1,13 @@
 # beymerttuhafiye.com — SEO Domain Migration
 
-Canonical production domain: `https://beymerttuhafiye.com`
+Canonical production domain: `https://www.beymerttuhafiye.com`
 
 ## Marka standardı
 
 - İşletme adı: Beymert Tuhafiye
 - Logo adı: Beymert Tuhafiye
-- Canonical host: beymerttuhafiye.com
-- Secondary host: www.beymerttuhafiye.com → 308 → apex
+- Canonical host: www.beymerttuhafiye.com
+- Secondary host: beymerttuhafiye.com → 308 → www
 
 ## Sıralı geçiş
 
@@ -15,8 +15,8 @@ Canonical production domain: `https://beymerttuhafiye.com`
 2. Domain Vercel projesine eklenir.
 3. DNS ve HTTPS READY doğrulanır.
 4. `www.beymerttuhafiye.com` aynı projeye eklenir.
-5. www → apex kalıcı redirect doğrulanır.
-6. Production `NEXT_PUBLIC_SITE_URL` değeri `https://beymerttuhafiye.com` yapılır.
+5. apex → www kalıcı 308 redirect doğrulanır.
+6. Uygulamanın canonical origin'i `https://www.beymerttuhafiye.com` olarak kilitlenir.
 7. Production redeploy alınır.
 8. Aşağıdaki origin'lerin tamamı aynı canonical hostu üretmelidir:
    - canonical
@@ -26,7 +26,7 @@ Canonical production domain: `https://beymerttuhafiye.com`
    - Store/WebSite JSON-LD
 9. Google Business Profile website alanı canonical domaine çevrilir.
 10. Search Console domain property doğrulanır.
-11. `https://beymerttuhafiye.com/sitemap.xml` gönderilir.
+11. `https://www.beymerttuhafiye.com/sitemap.xml` gönderilir.
 12. Ana hedef URL'ler URL Inspection ile kontrol edilir.
 
 ## SEO güvenlik kuralları
