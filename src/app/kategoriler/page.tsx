@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { buildPageMetadata } from "@/lib/seo";
 
 import { CategoryCard } from "@/components/categories/category-card";
@@ -10,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const settings = await getStoreSettings();
 
   return buildPageMetadata({
-    title: "Kategoriler",
+    title: "Gemlik Parti & Tuhafiye Kategorileri",
     description: `${settings.shortName}’in balon, doğum günü, baby shower, söz-nişan-düğün, hediyelik ve tuhafiye kategorilerini keşfedin.`,
     path: "/kategoriler",
   });
@@ -43,6 +44,49 @@ export default async function CategoriesPage() {
             {categories.map((category) => (
               <CategoryCard key={category.slug} category={category} />
             ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section className="border-t border-border bg-surface-muted/35">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            <div>
+              <p className="bt-eyebrow text-secondary">Gemlik’te ürün grupları</p>
+              <h2 className="bt-display mt-3 text-4xl font-semibold sm:text-5xl">
+                Kutlama ve tuhafiye ihtiyaçlarını konuya göre keşfet.
+              </h2>
+            </div>
+            <div className="space-y-4 leading-7 text-muted">
+              <p>
+                Doğum günü, baby shower, cinsiyet partisi, söz-nişan-düğün ve
+                benzeri özel günlerde ihtiyaç listesi etkinliğe göre değişir.
+                Kategori sayfaları, ürünleri kullanım alanına göre daha hızlı
+                karşılaştırabilmen için hazırlanmıştır.
+              </p>
+              <p>
+                Balon ve kutlama ürünleri için{" "}
+                <Link
+                  href="/gemlik-parti-malzemeleri"
+                  className="font-extrabold text-primary hover:text-primary-hover"
+                >
+                  Gemlik parti malzemeleri
+                </Link>{" "}
+                sayfasına; tül, kurdele ve tamamlayıcı tuhafiye ürünleri için{" "}
+                <Link
+                  href="/gemlik-tuhafiye"
+                  className="font-extrabold text-primary hover:text-primary-hover"
+                >
+                  Gemlik tuhafiye
+                </Link>{" "}
+                sayfasına geçebilirsin.
+              </p>
+              <p>
+                Ürün renkleri ve stoklar dönemsel olarak değişebildiği için,
+                mağazaya gelmeden önce ilgilendiğin kategori veya ürünü
+                WhatsApp üzerinden doğrulaman faydalı olur.
+              </p>
+            </div>
           </div>
         </Container>
       </Section>

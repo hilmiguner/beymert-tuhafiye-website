@@ -34,7 +34,7 @@ const categoryLinks = [
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
-    title: "Gemlik Parti Malzemeleri | Balon & Doğum Günü",
+    title: "Gemlik Parti Malzemeleri & Balon",
     description:
       "Gemlik’te parti malzemeleri, helyumlu ve folyo balon, doğum günü, baby shower, cinsiyet partisi, söz-nişan ve özel gün ürünlerini Beymert’te keşfedin.",
     path: "/gemlik-parti-malzemeleri",
