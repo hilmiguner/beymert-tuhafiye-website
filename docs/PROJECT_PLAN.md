@@ -837,10 +837,10 @@ Canonical açık adres:
 
 - [x] Google Search Console Domain property doğrulandı.
 - [x] Sitemap gönderildi; gönderim sırasında 0 hata / 0 uyarı doğrulandı.
-- [ ] Beymert Search Console property'sini kullanılabilir analiz entegrasyonuna bağlama.
-- [ ] Ana hedef sorgular için başlangıç baseline'ı kaydetme: clicks, impressions, CTR, average position.
-- [ ] `Gemlik Tuhafiye`, `Gemlik Parti Malzemeleri`, `Bursa Tuhafiye`, `Bursa Parti Malzemeleri` sorgularını düzenli izleme.
-- [ ] Yeni local landing page'lerin index durumunu URL Inspection ile doğrulama.
+- [x] Beymert Search Console property'si analiz entegrasyonunda kullanılabilir hale getirildi — `sc-domain:beymerttuhafiye.com`; inspection ve performance read erişimi doğrulandı.
+- [x] Ana hedef sorgular için başlangıç baseline'ı kaydedildi — 2026-08-31–2026-09-27 aralığında `Gemlik Tuhafiye`, `Gemlik Parti Malzemeleri`, `Bursa Tuhafiye`, `Bursa Parti Malzemeleri`: 0 impression / 0 click; görünürlük henüz oluşmamış.
+- [x] `Gemlik Tuhafiye`, `Gemlik Parti Malzemeleri`, `Bursa Tuhafiye`, `Bursa Parti Malzemeleri` ve ikincil local sorgular için `Beymert Local SEO Targets` Search Console topic cluster'ı oluşturuldu; düzenli performans takibi bu küme üzerinden yapılacak.
+- [x] Local landing page index durumu URL Inspection ile doğrulandı — ana sayfa + `/gemlik-parti-malzemeleri` + `/gemlik-tuhafiye` `Submitted and indexed`; yeni Bursa landing page'leri 2026-09-30 itibarıyla `URL is unknown to Google`.
 - [ ] Deployment / içerik değişiklikleri sonrası query ve landing-page bazında performans karşılaştırma.
 - [ ] Düşük CTR alan ancak iyi impression/position üreten sayfalarda title / description testleri yapma.
 - [ ] Cannibalization kontrolü: aynı sorgu için birden fazla sayfanın birbirinin sinyalini zayıflatıp zayıflatmadığını izleme.
