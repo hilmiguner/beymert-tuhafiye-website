@@ -165,9 +165,14 @@ export function whatsappHref(settings: StoreSettings, message?: string) {
 }
 
 export function directionsHref(settings: StoreSettings) {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.mapQuery)}`;
+  const query = encodeURIComponent(settings.siteName);
+  const placeId = encodeURIComponent(siteConfig.googlePlaceId);
+
+  return `https://www.google.com/maps/search/?api=1&query=${query}&query_place_id=${placeId}`;
 }
 
-export function mapEmbedHref(settings: StoreSettings) {
-  return `https://www.google.com/maps?q=${encodeURIComponent(settings.mapQuery)}&output=embed`;
+export function mapEmbedHref(_settings: StoreSettings) {
+  const placeQuery = encodeURIComponent(`place_id:${siteConfig.googlePlaceId}`);
+
+  return `https://www.google.com/maps?q=${placeQuery}&output=embed`;
 }

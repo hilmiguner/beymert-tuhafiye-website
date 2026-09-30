@@ -2,6 +2,7 @@ export const siteConfig = {
   name: "Beymert Tuhafiye",
   shortName: "Beymert Tuhafiye",
   canonicalOrigin: "https://www.beymerttuhafiye.com",
+  googlePlaceId: "ChIJCRiIsplbyhQRRlnbtUGuCXs",
   locationLabel: "Gemlik · Bursa",
   neighborhoodLabel: "Hamidiye Mahallesi · Gemlik · Bursa",
   locality: {
@@ -43,11 +44,14 @@ export function whatsappHref(message?: string) {
 }
 
 export function directionsHref() {
-  const query = siteConfig.addressVerification.publicLabel;
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  const query = encodeURIComponent(siteConfig.name);
+  const placeId = encodeURIComponent(siteConfig.googlePlaceId);
+
+  return `https://www.google.com/maps/search/?api=1&query=${query}&query_place_id=${placeId}`;
 }
 
 export function mapEmbedHref() {
-  const query = encodeURIComponent(siteConfig.addressVerification.publicLabel);
-  return `https://www.google.com/maps?q=${query}&output=embed`;
+  const placeQuery = encodeURIComponent(`place_id:${siteConfig.googlePlaceId}`);
+
+  return `https://www.google.com/maps?q=${placeQuery}&output=embed`;
 }
