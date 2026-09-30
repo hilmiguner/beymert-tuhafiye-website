@@ -760,8 +760,8 @@ Amaç: Beymert Tuhafiye'nin özellikle aşağıdaki ticari ve yerel arama niyetl
 #### On-page ve içerik geliştirmeleri
 
 - [x] Tüm public route'larda title, meta description, H1, H2/H3 ve canonical audit'i — Phase 11.5 başlangıcında mevcut public route'lar gözden geçirildi; local SEO foundation iyileştirmeleri ayrı branch'te uygulandı.
-- [ ] `/gemlik-parti-malzemeleri` sayfasını gerçek ürünler, kategori bağlantıları, mağaza bilgisi, kullanım alanları ve özgün yerel içerikle daha kapsamlı hale getirme.
-- [ ] `/gemlik-tuhafiye` sayfasını gerçek tuhafiye ürünleri, tül/kurdele kullanım alanları, mağaza bilgisi ve özgün yerel içerikle güçlendirme.
+- [x] `/gemlik-parti-malzemeleri` sayfası kategori niyeti, balon/doğum günü/baby shower/söz-nişan bağlantıları, Bursa ilişkili sayfa geçişi ve güncel ürün vitriniyle derinleştirildi.
+- [x] `/gemlik-tuhafiye` sayfası tül/kurdele kullanım alanları, ilgili özel gün kategorileri, Bursa ilişkili sayfa geçişi ve güncel ürün vitriniyle güçlendirildi.
 - [x] `/bursa-parti-malzemeleri` landing page oluşturma — Gemlik'teki gerçek mağaza konumu açıkça belirtilen, özgün içerikli sayfa eklendi.
 - [x] `/bursa-tuhafiye` landing page oluşturma — Gemlik'teki gerçek mağaza konumu açıkça belirtilen, özgün tül/kurdele odaklı sayfa eklendi.
 - [x] Bursa landing page'lerinde işletmenin fiziksel olarak Gemlik/Bursa'da olduğu açıkça belirtiliyor; Bursa merkezde mağaza varmış izlenimi oluşturulmuyor.
@@ -769,7 +769,7 @@ Amaç: Beymert Tuhafiye'nin özellikle aşağıdaki ticari ve yerel arama niyetl
 - [x] Ana sayfadaki Local SEO bölümü Gemlik + Bursa landing page'lerine bağlanan dört kartlık internal-link yapısına genişletildi.
 - [ ] Kategori sayfalarını yalnız ürün grid'i olmaktan çıkarıp indekslenebilir, özgün ve kullanıcıya faydalı açıklamalarla güçlendirme.
 - [ ] Gerçek ürün ve konseptler geldikçe ilgili kategori / local landing page / ürün sayfaları arasında bağlamsal internal linking kurma.
-- [ ] Anchor text'leri doğal tutma; aynı exact-match anahtar kelimeyi aşırı tekrar etmeme.
+- [x] Local SEO landing page internal link anchor'ları bağlama göre çeşitlendirildi; exact-match tekrarına dayalı keyword stuffing kullanılmadı.
 - [x] Gemlik ve Bursa local landing page'lerinde breadcrumb JSON-LD ve ilgili sayfa bağlantıları doğrulandı / eklendi.
 
 #### Hedef içerik mimarisi
