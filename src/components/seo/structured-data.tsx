@@ -5,6 +5,14 @@ import {
   type StoreSettings,
 } from "@/lib/store-settings";
 
+function structuredStreetAddress(value: string) {
+  const suffix = `, ${siteConfig.locality.city}/${siteConfig.locality.region}`;
+
+  return value.toLocaleLowerCase("tr-TR").endsWith(suffix.toLocaleLowerCase("tr-TR"))
+    ? value.slice(0, -suffix.length).trim()
+    : value;
+}
+
 function parseHoursRange(value: string) {
   const match = value.match(
     /(\d{1,2}):(\d{2})\s*[–-]\s*(\d{1,2}):(\d{2})/,
@@ -47,7 +55,7 @@ export function StructuredData({ settings }: { settings: StoreSettings }) {
         address: {
           "@type": "PostalAddress",
           ...(hasDetailedStreetAddress
-            ? { streetAddress: settings.address }
+            ? { streetAddress: structuredStreetAddress(settings.address) }
             : {}),
           addressLocality: siteConfig.locality.city,
           addressRegion: siteConfig.locality.region,

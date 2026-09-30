@@ -2,8 +2,9 @@ export const siteConfig = {
   name: "Beymert Tuhafiye",
   shortName: "Beymert Tuhafiye",
   canonicalOrigin: "https://www.beymerttuhafiye.com",
+  googlePlaceId: "ChIJCRiIsplbyhQRRlnbtUGuCXs",
   locationLabel: "Gemlik · Bursa",
-  neighborhoodLabel: "Hamidiye · Gemlik · Bursa",
+  neighborhoodLabel: "Hamidiye Mahallesi · Gemlik · Bursa",
   locality: {
     neighborhood: "Hamidiye",
     city: "Gemlik",
@@ -20,8 +21,9 @@ export const siteConfig = {
     sundayHours: "Gelmeden önce iletişime geç",
   },
   addressVerification: {
-    status: "pending-owner-verification",
-    publicLabel: "Hamidiye · Gemlik · Bursa",
+    status: "owner-verified",
+    publicLabel:
+      "Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa",
   },
   nav: [
     { label: "Ürünler", href: "/urunler" },
@@ -42,11 +44,16 @@ export function whatsappHref(message?: string) {
 }
 
 export function directionsHref() {
-  const query = `${siteConfig.name} Gemlik Bursa`;
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  const query = encodeURIComponent(siteConfig.name);
+  const placeId = encodeURIComponent(siteConfig.googlePlaceId);
+
+  return `https://www.google.com/maps/search/?api=1&query=${query}&query_place_id=${placeId}`;
 }
 
 export function mapEmbedHref() {
-  const query = encodeURIComponent(`${siteConfig.name} Gemlik Bursa`);
+  const query = encodeURIComponent(
+    "Beymert Parti Malzemeleri Tuhafiye Tasarım Gemlik Bursa",
+  );
+
   return `https://www.google.com/maps?q=${query}&output=embed`;
 }

@@ -44,7 +44,7 @@ export const fallbackStoreSettings: StoreSettings = {
     facebook: siteConfig.facebookUrl,
     instagram: "",
   },
-  mapQuery: `${siteConfig.name} Gemlik Bursa`,
+  mapQuery: "Beymert Parti Malzemeleri Tuhafiye Tasarım Gemlik Bursa",
 };
 
 function jsonObject(value: Json): Record<string, Json | undefined> {
@@ -165,7 +165,10 @@ export function whatsappHref(settings: StoreSettings, message?: string) {
 }
 
 export function directionsHref(settings: StoreSettings) {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.mapQuery)}`;
+  const query = encodeURIComponent(settings.siteName);
+  const placeId = encodeURIComponent(siteConfig.googlePlaceId);
+
+  return `https://www.google.com/maps/search/?api=1&query=${query}&query_place_id=${placeId}`;
 }
 
 export function mapEmbedHref(settings: StoreSettings) {
