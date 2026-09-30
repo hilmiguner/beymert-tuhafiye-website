@@ -25,7 +25,7 @@ const partyCategorySlugs = new Set([
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
-    title: "Bursa Parti Malzemeleri | Gemlik Beymert",
+    title: "Bursa Parti Malzemeleri | Gemlik",
     description:
       "Bursa’da parti malzemeleri arıyorsanız Gemlik’teki Beymert’te balon, doğum günü, baby shower, söz-nişan ve özel gün ürünlerini keşfedin.",
     path: "/bursa-parti-malzemeleri",
