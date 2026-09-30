@@ -767,8 +767,8 @@ Amaç: Beymert Tuhafiye'nin özellikle aşağıdaki ticari ve yerel arama niyetl
 - [x] Bursa landing page'lerinde işletmenin fiziksel olarak Gemlik/Bursa'da olduğu açıkça belirtiliyor; Bursa merkezde mağaza varmış izlenimi oluşturulmuyor.
 - [x] Bursa sayfaları Gemlik sayfalarının kopyası olarak üretilmedi; Bursa arama niyetine özel özgün açıklamalar, mağaza konumu ve kategori bağlantıları içeriyor.
 - [x] Ana sayfadaki Local SEO bölümü Gemlik + Bursa landing page'lerine bağlanan dört kartlık internal-link yapısına genişletildi.
-- [ ] Kategori sayfalarını yalnız ürün grid'i olmaktan çıkarıp indekslenebilir, özgün ve kullanıcıya faydalı açıklamalarla güçlendirme.
-- [ ] Gerçek ürün ve konseptler geldikçe ilgili kategori / local landing page / ürün sayfaları arasında bağlamsal internal linking kurma.
+- [x] Kategori detay sayfaları yalnız ürün grid'i olmaktan çıkarıldı; kategori bazlı özgün metadata, Gemlik yerel bağlamı, mağaza bilgisi ve ilgili Gemlik/Bursa landing page bağlantıları eklendi.
+- [ ] Gerçek ürün ve konseptler geldikçe kategori / local landing page / ürün / konsept arasındaki bağlamsal internal linking'i gerçek içerik üzerinden daha da genişletme — kategori ↔ local landing page temeli tamamlandı.
 - [x] Local SEO landing page internal link anchor'ları bağlama göre çeşitlendirildi; exact-match tekrarına dayalı keyword stuffing kullanılmadı.
 - [x] Gemlik ve Bursa local landing page'lerinde breadcrumb JSON-LD ve ilgili sayfa bağlantıları doğrulandı / eklendi.
 
