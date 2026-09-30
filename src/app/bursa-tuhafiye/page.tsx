@@ -15,7 +15,7 @@ import {
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
-    title: "Bursa Tuhafiye | Tül & Kurdele | Gemlik Beymert",
+    title: "Bursa Tuhafiye | Tül & Kurdele | Gemlik",
     description:
       "Bursa’da tuhafiye, tül ve kurdele arıyorsanız Gemlik’teki Beymert’in özel gün, paketleme ve süsleme için tamamlayıcı ürünlerini keşfedin.",
     path: "/bursa-tuhafiye",
@@ -41,7 +41,7 @@ export default async function BursaNotionsPage() {
         <Container>
           <p className="bt-eyebrow text-primary">Bursa · Gemlik</p>
           <h1 className="bt-display bt-balance mt-4 max-w-5xl text-5xl leading-[0.95] font-semibold sm:text-6xl lg:text-7xl">
-            Bursa tuhafiye aramalarında Gemlik’te tül ve kurdele seçenekleri.
+            Bursa’da tuhafiye arayanlar için Gemlik’te tül ve kurdele.
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-7 text-muted sm:text-lg">
             Bursa’nın Gemlik ilçesindeki {settings.shortName}; tül, saten
