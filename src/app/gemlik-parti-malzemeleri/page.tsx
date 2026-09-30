@@ -34,7 +34,7 @@ const categoryLinks = [
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
-    title: "Gemlik Parti Malzemeleri & Balon",
+    title: "Gemlik Parti Malzemeleri | Balon & Doğum Günü",
     description:
       "Gemlik’te parti malzemeleri, helyumlu ve folyo balon, doğum günü, baby shower, cinsiyet partisi, söz-nişan ve özel gün ürünlerini Beymert’te keşfedin.",
     path: "/gemlik-parti-malzemeleri",
@@ -140,6 +140,82 @@ export default async function GemlikPartySuppliesPage() {
               sorarak güncel bilgiyi alabilirsin.
             </p>
           </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            <div>
+              <p className="bt-eyebrow text-secondary">İhtiyaca göre keşfet</p>
+              <h2 className="bt-display mt-3 text-4xl font-semibold sm:text-5xl">
+                Gemlik’te parti malzemesi ararken doğru kategoriden başla.
+              </h2>
+              <p className="mt-5 leading-7 text-muted">
+                Kutlamanın türü belli olduğunda ürün seçmek kolaylaşır. Balon,
+                masa süsü, temalı aksesuar veya hediyelik arıyorsan ihtiyacına
+                en yakın kategoriye geçerek güncel ürünleri inceleyebilirsin.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Link
+                href="/kategoriler/balonlar"
+                className="rounded-card border border-border bg-surface p-5 shadow-soft transition-colors hover:border-primary/30"
+              >
+                <h3 className="bt-display text-2xl font-semibold">
+                  Helyumlu ve folyo balonlar
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  Rakam, lateks, krom ve özel gün balon seçeneklerini keşfet.
+                </p>
+              </Link>
+              <Link
+                href="/kategoriler/dogum-gunu"
+                className="rounded-card border border-border bg-surface p-5 shadow-soft transition-colors hover:border-primary/30"
+              >
+                <h3 className="bt-display text-2xl font-semibold">
+                  Doğum günü malzemeleri
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  Tema, masa düzeni ve kutlama detaylarını birlikte planla.
+                </p>
+              </Link>
+              <Link
+                href="/kategoriler/baby-shower"
+                className="rounded-card border border-border bg-surface p-5 shadow-soft transition-colors hover:border-primary/30"
+              >
+                <h3 className="bt-display text-2xl font-semibold">
+                  Baby shower ürünleri
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  Kutlama temasına uygun balon ve tamamlayıcı ürünlere göz at.
+                </p>
+              </Link>
+              <Link
+                href="/kategoriler/soz-nisan-dugun"
+                className="rounded-card border border-border bg-surface p-5 shadow-soft transition-colors hover:border-primary/30"
+              >
+                <h3 className="bt-display text-2xl font-semibold">
+                  Söz, nişan ve düğün
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  Özel gün sunumları için dekor ve tamamlayıcı detayları incele.
+                </p>
+              </Link>
+            </div>
+          </div>
+
+          <p className="mt-8 max-w-3xl text-sm leading-7 text-muted sm:text-base">
+            Bursa genelinden parti ürünü araştırıyorsan fiziksel mağaza
+            konumumuzu ve ürün gruplarımızı anlatan{" "}
+            <Link
+              href="/bursa-parti-malzemeleri"
+              className="font-extrabold text-primary hover:text-primary-hover"
+            >
+              Bursa parti malzemeleri
+            </Link>{" "}
+            sayfasına da göz atabilirsin.
+          </p>
         </Container>
       </Section>
 

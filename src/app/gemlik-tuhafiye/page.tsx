@@ -15,7 +15,7 @@ import {
 
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
-    title: "Gemlik Tuhafiye | Tül & Kurdele",
+    title: "Gemlik Tuhafiye | Tül, Kurdele & Süsleme",
     description:
       "Gemlik tuhafiye ürünleri için tül, saten kurdele, süsleme ve özel gün hazırlıklarında kullanılan tamamlayıcı ürünleri Beymert’te keşfedin.",
     path: "/gemlik-tuhafiye",
@@ -199,6 +199,66 @@ export default async function GemlikNotionsPage() {
             >
               Tül, kurdele ve tuhafiye kategorisini incele →
             </Link>
+          </div>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+            <div>
+              <p className="bt-eyebrow text-secondary">Tamamlayıcı kullanım alanları</p>
+              <h2 className="bt-display mt-3 text-4xl font-semibold sm:text-5xl">
+                Tül ve kurdeleyi kutlamanın diğer parçalarıyla eşleştir.
+              </h2>
+              <p className="mt-5 leading-7 text-muted">
+                Tuhafiye ürünleri çoğu zaman tek başına değil, hediye,
+                süsleme veya özel gün hazırlığının tamamlayıcı parçası olarak
+                kullanılır. İhtiyacına göre ilgili ürün gruplarını birlikte
+                inceleyebilirsin.
+              </p>
+            </div>
+            <div className="space-y-4 leading-7 text-muted">
+              <p>
+                Söz ve nişan hazırlığında tül ve kurdeleleri masa, tepsi,
+                hediyelik ve dekor detaylarıyla eşleştirmek için{" "}
+                <Link
+                  href="/kategoriler/soz-nisan-dugun"
+                  className="font-extrabold text-primary hover:text-primary-hover"
+                >
+                  söz, nişan ve düğün ürünlerini
+                </Link>{" "}
+                inceleyebilirsin.
+              </p>
+              <p>
+                Doğum günü süslemesinde renk bütünlüğü kurmak istiyorsan{" "}
+                <Link
+                  href="/kategoriler/dogum-gunu"
+                  className="font-extrabold text-primary hover:text-primary-hover"
+                >
+                  doğum günü ürünleri
+                </Link>{" "}
+                ve{" "}
+                <Link
+                  href="/kategoriler/balonlar"
+                  className="font-extrabold text-primary hover:text-primary-hover"
+                >
+                  balon seçenekleri
+                </Link>{" "}
+                ile birlikte değerlendirebilirsin.
+              </p>
+              <p>
+                Bursa genelinden tuhafiye ürünü arıyorsan mağazanın gerçek
+                konumu ve ürün kapsamı için{" "}
+                <Link
+                  href="/bursa-tuhafiye"
+                  className="font-extrabold text-primary hover:text-primary-hover"
+                >
+                  Bursa tuhafiye
+                </Link>{" "}
+                sayfasını da inceleyebilirsin.
+              </p>
+            </div>
           </div>
         </Container>
       </Section>
