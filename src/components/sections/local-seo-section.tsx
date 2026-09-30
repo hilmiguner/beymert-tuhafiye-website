@@ -17,6 +17,20 @@ const localPages = [
     description:
       "Tül, saten kurdele, süsleme ve özel gün hazırlıklarında kullanılan tamamlayıcı tuhafiye ürünlerine göz at.",
   },
+  {
+    href: "/bursa-parti-malzemeleri",
+    eyebrow: "Bursa parti malzemeleri",
+    title: "Bursa genelinden parti ürünü arayanlar için Gemlik mağazası",
+    description:
+      "Bursa’da parti malzemesi ararken Gemlik’teki fiziksel mağazamızın balon, doğum günü ve özel gün ürünlerini keşfet.",
+  },
+  {
+    href: "/bursa-tuhafiye",
+    eyebrow: "Bursa tuhafiye",
+    title: "Bursa’da tül ve kurdele için Gemlik’te yerel seçenek",
+    description:
+      "Tül, saten kurdele ve özel gün tamamlayıcılarını Bursa’nın Gemlik ilçesindeki mağazamızda incele.",
+  },
 ] as const;
 
 export function LocalSeoSection() {

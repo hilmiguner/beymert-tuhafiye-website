@@ -759,18 +759,18 @@ Amaç: Beymert Tuhafiye'nin özellikle aşağıdaki ticari ve yerel arama niyetl
 
 #### On-page ve içerik geliştirmeleri
 
-- [ ] Tüm public route'larda title, meta description, H1, H2/H3 ve canonical audit'i.
+- [x] Tüm public route'larda title, meta description, H1, H2/H3 ve canonical audit'i — Phase 11.5 başlangıcında mevcut public route'lar gözden geçirildi; local SEO foundation iyileştirmeleri ayrı branch'te uygulandı.
 - [ ] `/gemlik-parti-malzemeleri` sayfasını gerçek ürünler, kategori bağlantıları, mağaza bilgisi, kullanım alanları ve özgün yerel içerikle daha kapsamlı hale getirme.
 - [ ] `/gemlik-tuhafiye` sayfasını gerçek tuhafiye ürünleri, tül/kurdele kullanım alanları, mağaza bilgisi ve özgün yerel içerikle güçlendirme.
-- [ ] `/bursa-parti-malzemeleri` landing page oluşturma.
-- [ ] `/bursa-tuhafiye` landing page oluşturma.
-- [ ] Bursa landing page'lerinde işletmenin fiziksel olarak Gemlik/Bursa'da olduğu açıkça belirtilmeli; Bursa merkezde mağaza varmış izlenimi oluşturulmamalı.
-- [ ] Bursa sayfaları Gemlik sayfalarının şehir adı değiştirilmiş kopyası olmamalı; doorway / thin-content riski yaratmayacak özgün kullanıcı değeri sağlamalı.
-- [ ] Ana sayfadaki Local SEO bölümünü Gemlik + Bursa sinyalleri ve doğru internal-link mimarisiyle geliştirme.
+- [x] `/bursa-parti-malzemeleri` landing page oluşturma — Gemlik'teki gerçek mağaza konumu açıkça belirtilen, özgün içerikli sayfa eklendi.
+- [x] `/bursa-tuhafiye` landing page oluşturma — Gemlik'teki gerçek mağaza konumu açıkça belirtilen, özgün tül/kurdele odaklı sayfa eklendi.
+- [x] Bursa landing page'lerinde işletmenin fiziksel olarak Gemlik/Bursa'da olduğu açıkça belirtiliyor; Bursa merkezde mağaza varmış izlenimi oluşturulmuyor.
+- [x] Bursa sayfaları Gemlik sayfalarının kopyası olarak üretilmedi; Bursa arama niyetine özel özgün açıklamalar, mağaza konumu ve kategori bağlantıları içeriyor.
+- [x] Ana sayfadaki Local SEO bölümü Gemlik + Bursa landing page'lerine bağlanan dört kartlık internal-link yapısına genişletildi.
 - [ ] Kategori sayfalarını yalnız ürün grid'i olmaktan çıkarıp indekslenebilir, özgün ve kullanıcıya faydalı açıklamalarla güçlendirme.
 - [ ] Gerçek ürün ve konseptler geldikçe ilgili kategori / local landing page / ürün sayfaları arasında bağlamsal internal linking kurma.
 - [ ] Anchor text'leri doğal tutma; aynı exact-match anahtar kelimeyi aşırı tekrar etmeme.
-- [ ] Her önemli landing page için breadcrumb ve ilgili sayfa bağlantılarını doğrulama.
+- [x] Gemlik ve Bursa local landing page'lerinde breadcrumb JSON-LD ve ilgili sayfa bağlantıları doğrulandı / eklendi.
 
 #### Hedef içerik mimarisi
 
@@ -847,7 +847,7 @@ Canonical açık adres:
 
 #### Teknik SEO / kalite kapısı
 
-- [ ] Yeni local landing page'leri sitemap'e ekleme.
+- [x] Yeni Bursa local landing page'leri sitemap'e eklendi.
 - [ ] Canonical URL'leri production host `https://www.beymerttuhafiye.com` üzerinde doğrulama.
 - [ ] robots / noindex davranışını kontrol etme.
 - [ ] Broken internal link kontrolü.
