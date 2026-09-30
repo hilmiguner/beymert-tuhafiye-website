@@ -48,6 +48,18 @@ export function SiteFooter({ settings }: { settings: StoreSettings }) {
               >
                 Gemlik Tuhafiye
               </Link>
+              <Link
+                href="/bursa-parti-malzemeleri"
+                className="w-fit font-bold transition-colors hover:text-primary"
+              >
+                Bursa Parti Malzemeleri
+              </Link>
+              <Link
+                href="/bursa-tuhafiye"
+                className="w-fit font-bold transition-colors hover:text-primary"
+              >
+                Bursa Tuhafiye
+              </Link>
             </div>
           </div>
 
