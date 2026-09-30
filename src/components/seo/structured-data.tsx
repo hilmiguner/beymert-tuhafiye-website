@@ -6,19 +6,11 @@ import {
 } from "@/lib/store-settings";
 
 function structuredStreetAddress(value: string) {
-  const localitySuffix = new RegExp(
-    `,\\s*${siteConfig.locality.city}\\s*\\/\\s*${siteConfig.locality.region}\\s*import { siteConfig } from "@/config/site";
-import { absoluteUrl } from "@/lib/seo";
-import {
-  directionsHref,
-  type StoreSettings,
-} from "@/lib/store-settings";
+  const suffix = `, ${siteConfig.locality.city}/${siteConfig.locality.region}`;
 
-,
-    "i",
-  );
-
-  return value.replace(localitySuffix, "").trim();
+  return value.toLocaleLowerCase("tr-TR").endsWith(suffix.toLocaleLowerCase("tr-TR"))
+    ? value.slice(0, -suffix.length).trim()
+    : value;
 }
 
 function parseHoursRange(value: string) {
