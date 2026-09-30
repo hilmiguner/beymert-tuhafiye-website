@@ -147,3 +147,25 @@ Hedefler:
 - Accessibility: 95+
 - Best Practices: 95+
 - SEO: 95+
+
+
+## Local SEO production audit — 2026-09-30
+
+Production üzerinde doğrulananlar:
+
+- `/gemlik-parti-malzemeleri`: 200, canonical `https://www.beymerttuhafiye.com/gemlik-parti-malzemeleri`, `index, follow`, tek H1.
+- `/gemlik-tuhafiye`: 200, canonical `https://www.beymerttuhafiye.com/gemlik-tuhafiye`, `index, follow`, tek H1.
+- `/bursa-parti-malzemeleri`: 200, canonical `https://www.beymerttuhafiye.com/bursa-parti-malzemeleri`, `index, follow`, tek H1.
+- `/bursa-tuhafiye`: 200, canonical `https://www.beymerttuhafiye.com/bursa-tuhafiye`, `index, follow`, tek H1.
+- Kritik kategori örnekleri `/kategoriler/balonlar` ve `/kategoriler/tul-kurdele-tuhafiye`: 200, doğru canonical, `index, follow`, tek H1.
+- `robots.txt`: public crawl açık, `/admin` ve `/preview` disallow, sitemap canonical host üzerinde.
+- `sitemap.xml`: Gemlik/Bursa local landing page'leri ve dinamik kategori/konsept/ürün route'ları canonical `www` host ile listeleniyor.
+
+NAP audit bulguları:
+
+- Site canonical adresi: `Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa`.
+- Yandex kaydı: `Hamidiye Mah., Irmak Sok., No:32/1C, Gemlik, Bursa` — eski/çelişkili.
+- Güncel harita/business kaydı: `Hamidiye, Kuvayi Milliye Bl. 2/A, Gemlik/Bursa` — site canonical adresinden farklı adres gösterimi.
+- Telefon: `+90 543 337 70 04` kaynaklarda tutarlı.
+
+Sonraki harici aksiyon: Google Business Profile / harita kaydı ve Yandex işletme kaydında adresi işletme sahibinin doğruladığı canonical adres standardına yaklaştırmak; fiziksel konum platform tarafından farklı cadde/sokak adıyla normalize ediliyorsa bunu mağaza sahibi hesabından doğrulamak.

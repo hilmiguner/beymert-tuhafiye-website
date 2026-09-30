@@ -808,9 +808,9 @@ Kural: yüksek adetli, düşük kaliteli veya yalnız anahtar kelime varyasyonu 
 - [ ] Gerçek müşteri yorumlarını doğal şekilde teşvik etme; yorum satın alma veya manipülatif yorum toplama yapılmaz.
 - [ ] Gelen Google yorumlarına düzenli ve doğal yanıt verme.
 - [ ] İnternetteki temel işletme kayıtlarında NAP tutarlılığı sağlama: Name / Address / Phone.
-- [ ] Eski veya çelişkili adres kayıtlarını tespit edip mümkün olan platformlarda düzeltme.
-- [ ] Özellikle Yandex ve diğer görünür işletme dizinlerindeki eski adres kayıtlarını kontrol etme.
-- [ ] Site, Google Business Profile ve harita/dizin kayıtlarında canonical işletme adı, tam adres ve telefon bilgisini aynı standarda getirme.
+- [x] Eski veya çelişkili adres kayıtları tespit edildi — Yandex `Hamidiye Mah., Irmak Sok., No:32/1C`; güncel harita/business kaydı `Hamidiye, Kuvayi Milliye Bl. 2/A` gösteriyor. Sitenin işletme sahibi tarafından doğrulanmış canonical adresi `Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa`. Harici platform düzeltmeleri açık iş olarak devam ediyor.
+- [x] Yandex ve görünür harita/business kayıtları kontrol edildi; adres tutarsızlığı doğrulandı. Düzeltme işlemleri ilgili platform hesaplarından yapılacak.
+- [ ] Site, Google Business Profile ve harita/dizin kayıtlarında canonical işletme adı, tam adres ve telefon bilgisini aynı standarda getirme — telefon `+90 543 337 70 04` kaynaklarda tutarlı; adres standardizasyonu hâlâ açık.
 
 Canonical açık adres:
 
@@ -848,7 +848,7 @@ Canonical açık adres:
 #### Teknik SEO / kalite kapısı
 
 - [x] Yeni Bursa local landing page'leri sitemap'e eklendi.
-- [ ] Canonical URL'leri production host `https://www.beymerttuhafiye.com` üzerinde doğrulama.
+- [x] Canonical URL'ler production host `https://www.beymerttuhafiye.com` üzerinde doğrulandı — Gemlik/Bursa local landing page'leri ve kritik kategori sayfaları 200 + doğru canonical + `index, follow` + tek H1 ile canlıda kontrol edildi.
 - [x] robots / noindex davranışı otomatik smoke test ile korunuyor; public sitemap route'larında noindex reddediliyor, admin/preview robots kuralları doğrulanıyor.
 - [x] Broken internal link kontrolü otomatik smoke testin sitemap crawl ve discovered internal-link taramasıyla korunuyor.
 - [x] Duplicate title / duplicate description audit'i — production smoke test sitemap genelinde benzersizlik kontrolü yapacak şekilde genişletildi.
