@@ -24,9 +24,6 @@ function fail(message) {
   process.exitCode = 1;
 }
 
-function warn(message) {
-  process.stderr.write(`WARN: ${message}\n`);
-}
 
 function normalizeText(value) {
   return value
