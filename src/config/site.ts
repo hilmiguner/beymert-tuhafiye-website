@@ -51,7 +51,9 @@ export function directionsHref() {
 }
 
 export function mapEmbedHref() {
-  const placeQuery = encodeURIComponent(`place_id:${siteConfig.googlePlaceId}`);
+  const query = encodeURIComponent(
+    "Beymert Parti Malzemeleri Tuhafiye Tasarım Gemlik Bursa",
+  );
 
-  return `https://www.google.com/maps?q=${placeQuery}&output=embed`;
+  return `https://www.google.com/maps?q=${query}&output=embed`;
 }
