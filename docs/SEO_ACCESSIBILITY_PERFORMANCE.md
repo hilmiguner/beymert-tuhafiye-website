@@ -169,3 +169,42 @@ NAP audit bulguları:
 - Telefon: `+90 543 337 70 04` kaynaklarda tutarlı.
 
 Sonraki harici aksiyon: Google Business Profile / harita kaydı ve Yandex işletme kaydında adresi işletme sahibinin doğruladığı canonical adres standardına yaklaştırmak; fiziksel konum platform tarafından farklı cadde/sokak adıyla normalize ediliyorsa bunu mağaza sahibi hesabından doğrulamak.
+
+
+## Search Console baseline — 2026-09-30
+
+Property:
+
+- `sc-domain:beymerttuhafiye.com`
+- Search Console settled data through: 2026-09-27
+- Son 28 gün: 0 clicks, 0 impressions, 0 CTR.
+- Search Console performance datası henüz organik görünürlük üretmediği için average position anlamlı bir baseline vermiyor.
+
+Ana hedef sorguların başlangıç durumu:
+
+| Query | Impressions | Clicks | CTR | Position |
+| --- | ---: | ---: | ---: | ---: |
+| Gemlik Tuhafiye | 0 | 0 | 0% | — |
+| Gemlik Parti Malzemeleri | 0 | 0 | 0% | — |
+| Bursa Tuhafiye | 0 | 0 | 0% | — |
+| Bursa Parti Malzemeleri | 0 | 0 | 0% | — |
+
+URL Inspection:
+
+- `https://www.beymerttuhafiye.com/` — PASS, Submitted and indexed, Googlebot Smartphone crawl successful; son crawl 2026-09-29.
+- `/gemlik-parti-malzemeleri` — PASS, Submitted and indexed; sitemap referansı üzerinden keşfedilmiş; son crawl 2026-09-29.
+- `/gemlik-tuhafiye` — PASS, Submitted and indexed; sitemap referansı üzerinden keşfedilmiş; son crawl 2026-09-27.
+- `/bursa-parti-malzemeleri` — URL is unknown to Google; henüz crawl edilmemiş.
+- `/bursa-tuhafiye` — URL is unknown to Google; henüz crawl edilmemiş.
+- `/kategoriler/balonlar` — URL is unknown to Google; henüz crawl edilmemiş.
+
+Sitemap durumu:
+
+- `https://www.beymerttuhafiye.com/sitemap.xml` mevcut ve Search Console'a kayıtlı.
+- Search Console sitemap özeti son raporda eski/stale bir `indexed: 0` değeri gösterirken URL Inspection üç önemli URL'nin gerçekten indexed olduğunu doğruluyor; indeks kararı için URL Inspection daha güncel referans olarak kullanılmalı.
+- Canlı sitemap production üzerinde Gemlik/Bursa landing page'leri dahil 45 URL döndürüyor.
+- Sitemap'i programatik olarak yeniden gönderme denemesi GSC bağlantısındaki read-only OAuth scope nedeniyle reddedildi. Yeniden submit gerekirse GSC Wizard hesabında full Search Console access açılmalı veya Search Console arayüzünden manuel yapılmalı.
+
+Ölçüm yorumu:
+
+Bu baseline bir sıralama düşüşünü değil, yeni domain/site için henüz arama görünürlüğü oluşmadığını gösterir. İlk anlamlı SEO karşılaştırması impressions oluşmaya başladıktan sonra yapılacaktır.
