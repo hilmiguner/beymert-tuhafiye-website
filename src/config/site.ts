@@ -3,7 +3,7 @@ export const siteConfig = {
   shortName: "Beymert Tuhafiye",
   canonicalOrigin: "https://www.beymerttuhafiye.com",
   locationLabel: "Gemlik · Bursa",
-  neighborhoodLabel: "Hamidiye · Gemlik · Bursa",
+  neighborhoodLabel: "Hamidiye Mahallesi · Gemlik · Bursa",
   locality: {
     neighborhood: "Hamidiye",
     city: "Gemlik",
@@ -20,8 +20,9 @@ export const siteConfig = {
     sundayHours: "Gelmeden önce iletişime geç",
   },
   addressVerification: {
-    status: "pending-owner-verification",
-    publicLabel: "Hamidiye · Gemlik · Bursa",
+    status: "owner-verified",
+    publicLabel:
+      "Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa",
   },
   nav: [
     { label: "Ürünler", href: "/urunler" },
@@ -42,11 +43,11 @@ export function whatsappHref(message?: string) {
 }
 
 export function directionsHref() {
-  const query = `${siteConfig.name} Gemlik Bursa`;
+  const query = siteConfig.addressVerification.publicLabel;
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
 export function mapEmbedHref() {
-  const query = encodeURIComponent(`${siteConfig.name} Gemlik Bursa`);
+  const query = encodeURIComponent(siteConfig.addressVerification.publicLabel);
   return `https://www.google.com/maps?q=${query}&output=embed`;
 }

@@ -626,17 +626,17 @@ Durum: TAMAMLANDI
 
 ### Phase 9 — About, Trust & Store Contact
 
-Durum: TAMAMLANDI — açık adres ve çalışma saatlerinin işletme sahibi doğrulaması Phase 10'a taşındı.
+Durum: TAMAMLANDI — tam açık adres işletme sahibi tarafından doğrulandı; çalışma saatlerinin final doğrulaması Phase 10'da devam ediyor.
 
 - [x] Hakkımızda içeriği
 - [x] Neden Biz? bölümü
 - [x] Mağaza bilgileri
-- [ ] Tam açık adres — kaynaklar arasında çelişki var; Gemlik/Hamidiye seviyesi ve isim bazlı harita araması aktif, kapı numarası Phase 10 işletme sahibi doğrulamasıyla kilitlenecek.
+- [x] Tam açık adres — işletme sahibi tarafından doğrulandı: Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa.
 - [x] Telefon
 - [ ] Çalışma saatleri — public listing Pzt–Cmt 10:00–19:30 olarak işlendi; Phase 10'da işletme sahibiyle final doğrulama yapılacak.
 - [x] WhatsApp
-- [x] Yol tarifi — işletme adıyla güncel harita aramasına yönlendiriliyor.
-- [x] Harita — işletme adıyla arama yapan lazy-loaded embed.
+- [x] Yol tarifi — doğrulanmış tam adres üzerinden harita aramasına yönlendiriliyor.
+- [x] Harita — doğrulanmış tam adresi kullanan lazy-loaded embed.
 - [x] Final CTA
 - [x] İletişim sayfası
 
@@ -671,7 +671,8 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - [ ] Gerçek kategorileri tanımlama.
 - [ ] Gerçek konseptleri tanımlama.
 - [ ] Gerçek ürün / konsept / galeri fotoğraflarını yükleme.
-- [ ] Açık adres ve çalışma saatlerini işletme sahibiyle doğrulama.
+- [x] Açık adresi işletme sahibiyle doğrulama — Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa.
+- [ ] Çalışma saatlerini işletme sahibiyle final doğrulama.
 - [x] RLS / authorization güvenlik denetimi — public tabloların RLS/policy/grant yüzeyi denetlendi; anon grant'leri read-only seviyesine indirildi, CMS RPC execute izinleri anon'dan kaldırıldı, future postgres default privileges harden edildi ve draft medya metadata'sının anon tarafından listelenmesi engellendi. Supabase Security Advisor'da yalnız hesap seviyesindeki leaked-password-protection uyarısı kaldı.
 - [ ] Dükkan sahibi gerçek kullanım testi.
 - [ ] CMS sonrası public-site regression / SEO / performans QA.
@@ -701,7 +702,7 @@ Durum: TAMAMLANDI — final Lighthouse ölçümü Phase 12 production QA kapsam�
 - [x] Open Graph
 - [x] Sitemap
 - [x] robots.txt
-- [x] Structured data — WebSite + LocalBusiness; doğrulanmamış sokak/kapı numarası ve çalışma saati schema'ya eklenmedi.
+- [x] Structured data — WebSite + Store; işletme sahibi tarafından doğrulanan tam adres PostalAddress schema'sına bağlandı, çalışma saati mevcut CMS verisinden üretiliyor.
 - [x] Alt text audit — gerçek media metadata'sında alt zorunlu; dekoratif artwork aria-hidden, ürün placeholder'ı anlamlı aria-label kullanıyor.
 - [x] Heading audit — route sayfalarında tek ana H1 ve section bazlı H2/H3 yapısı korunuyor.
 - [x] Keyboard navigation — skip link, mobile nav inert state, Escape desteği ve gallery dialog focus trap/restore.
@@ -733,7 +734,7 @@ Durum: QA DEVAM EDİYOR — production deployment ve smoke test tamamlandı; bro
 - [x] Domain bağlantısı — `beymerttuhafiye.com` ve `www.beymerttuhafiye.com` production'a bağlı; apex → www 308 doğrulandı.
 - [x] Production smoke test — canlı Vercel URL üzerinde `Smoke test PASSED`.
 - [ ] Analytics kararı
-- [ ] Search Console / sitemap gönderimi
+- [x] Search Console / sitemap gönderimi — Domain property doğrulandı; sitemap 0 hata / 0 uyarı ile gönderildi.
 
 ## 17. Post-MVP Backlog
 
@@ -783,4 +784,4 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 
 ---
 
-Son güncelleme: 2026-09-26
+Son güncelleme: 2026-09-30
