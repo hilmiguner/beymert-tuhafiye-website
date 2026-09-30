@@ -208,3 +208,44 @@ Sitemap durumu:
 Ölçüm yorumu:
 
 Bu baseline bir sıralama düşüşünü değil, yeni domain/site için henüz arama görünürlüğü oluşmadığını gösterir. İlk anlamlı SEO karşılaştırması impressions oluşmaya başladıktan sonra yapılacaktır.
+
+
+### Indexing tracker ve keyword cluster
+
+2026-09-30 itibarıyla GSC Wizard Indexing Tracker aktif edildi.
+
+Takip edilen 8 kritik URL:
+
+- Ana sayfa
+- Gemlik Parti Malzemeleri
+- Gemlik Tuhafiye
+- Bursa Parti Malzemeleri
+- Bursa Tuhafiye
+- Balonlar kategorisi
+- Doğum Günü kategorisi
+- Tül · Kurdele · Tuhafiye kategorisi
+
+İlk tracker snapshot:
+
+- Total: 8
+- Indexed: 3
+- Not indexed: 5
+- Pending: 0
+- Errors: 0
+- Warnings: 0
+
+Indexed:
+
+- Ana sayfa
+- `/gemlik-parti-malzemeleri`
+- `/gemlik-tuhafiye`
+
+Not indexed / henüz Google tarafından yeterince işlenmemiş:
+
+- `/bursa-parti-malzemeleri` — URL is unknown to Google
+- `/bursa-tuhafiye` — URL is unknown to Google
+- `/kategoriler/balonlar` — URL is unknown to Google
+- `/kategoriler/dogum-gunu` — URL is unknown to Google
+- `/kategoriler/tul-kurdele-tuhafiye` — Discovered - currently not indexed
+
+Ayrıca `Beymert Local SEO Targets` topic cluster'ı oluşturuldu. Cluster; dört ana ticari sorgunun yanında Gemlik balon, helyumlu balon, doğum günü, baby shower, cinsiyet partisi, söz-nişan, tül, kurdele ve hediyelik sorgularını içeriyor.
