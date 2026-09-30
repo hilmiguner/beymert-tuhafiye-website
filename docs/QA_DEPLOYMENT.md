@@ -79,6 +79,9 @@ Smoke test:
 - CMS kaynaklı ürün/kategori/konsept detail route ailelerinin sitemap'te bulunduğunu doğrular
 - opsiyonel `SMOKE_EXPECT_PATHS` ile belirli CMS route'larının sitemap'e gerçekten yansıdığını kontrol eder
 - public HTML sayfalarında title, meta description, canonical ve Open Graph URL kontrolü yapar
+- sitemap'teki her public HTML sayfasında tam bir H1 bulunduğunu doğrular
+- sitemap genelinde duplicate title ve duplicate meta description değerlerini hata olarak raporlar
+- bulunan JSON-LD bloklarının geçerli JSON olduğunu doğrular
 - sitemap'te admin/preview gibi private route'ların bulunmadığını doğrular
 - HTML sayfalarındaki internal linkleri keşfeder
 - internal link status kodlarını kontrol eder

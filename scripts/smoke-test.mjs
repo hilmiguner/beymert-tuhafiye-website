@@ -24,6 +24,18 @@ function fail(message) {
   process.exitCode = 1;
 }
 
+
+function normalizeText(value) {
+  return value
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 async function fetchPath(pathname, { redirect = "follow" } = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -136,7 +148,9 @@ function hasNoindex(html) {
 }
 
 function assertPublicMetadata(html, pathname) {
-  const title = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.trim();
+  const rawTitle = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]?.trim();
+  const title = rawTitle ? normalizeText(rawTitle) : null;
+
   if (!title) {
     fail(`${pathname}: missing or empty <title>`);
   }
@@ -146,7 +160,10 @@ function assertPublicMetadata(html, pathname) {
     "meta",
     (tag) => getAttribute(tag, "name")?.toLowerCase() === "description",
   );
-  if (!getAttribute(descriptionTag ?? "", "content")?.trim()) {
+  const rawDescription = getAttribute(descriptionTag ?? "", "content")?.trim();
+  const description = rawDescription ? normalizeText(rawDescription) : null;
+
+  if (!description) {
     fail(`${pathname}: missing meta description`);
   }
 
@@ -195,6 +212,67 @@ function assertPublicMetadata(html, pathname) {
 
   if (hasNoindex(html)) {
     fail(`${pathname}: public sitemap route is marked noindex`);
+  }
+
+  return { title, description };
+}
+
+function assertHeadingStructure(html, pathname) {
+  const h1Count = [...html.matchAll(/<h1\b[^>]*>/gi)].length;
+
+  if (h1Count !== 1) {
+    fail(`${pathname}: expected exactly one H1, found ${h1Count}`);
+  }
+}
+
+function assertStructuredDataJson(html, pathname) {
+  const scripts = [
+    ...html.matchAll(
+      /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+    ),
+  ];
+
+  for (const [index, match] of scripts.entries()) {
+    try {
+      JSON.parse(match[1]);
+    } catch {
+      fail(`${pathname}: invalid JSON-LD in structured data block ${index + 1}`);
+    }
+  }
+}
+
+function auditDuplicateMetadata(entries) {
+  const fields = [
+    ["title", "title"],
+    ["description", "meta description"],
+  ];
+
+  for (const [field, label] of fields) {
+    const values = new Map();
+
+    for (const entry of entries) {
+      const value = entry[field];
+
+      if (!value) {
+        continue;
+      }
+
+      const paths = values.get(value) ?? [];
+      paths.push(entry.pathname);
+      values.set(value, paths);
+    }
+
+    for (const [value, paths] of values) {
+      if (paths.length < 2) {
+        continue;
+      }
+
+      const preview =
+        value.length > 110 ? `${value.slice(0, 107)}...` : value;
+      fail(
+        `Duplicate ${label} across ${paths.join(", ")}: "${preview}"`,
+      );
+    }
   }
 }
 
@@ -250,6 +328,7 @@ for (const expectedPath of expectedPaths) {
 }
 
 const discoveredLinks = new Set();
+const publicMetadata = [];
 
 for (const pathname of routePaths) {
   const response = await request(pathname);
@@ -264,13 +343,18 @@ for (const pathname of routePaths) {
   }
 
   const html = await response.text();
-  assertPublicMetadata(html, pathname);
+  const metadata = assertPublicMetadata(html, pathname);
+  assertHeadingStructure(html, pathname);
+  assertStructuredDataJson(html, pathname);
+  publicMetadata.push({ pathname, ...metadata });
 
   for (const href of extractInternalLinks(html)) {
     discoveredLinks.add(href);
   }
 }
 
+auditDuplicateMetadata(publicMetadata);
+line(`SEO metadata audited: ${publicMetadata.length} pages`);
 line(`Internal links discovered: ${discoveredLinks.size}`);
 
 for (const href of discoveredLinks) {

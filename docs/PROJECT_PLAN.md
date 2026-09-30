@@ -849,10 +849,10 @@ Canonical açık adres:
 
 - [x] Yeni Bursa local landing page'leri sitemap'e eklendi.
 - [ ] Canonical URL'leri production host `https://www.beymerttuhafiye.com` üzerinde doğrulama.
-- [ ] robots / noindex davranışını kontrol etme.
-- [ ] Broken internal link kontrolü.
-- [ ] Duplicate title / duplicate description audit'i.
-- [ ] Heading hierarchy audit'i.
+- [x] robots / noindex davranışı otomatik smoke test ile korunuyor; public sitemap route'larında noindex reddediliyor, admin/preview robots kuralları doğrulanıyor.
+- [x] Broken internal link kontrolü otomatik smoke testin sitemap crawl ve discovered internal-link taramasıyla korunuyor.
+- [x] Duplicate title / duplicate description audit'i — production smoke test sitemap genelinde benzersizlik kontrolü yapacak şekilde genişletildi.
+- [x] Heading hierarchy audit'i — mevcut route auditine ek olarak smoke test her public sitemap route'unda tam bir H1 zorunluluğunu otomatik doğruluyor.
 - [ ] Mobil ve desktop render / content parity kontrolü.
 - [ ] Final Lighthouse SEO hedefi: 95+.
 - [ ] Gerçek medya sonrası Core Web Vitals etkisini tekrar ölçme.
