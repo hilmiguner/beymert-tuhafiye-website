@@ -80,7 +80,11 @@ Ana dönüşüm aksiyonları:
 │   └── /konseptler/[slug]
 ├── /galeri
 ├── /hakkimizda
-└── /iletisim
+├── /iletisim
+├── /gemlik-parti-malzemeleri
+├── /gemlik-tuhafiye
+├── /bursa-parti-malzemeleri          # Phase 11.5 planlı
+└── /bursa-tuhafiye                   # Phase 11.5 planlı
 ```
 
 Ana sayfa içinde planlanan bölüm sırası:
@@ -714,6 +718,171 @@ Durum: TAMAMLANDI — final Lighthouse ölçümü Phase 12 production QA kapsam�
 - [x] Core Web Vitals kod seviyesi optimizasyonu — static/SSG routes, responsive image layer, transform/opacity animation yaklaşımı ve ağır medya yok. Field ölçümü Phase 12'de.
 - [ ] Lighthouse hedeflerinin kontrolü — production URL ve gerçek medya sonrası Phase 12'de ölçülecek.
 
+### Phase 11.5 — Local SEO Growth / Gemlik & Bursa
+
+Durum: PLANLANDI — gerçek ürün/kategori içeriği toplu şekilde girilmeden önce uygulanacak öncelikli SEO geliştirme paketi.
+
+Amaç: Beymert Tuhafiye'nin özellikle aşağıdaki ticari ve yerel arama niyetlerinde güçlü, ölçülebilir ve sürdürülebilir organik görünürlük kazanmasını sağlamak:
+
+- `Gemlik Tuhafiye`
+- `Gemlik Parti Malzemeleri`
+- `Bursa Tuhafiye`
+- `Bursa Parti Malzemeleri`
+
+İkincil hedef sorgu kümeleri:
+
+- Gemlik balon
+- Gemlik helyumlu balon
+- Gemlik doğum günü malzemeleri
+- Gemlik doğum günü süsleri
+- Gemlik baby shower malzemeleri
+- Gemlik cinsiyet partisi malzemeleri
+- Gemlik söz / nişan malzemeleri
+- Gemlik tül
+- Gemlik kurdele
+- Gemlik hediyelik
+- Bursa balon / doğum günü / özel gün ürünleri ile ilgili anlamlı uzun kuyruklu sorgular
+
+#### Mevcut güçlü temel
+
+- [x] `/gemlik-parti-malzemeleri` landing page
+- [x] `/gemlik-tuhafiye` landing page
+- [x] Ana sayfada Gemlik odaklı title / description
+- [x] Page-level canonical URL
+- [x] Open Graph metadata
+- [x] Sitemap ve robots.txt
+- [x] Breadcrumb JSON-LD
+- [x] WebSite + Store structured data
+- [x] Doğrulanmış tam adresin structured data'ya bağlanması
+- [x] Kategori / ürün / konsept sayfalarının sitemap'e dahil edilmesi
+- [x] Ana sayfadan yerel SEO landing page'lerine internal linking
+
+#### On-page ve içerik geliştirmeleri
+
+- [ ] Tüm public route'larda title, meta description, H1, H2/H3 ve canonical audit'i.
+- [ ] `/gemlik-parti-malzemeleri` sayfasını gerçek ürünler, kategori bağlantıları, mağaza bilgisi, kullanım alanları ve özgün yerel içerikle daha kapsamlı hale getirme.
+- [ ] `/gemlik-tuhafiye` sayfasını gerçek tuhafiye ürünleri, tül/kurdele kullanım alanları, mağaza bilgisi ve özgün yerel içerikle güçlendirme.
+- [ ] `/bursa-parti-malzemeleri` landing page oluşturma.
+- [ ] `/bursa-tuhafiye` landing page oluşturma.
+- [ ] Bursa landing page'lerinde işletmenin fiziksel olarak Gemlik/Bursa'da olduğu açıkça belirtilmeli; Bursa merkezde mağaza varmış izlenimi oluşturulmamalı.
+- [ ] Bursa sayfaları Gemlik sayfalarının şehir adı değiştirilmiş kopyası olmamalı; doorway / thin-content riski yaratmayacak özgün kullanıcı değeri sağlamalı.
+- [ ] Ana sayfadaki Local SEO bölümünü Gemlik + Bursa sinyalleri ve doğru internal-link mimarisiyle geliştirme.
+- [ ] Kategori sayfalarını yalnız ürün grid'i olmaktan çıkarıp indekslenebilir, özgün ve kullanıcıya faydalı açıklamalarla güçlendirme.
+- [ ] Gerçek ürün ve konseptler geldikçe ilgili kategori / local landing page / ürün sayfaları arasında bağlamsal internal linking kurma.
+- [ ] Anchor text'leri doğal tutma; aynı exact-match anahtar kelimeyi aşırı tekrar etmeme.
+- [ ] Her önemli landing page için breadcrumb ve ilgili sayfa bağlantılarını doğrulama.
+
+#### Hedef içerik mimarisi
+
+```text
+/
+├── /gemlik-parti-malzemeleri
+├── /gemlik-tuhafiye
+├── /bursa-parti-malzemeleri
+├── /bursa-tuhafiye
+├── /kategoriler/balonlar
+├── /kategoriler/dogum-gunu
+├── /kategoriler/baby-shower
+├── /kategoriler/cinsiyet-partisi
+├── /kategoriler/soz-nisan-dugun
+├── /kategoriler/tul-kurdele-tuhafiye
+├── /urunler/[slug]
+└── /konseptler/[slug]
+```
+
+Gerçek arama talebi ve içerik kalitesi yeterli olduğunda değerlendirilebilecek rehber içerikler:
+
+- `/rehber/gemlik-dogum-gunu-malzemeleri`
+- `/rehber/helyumlu-balon-nedir`
+- `/rehber/dogum-gunu-balon-secimi`
+- `/rehber/baby-shower-malzemeleri`
+- `/rehber/nisan-masasi-susleme`
+
+Kural: yüksek adetli, düşük kaliteli veya yalnız anahtar kelime varyasyonu için üretilmiş SEO sayfaları oluşturulmaz. Az sayıda, özgün ve faydalı içerik tercih edilir.
+
+#### Local SEO / Google Business Profile / NAP
+
+- [ ] Google Business Profile ana kategori ve uygun ikincil kategorileri doğrulama.
+- [ ] Google Business Profile işletme adı, adres, telefon, web sitesi ve çalışma saatlerini final bilgilerle eşitleme.
+- [ ] Google Business Profile'a gerçek mağaza / ürün / vitrin fotoğrafları ekleme ve güncel tutma.
+- [ ] Gerçek müşteri yorumlarını doğal şekilde teşvik etme; yorum satın alma veya manipülatif yorum toplama yapılmaz.
+- [ ] Gelen Google yorumlarına düzenli ve doğal yanıt verme.
+- [ ] İnternetteki temel işletme kayıtlarında NAP tutarlılığı sağlama: Name / Address / Phone.
+- [ ] Eski veya çelişkili adres kayıtlarını tespit edip mümkün olan platformlarda düzeltme.
+- [ ] Özellikle Yandex ve diğer görünür işletme dizinlerindeki eski adres kayıtlarını kontrol etme.
+- [ ] Site, Google Business Profile ve harita/dizin kayıtlarında canonical işletme adı, tam adres ve telefon bilgisini aynı standarda getirme.
+
+Canonical açık adres:
+
+`Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa`
+
+#### Structured data geliştirmeleri
+
+- [ ] Store JSON-LD için gerçek koordinatlar doğrulandıktan sonra `geo.latitude` ve `geo.longitude` ekleme.
+- [ ] Gerçek mağaza görselleri geldikten sonra uygun `image` alanlarını ekleme.
+- [ ] Final logo asset'i geldiğinde structured data ve metadata tarafında logo kullanımını değerlendirme.
+- [ ] Çalışma saatleri owner tarafından final doğrulandıktan sonra `openingHoursSpecification` doğruluğunu tekrar kontrol etme.
+- [ ] Sosyal hesaplar doğrulandıkça `sameAs` listesini eksiksiz tutma.
+- [ ] Gerçek ürün datası tamamlandığında uygun ürün sayfalarında Product structured data değerlendirme / uygulama.
+- [ ] Structured data değişikliklerini Google Rich Results / schema doğrulama araçlarıyla kontrol etme.
+
+#### Görsel SEO
+
+- [ ] Gerçek ürün, mağaza ve konsept fotoğraflarında açıklayıcı ve doğal alt text kullanma.
+- [ ] Dosya adlarını mümkün olduğunca anlamlı tutma.
+- [ ] Görsel boyut / format / responsive `sizes` ve Next/Image optimizasyonunu gerçek içerik sonrası tekrar audit etme.
+- [ ] Aynı görselin gereksiz tekrar kullanımını ve düşük kaliteli placeholder içeriğini azaltma.
+
+#### Search Console ve ölçüm
+
+- [x] Google Search Console Domain property doğrulandı.
+- [x] Sitemap gönderildi; gönderim sırasında 0 hata / 0 uyarı doğrulandı.
+- [ ] Beymert Search Console property'sini kullanılabilir analiz entegrasyonuna bağlama.
+- [ ] Ana hedef sorgular için başlangıç baseline'ı kaydetme: clicks, impressions, CTR, average position.
+- [ ] `Gemlik Tuhafiye`, `Gemlik Parti Malzemeleri`, `Bursa Tuhafiye`, `Bursa Parti Malzemeleri` sorgularını düzenli izleme.
+- [ ] Yeni local landing page'lerin index durumunu URL Inspection ile doğrulama.
+- [ ] Deployment / içerik değişiklikleri sonrası query ve landing-page bazında performans karşılaştırma.
+- [ ] Düşük CTR alan ancak iyi impression/position üreten sayfalarda title / description testleri yapma.
+- [ ] Cannibalization kontrolü: aynı sorgu için birden fazla sayfanın birbirinin sinyalini zayıflatıp zayıflatmadığını izleme.
+
+#### Teknik SEO / kalite kapısı
+
+- [ ] Yeni local landing page'leri sitemap'e ekleme.
+- [ ] Canonical URL'leri production host `https://www.beymerttuhafiye.com` üzerinde doğrulama.
+- [ ] robots / noindex davranışını kontrol etme.
+- [ ] Broken internal link kontrolü.
+- [ ] Duplicate title / duplicate description audit'i.
+- [ ] Heading hierarchy audit'i.
+- [ ] Mobil ve desktop render / content parity kontrolü.
+- [ ] Final Lighthouse SEO hedefi: 95+.
+- [ ] Gerçek medya sonrası Core Web Vitals etkisini tekrar ölçme.
+
+#### Uygulama sırası
+
+1. Mevcut metadata / heading / canonical / internal-link audit'i.
+2. Gemlik landing page'lerini derinleştirme.
+3. Bursa Parti Malzemeleri landing page'i.
+4. Bursa Tuhafiye landing page'i.
+5. Ana sayfa local SEO ve internal-link güncellemesi.
+6. Structured data geliştirmeleri.
+7. Kategori sayfalarının SEO içeriğini güçlendirme.
+8. Sitemap / breadcrumb / internal-link finalizasyonu.
+9. Google index kontrolü.
+10. Gerçek ürünler girildikçe ürün/kategori/konsept sinyallerini local landing page'lere bağlama.
+11. Search Console verisi yeterli hale geldikçe sorgu bazlı iterasyon.
+
+#### Başarı ölçütü
+
+Amaç tek başına belirli bir sıra numarasını garanti etmek değildir. Başarı aşağıdaki metriklerle ölçülür:
+
+- hedef sorgularda artan impressions
+- hedef sorgularda yükselen organik clicks
+- iyileşen CTR
+- zaman içinde daha iyi average position
+- local landing page'lerin doğru şekilde indexlenmesi
+- Google Business Profile / web sitesi / dizinler arasında NAP tutarlılığı
+- organik aramadan WhatsApp, telefon ve mağaza ziyareti niyetinin artması
+
 ### Phase 12 — QA & Deployment
 
 Durum: QA DEVAM EDİYOR — production deployment ve smoke test tamamlandı; browser/gerçek cihaz matrisi aktif.
@@ -767,6 +936,9 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 - Hazır UI kitleri yalnızca kaynak/component havuzu olarak kullanılır.
 - Kullanıcı harici bir servise login olmak zorunda kalmaz.
 - WhatsApp ana iletişim/dönüşüm kanallarından biridir.
+- Yerel SEO'nun ana hedefleri Gemlik'te parti malzemeleri/tuhafiye sorguları; ikincil genişleme hedefleri Bursa parti malzemeleri/tuhafiye sorgularıdır.
+- Bursa SEO sayfaları işletmenin Gemlik'teki gerçek konumunu açıkça belirtir; yanıltıcı şehir/mağaza konumu sinyali üretilmez.
+- Local SEO başarısı yalnız sıralamayla değil Search Console görünürlüğü, CTR, index durumu, NAP tutarlılığı ve dönüşüm niyetiyle ölçülür.
 - Ürün ve konsept bazında özel WhatsApp mesajı tanımlanabilir; boş bırakılırsa varsayılan bağlamsal mesaj kullanılır.
 - Performans, animasyon gösterişinden daha yüksek önceliğe sahiptir.
 
