@@ -42,7 +42,9 @@ kullanılır.
 Owner-verified çalışma saatleri:
 
 - Pazartesi–Cumartesi: 10:00–19:30
-- Pazar: 13:00–19:09
+- Pazar: 13:00–19:30
+
+Google Business Profile'da Pazar kapanışını 19:30 yapmak için düzeltme 2 Ekim 2026'da gönderildi; Google onayı beklenirken site ve structured data owner-verified 19:30 değerini kullanır.
 
 `openingHoursSpecification` iki ayrı kayıtla Pazartesi–Cumartesi ve Pazar saatlerini temsil eder. Gerçek katalog doğrulanana kadar Product schema eklenmez.
 
