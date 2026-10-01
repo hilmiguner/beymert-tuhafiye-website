@@ -1,6 +1,6 @@
 # About, Trust & Store Contact
 
-Phase 9 mağaza ve iletişim katmanının referansıdır.
+Phase 9 mağaza ve iletişim katmanının güncel referansıdır.
 
 ## İçerik yaklaşımı
 
@@ -22,60 +22,76 @@ Telefon:
 - 0543 337 70 04
 - +90 543 337 70 04
 
+Website:
+
+- https://www.beymerttuhafiye.com
+
 Facebook:
 
 - facebook.com/beymertasarim
 
-## Adres doğrulama durumu
+## Canonical adres
 
-19 Eylül 2026 tarihli public listing kontrolünde aynı telefon numarasıyla farklı adres gösterimleri bulundu.
+İşletme sahibi tarafından doğrulanan site adresi:
 
-Bir harita/business listing:
-- Hamidiye
-- Kuvayi Milliye Bl. 2/A
-- Gemlik / Bursa
+- Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa
 
-Diğer güncel listing:
-- Hamidiye Mah.
-- Irmak Sok.
-- No:32/1C
-- Gemlik / Bursa
+Site, Supabase `store_settings`, footer, iletişim bölümü ve Store JSON-LD bu canonical adresi kullanır.
 
-Başka bir directory ise:
-- Hamidiye
-- Irmak Sk. 2/A
-- Gemlik / Bursa
+## Harici platform NAP durumu — 1 Ekim 2026
 
-Bu nedenle uygulamada tam kapı numarası public kullanıcıya kesin bilgi gibi sunulmaz.
+Google Business Profile:
 
-Phase 9:
-- "Hamidiye · Gemlik · Bursa" gösterir
-- yol tarifini işletme adıyla harita aramasına açar
-- map embed'i işletme adıyla arar
+- adres doğru fiziksel mağazayı gösteriyor
+- telefon doğru
+- website doğru
+- işletme adı tabela değişikliği planı nedeniyle şimdilik mevcut haliyle korunuyor
+- Google adres metnini kendi harita veri modeline göre normalize edebilir; doğruluk değerlendirmesinde fiziksel konum ve pin esas alınır
 
-Phase 10'da işletme sahibinden final açık adres doğrulanmalıdır.
+Yandex Business / Maps:
+
+- eski ve hatalı `Irmak Sok. No:32/1C` kaydı "Move" kullanılmadan "Edit" ile düzeltildi
+- public kartta `Hamidiye Mahallesi Kuşlu Sokak No: 2 Gemlik Bursa` gösteriliyor
+- Yandex `2/A` değerini kabul etmediği için platformda `No: 2` normalizasyonu korunuyor
+- pin aynı fiziksel mağazayı gösterdiği sürece site canonical `2/A` adresi değiştirilmez
+- telefon ve website doğru
+- işletme adı tabela değişikliği planı nedeniyle şimdilik mevcut haliyle korunuyor
+
+Bu nedenle adres metinlerinin platformlar arasında karakter karakter aynı olması zorunlu kabul edilmez. Aynı fiziksel mağaza, doğru pin, telefon ve web sitesi tutarlılığı esas alınır.
 
 ## Çalışma saatleri
 
-Güncel business listing Pzt–Cmt 10:00–19:30 gösteriyor.
-Başka listing 10:00–19:00 gösteriyor.
+Mevcut site verisi:
 
-Bu yüzden site geliştirme verisi:
 - Pzt–Cmt 10:00–19:30
 - Pazar: gelmeden önce iletişime geç
 
-olarak yapılandırılmıştır ve "özel günlerde değişebilir" notu gösterir.
-
-Production öncesi işletme sahibi doğrulaması gereklidir.
+Çalışma saatleri henüz işletme sahibi tarafından final doğrulanmış kabul edilmez. Özel günlerde değişebileceği notu public sitede gösterilir.
 
 ## Harita ve yol tarifi
 
-Exact address yerine işletme adı + Gemlik + Bursa sorgusu kullanılır.
+Yol tarifi:
 
-Bu yaklaşım:
-- yanlış kapı numarasını hard-code etmez
-- harita sağlayıcısının güncel business kaydını kullanmasına izin verir
-- adres doğrulandığında merkezi config üzerinden kolayca değiştirilebilir
+- doğrulanmış Google Place ID `ChIJCRiIsplbyhQRRlnbtUGuCXs` kullanır
+- işletme adı sorgusu Place ID ile birlikte gönderilir
+
+Map embed:
+
+- `Beymert Parti Malzemeleri Tuhafiye Tasarım Gemlik Bursa` sorgusunu kullanır
+- önceki yanlış marker davranışı nedeniyle iframe'de `place_id:` sorgusu kullanılmaz
+
+Bu yapı Google'ın görünen adres metnini farklı normalize etmesinden bağımsız olarak doğru işletme kaydına yönlendirmeyi amaçlar.
+
+## NAP regresyon kontrolü
+
+Production smoke test public sitemap HTML sayfalarında:
+
+- canonical adresi
+- telefonun display ve E.164 biçimini
+- Google Place ID'yi
+- eski `Irmak Sok` ve `32/1C` kalıntılarının bulunmadığını
+
+otomatik olarak denetler.
 
 ## Yeni sayfalar / bölümler
 
