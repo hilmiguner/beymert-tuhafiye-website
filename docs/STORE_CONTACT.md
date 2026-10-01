@@ -61,7 +61,7 @@ Bu nedenle adres metinlerinin platformlar arasında karakter karakter aynı olma
 
 ## Çalışma saatleri
 
-1 Ekim 2026 tarihinde işletme sahibi tarafından final doğrulandı; Google Business Profile'daki saatlerle aynıdır:
+2 Ekim 2026 tarihinde işletme sahibi tarafından final doğrulandı. Google Business Profile'da Pazar kapanışı için 19:09 → 19:30 düzeltmesi gönderildi; platform onayı bekleniyor:
 
 - Pazartesi: 10:00–19:30
 - Salı: 10:00–19:30
@@ -69,12 +69,12 @@ Bu nedenle adres metinlerinin platformlar arasında karakter karakter aynı olma
 - Perşembe: 10:00–19:30
 - Cuma: 10:00–19:30
 - Cumartesi: 10:00–19:30
-- Pazar: 13:00–19:09
+- Pazar: 13:00–19:30
 
 Site/CMS özeti:
 
 - Pazartesi–Cumartesi: 10:00–19:30
-- Pazar: 13:00–19:09
+- Pazar: 13:00–19:30
 
 Public görünüm ve Store JSON-LD bu owner-verified saatleri kullanır.
 

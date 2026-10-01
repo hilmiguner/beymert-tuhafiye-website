@@ -637,7 +637,7 @@ Durum: TAMAMLANDI — tam açık adres ve çalışma saatleri işletme sahibi ta
 - [x] Mağaza bilgileri
 - [x] Tam açık adres — işletme sahibi tarafından doğrulandı: Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa.
 - [x] Telefon
-- [x] Çalışma saatleri — işletme sahibi tarafından doğrulandı: Pzt–Cmt 10:00–19:30, Pazar 13:00–19:09.
+- [x] Çalışma saatleri — işletme sahibi tarafından doğrulandı: Pzt–Cmt 10:00–19:30, Pazar 13:00–19:30.
 - [x] WhatsApp
 - [x] Yol tarifi — doğrulanmış tam adres üzerinden harita aramasına yönlendiriliyor.
 - [x] Harita — doğrulanmış tam adresi kullanan lazy-loaded embed.
@@ -676,7 +676,7 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - [ ] Gerçek konseptleri tanımlama.
 - [ ] Gerçek ürün / konsept / galeri fotoğraflarını yükleme.
 - [x] Açık adresi işletme sahibiyle doğrulama — Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa.
-- [x] Çalışma saatlerini işletme sahibiyle final doğrulama — Pzt–Cmt 10:00–19:30, Pazar 13:00–19:09.
+- [x] Çalışma saatlerini işletme sahibiyle final doğrulama — Pzt–Cmt 10:00–19:30, Pazar 13:00–19:30.
 - [x] RLS / authorization güvenlik denetimi — public tabloların RLS/policy/grant yüzeyi denetlendi; anon grant'leri read-only seviyesine indirildi, CMS RPC execute izinleri anon'dan kaldırıldı, future postgres default privileges harden edildi ve draft medya metadata'sının anon tarafından listelenmesi engellendi. Supabase Security Advisor'da yalnız hesap seviyesindeki leaked-password-protection uyarısı kaldı.
 - [ ] Dükkan sahibi gerçek kullanım testi.
 - [ ] CMS sonrası public-site regression / SEO / performans QA.
@@ -803,7 +803,7 @@ Kural: yüksek adetli, düşük kaliteli veya yalnız anahtar kelime varyasyonu 
 #### Local SEO / Google Business Profile / NAP
 
 - [ ] Google Business Profile ana kategori ve uygun ikincil kategorileri doğrulama.
-- [ ] Google Business Profile işletme adını nihai tabela adıyla final eşitleme — adres, telefon, website ve çalışma saatleri 1 Ekim 2026 itibarıyla doğru; işletme adı planlanan tabela değişikliğine kadar bilinçli olarak korunuyor.
+- [ ] Google Business Profile işletme adını nihai tabela adıyla final eşitleme — adres, telefon ve website doğru; owner-verified çalışma saatleri Pzt–Cmt 10:00–19:30, Pazar 13:00–19:30. Pazar kapanışı için Google Business düzeltmesi 2 Ekim 2026'da gönderildi ve platform onayı bekleniyor; işletme adı planlanan tabela değişikliğine kadar bilinçli olarak korunuyor.
 - [ ] Google Business Profile'a gerçek mağaza / ürün / vitrin fotoğrafları ekleme ve güncel tutma.
 - [ ] Gerçek müşteri yorumlarını doğal şekilde teşvik etme; yorum satın alma veya manipülatif yorum toplama yapılmaz.
 - [ ] Gelen Google yorumlarına düzenli ve doğal yanıt verme.
@@ -823,7 +823,7 @@ Canonical açık adres:
 - [ ] Store JSON-LD için gerçek koordinatlar doğrulandıktan sonra `geo.latitude` ve `geo.longitude` ekleme.
 - [ ] Gerçek mağaza görselleri geldikten sonra uygun `image` alanlarını ekleme.
 - [ ] Final logo asset'i geldiğinde structured data ve metadata tarafında logo kullanımını değerlendirme.
-- [x] Çalışma saatleri owner tarafından final doğrulandı; Store `openingHoursSpecification` Pzt–Cmt 10:00–19:30 ve Pazar 13:00–19:09 olarak güncellendi ve smoke test ile korunuyor.
+- [x] Çalışma saatleri owner tarafından final doğrulandı; Store `openingHoursSpecification` Pzt–Cmt 10:00–19:30 ve Pazar 13:00–19:30 olarak güncellendi ve smoke test ile korunuyor.
 - [ ] Sosyal hesaplar doğrulandıkça `sameAs` listesini eksiksiz tutma.
 - [ ] Gerçek ürün datası tamamlandığında uygun ürün sayfalarında Product structured data değerlendirme / uygulama.
 - [ ] Structured data değişikliklerini Google Rich Results / schema doğrulama araçlarıyla kontrol etme.
@@ -958,4 +958,4 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 
 ---
 
-Son güncelleme: 2026-10-01
+Son güncelleme: 2026-10-02
