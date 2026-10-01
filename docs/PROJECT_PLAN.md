@@ -803,14 +803,16 @@ Kural: yüksek adetli, düşük kaliteli veya yalnız anahtar kelime varyasyonu 
 #### Local SEO / Google Business Profile / NAP
 
 - [ ] Google Business Profile ana kategori ve uygun ikincil kategorileri doğrulama.
-- [ ] Google Business Profile işletme adı, adres, telefon, web sitesi ve çalışma saatlerini final bilgilerle eşitleme.
+- [ ] Google Business Profile işletme adı ve çalışma saatlerini nihai tabela/owner bilgisiyle final eşitleme — adres, telefon ve website 1 Ekim 2026 kontrolünde doğru; işletme adı planlanan tabela değişikliğine kadar bilinçli olarak korunuyor.
 - [ ] Google Business Profile'a gerçek mağaza / ürün / vitrin fotoğrafları ekleme ve güncel tutma.
 - [ ] Gerçek müşteri yorumlarını doğal şekilde teşvik etme; yorum satın alma veya manipülatif yorum toplama yapılmaz.
 - [ ] Gelen Google yorumlarına düzenli ve doğal yanıt verme.
-- [ ] İnternetteki temel işletme kayıtlarında NAP tutarlılığı sağlama: Name / Address / Phone.
-- [x] Eski veya çelişkili adres kayıtları tespit edildi — Yandex `Hamidiye Mah., Irmak Sok., No:32/1C`; güncel harita/business kaydı `Hamidiye, Kuvayi Milliye Bl. 2/A` gösteriyor. Sitenin işletme sahibi tarafından doğrulanmış canonical adresi `Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa`. Harici platform düzeltmeleri açık iş olarak devam ediyor.
-- [x] Yandex ve görünür harita/business kayıtları kontrol edildi; adres tutarsızlığı doğrulandı. Düzeltme işlemleri ilgili platform hesaplarından yapılacak.
-- [ ] Site, Google Business Profile ve harita/dizin kayıtlarında canonical işletme adı, tam adres ve telefon bilgisini aynı standarda getirme — telefon `+90 543 337 70 04` kaynaklarda tutarlı; adres standardizasyonu hâlâ açık.
+- [ ] İnternetteki temel işletme kayıtlarında final NAP tutarlılığı sağlama: Address / Phone operasyonel olarak hizalandı; Name finalizasyonu tabela değişikliğine kadar açık.
+- [x] Eski veya çelişkili adres kayıtları tespit edildi — Yandex'teki hatalı `Hamidiye Mah., Irmak Sok., No:32/1C` kaydı düzeltme kaynağı olarak belirlendi; sitenin işletme sahibi tarafından doğrulanmış canonical adresi `Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa`.
+- [x] Yandex adresi "Move" kullanılmadan "Edit" ile düzeltildi — public kart `Hamidiye Mahallesi Kuşlu Sokak No: 2 Gemlik Bursa` gösteriyor; Yandex `2/A` kabul etmediği için aynı fiziksel mağazayı gösteren `No: 2` platform normalizasyonu korunuyor.
+- [x] Site + Google Business Profile + Yandex için adres/telefon hizalaması tamamlandı — site canonical `2/A` adresini koruyor; Google ve Yandex doğru fiziksel mağaza/pini gösteriyor; telefon `+90 543 337 70 04` tutarlı.
+- [x] Site NAP production audit tamamlandı — footer, iletişim, local landing page'ler, Store JSON-LD ve Place ID yönlendirmesi doğrulandı; legacy `Irmak Sok` / `32/1C` metni public render'da bulunmuyor ve smoke test ile korunuyor.
+- [ ] Google/Yandex/site işletme adını nihai tabela adıyla tek standarda getirme — tabela değişikliğine kadar mevcut platform adları bilinçli olarak korunuyor.
 
 Canonical açık adres:
 
