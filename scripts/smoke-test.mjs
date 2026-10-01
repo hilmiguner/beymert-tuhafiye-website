@@ -15,6 +15,26 @@ const expectedPaths = (process.env.SMOKE_EXPECT_PATHS ?? "")
   .filter(Boolean)
   .map((value) => (value.startsWith("/") ? value : `/${value}`));
 
+const expectedNap = {
+  address:
+    process.env.SMOKE_EXPECT_NAP_ADDRESS?.trim() ||
+    "Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa",
+  phoneDisplay:
+    process.env.SMOKE_EXPECT_NAP_PHONE?.trim() || "0543 337 70 04",
+  phoneE164:
+    process.env.SMOKE_EXPECT_NAP_PHONE_E164?.trim() || "+905433377004",
+  googlePlaceId:
+    process.env.SMOKE_EXPECT_GOOGLE_PLACE_ID?.trim() ||
+    "ChIJCRiIsplbyhQRRlnbtUGuCXs",
+};
+
+const forbiddenNapFragments = (
+  process.env.SMOKE_FORBIDDEN_NAP_FRAGMENTS ?? "Irmak Sok|32/1C"
+)
+  .split("|")
+  .map((value) => value.trim())
+  .filter(Boolean);
+
 function line(message = "") {
   process.stdout.write(`${message}\n`);
 }
@@ -241,6 +261,27 @@ function assertStructuredDataJson(html, pathname) {
   }
 }
 
+function assertNapConsistency(html, pathname) {
+  const requiredValues = [
+    ["canonical address", expectedNap.address],
+    ["display phone", expectedNap.phoneDisplay],
+    ["E.164 phone", expectedNap.phoneE164.replace("+", "")],
+    ["Google Place ID", expectedNap.googlePlaceId],
+  ];
+
+  for (const [label, value] of requiredValues) {
+    if (!html.includes(value)) {
+      fail(`${pathname}: missing expected NAP ${label}: ${value}`);
+    }
+  }
+
+  for (const fragment of forbiddenNapFragments) {
+    if (html.toLocaleLowerCase("tr-TR").includes(fragment.toLocaleLowerCase("tr-TR"))) {
+      fail(`${pathname}: legacy NAP fragment found: ${fragment}`);
+    }
+  }
+}
+
 function auditDuplicateMetadata(entries) {
   const fields = [
     ["title", "title"],
@@ -346,6 +387,7 @@ for (const pathname of routePaths) {
   const metadata = assertPublicMetadata(html, pathname);
   assertHeadingStructure(html, pathname);
   assertStructuredDataJson(html, pathname);
+  assertNapConsistency(html, pathname);
   publicMetadata.push({ pathname, ...metadata });
 
   for (const href of extractInternalLinks(html)) {
