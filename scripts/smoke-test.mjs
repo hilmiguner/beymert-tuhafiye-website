@@ -39,7 +39,7 @@ const expectedOpeningHours = {
   weekdayOpens: process.env.SMOKE_EXPECT_WEEKDAY_OPENS?.trim() || "10:00",
   weekdayCloses: process.env.SMOKE_EXPECT_WEEKDAY_CLOSES?.trim() || "19:30",
   sundayOpens: process.env.SMOKE_EXPECT_SUNDAY_OPENS?.trim() || "13:00",
-  sundayCloses: process.env.SMOKE_EXPECT_SUNDAY_CLOSES?.trim() || "19:09",
+  sundayCloses: process.env.SMOKE_EXPECT_SUNDAY_CLOSES?.trim() || "19:30",
 };
 
 function line(message = "") {
