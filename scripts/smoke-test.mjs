@@ -35,6 +35,13 @@ const forbiddenNapFragments = (
   .map((value) => value.trim())
   .filter(Boolean);
 
+const expectedOpeningHours = {
+  weekdayOpens: process.env.SMOKE_EXPECT_WEEKDAY_OPENS?.trim() || "10:00",
+  weekdayCloses: process.env.SMOKE_EXPECT_WEEKDAY_CLOSES?.trim() || "19:30",
+  sundayOpens: process.env.SMOKE_EXPECT_SUNDAY_OPENS?.trim() || "13:00",
+  sundayCloses: process.env.SMOKE_EXPECT_SUNDAY_CLOSES?.trim() || "19:09",
+};
+
 function line(message = "") {
   process.stdout.write(`${message}\n`);
 }
@@ -282,6 +289,75 @@ function assertNapConsistency(html, pathname) {
   }
 }
 
+function assertOpeningHours(html, pathname) {
+  const scripts = [
+    ...html.matchAll(
+      /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+    ),
+  ];
+
+  let store = null;
+
+  for (const match of scripts) {
+    try {
+      const data = JSON.parse(match[1]);
+      const nodes = Array.isArray(data?.["@graph"]) ? data["@graph"] : [data];
+      const candidate = nodes.find((node) => node?.["@type"] === "Store");
+
+      if (candidate) {
+        store = candidate;
+        break;
+      }
+    } catch {
+      // JSON syntax is validated separately.
+    }
+  }
+
+  if (!store) {
+    fail(`${pathname}: Store JSON-LD not found for opening-hours audit`);
+    return;
+  }
+
+  const specs = Array.isArray(store.openingHoursSpecification)
+    ? store.openingHoursSpecification
+    : store.openingHoursSpecification
+      ? [store.openingHoursSpecification]
+      : [];
+
+  const weekday = specs.find((spec) => {
+    const days = Array.isArray(spec?.dayOfWeek)
+      ? spec.dayOfWeek
+      : [spec?.dayOfWeek].filter(Boolean);
+
+    return days.includes("Monday") && days.includes("Saturday");
+  });
+  const sunday = specs.find((spec) => {
+    const days = Array.isArray(spec?.dayOfWeek)
+      ? spec.dayOfWeek
+      : [spec?.dayOfWeek].filter(Boolean);
+
+    return days.includes("Sunday");
+  });
+
+  if (
+    weekday?.opens !== expectedOpeningHours.weekdayOpens ||
+    weekday?.closes !== expectedOpeningHours.weekdayCloses
+  ) {
+    fail(
+      `${pathname}: weekday opening hours mismatch; got ${weekday?.opens ?? "<missing>"}–${weekday?.closes ?? "<missing>"}`,
+    );
+  }
+
+  if (
+    sunday?.opens !== expectedOpeningHours.sundayOpens ||
+    sunday?.closes !== expectedOpeningHours.sundayCloses
+  ) {
+    fail(
+      `${pathname}: Sunday opening hours mismatch; got ${sunday?.opens ?? "<missing>"}–${sunday?.closes ?? "<missing>"}`,
+    );
+  }
+}
+
 function auditDuplicateMetadata(entries) {
   const fields = [
     ["title", "title"],
@@ -388,6 +464,7 @@ for (const pathname of routePaths) {
   assertHeadingStructure(html, pathname);
   assertStructuredDataJson(html, pathname);
   assertNapConsistency(html, pathname);
+  assertOpeningHours(html, pathname);
   publicMetadata.push({ pathname, ...metadata });
 
   for (const href of extractInternalLinks(html)) {
