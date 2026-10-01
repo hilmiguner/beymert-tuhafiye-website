@@ -25,21 +25,26 @@ Production origin öncelik sırası:
 
 Production deployment öncesi `NEXT_PUBLIC_SITE_URL` kesin domain ile ayarlanmalıdır.
 
-### Structured data sınırı
+### Structured data durumu
 
-Public kaynaklarda tam adres ve çalışma saatleri çelişkili olduğu için JSON-LD içinde:
+İşletme sahibi doğrulaması sonrası Store JSON-LD içinde:
 
+- canonical tam adres
 - doğrulanmış telefon
 - işletme adı
 - Facebook
 - Gemlik / Bursa locality
-- harita araması
+- doğrulanmış Google Place ID tabanlı harita yönlendirmesi
+- owner-verified çalışma saatleri
 
 kullanılır.
 
-Doğrulanmamış sokak, kapı numarası ve openingHours schema içine eklenmez.
+Owner-verified çalışma saatleri:
 
-Gerçek katalog doğrulanana kadar Product schema da eklenmez.
+- Pazartesi–Cumartesi: 10:00–19:30
+- Pazar: 13:00–19:09
+
+`openingHoursSpecification` iki ayrı kayıtla Pazartesi–Cumartesi ve Pazar saatlerini temsil eder. Gerçek katalog doğrulanana kadar Product schema eklenmez.
 
 ## Accessibility
 

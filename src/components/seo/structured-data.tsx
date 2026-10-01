@@ -35,6 +35,36 @@ export function StructuredData({ settings }: { settings: StoreSettings }) {
     settings.socialLinks.instagram,
   ].filter(Boolean);
   const weekdayHours = parseHoursRange(settings.openingHours.weekdayHours);
+  const sundayHours = parseHoursRange(settings.openingHours.sundayHours);
+  const openingHoursSpecification = [
+    ...(weekdayHours
+      ? [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+            ],
+            opens: weekdayHours.opens,
+            closes: weekdayHours.closes,
+          },
+        ]
+      : []),
+    ...(sundayHours
+      ? [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Sunday",
+            opens: sundayHours.opens,
+            closes: sundayHours.closes,
+          },
+        ]
+      : []),
+  ];
   const hasDetailedStreetAddress = /\d/.test(settings.address);
 
   const graph = {
@@ -65,22 +95,8 @@ export function StructuredData({ settings }: { settings: StoreSettings }) {
           "@type": "City",
           name: siteConfig.locality.city,
         },
-        ...(weekdayHours
-          ? {
-              openingHoursSpecification: {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday",
-                ],
-                opens: weekdayHours.opens,
-                closes: weekdayHours.closes,
-              },
-            }
+        ...(openingHoursSpecification.length > 0
+          ? { openingHoursSpecification }
           : {}),
         knowsAbout: [
           "Parti malzemeleri",
