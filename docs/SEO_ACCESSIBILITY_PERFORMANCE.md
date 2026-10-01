@@ -161,14 +161,16 @@ Production üzerinde doğrulananlar:
 - `robots.txt`: public crawl açık, `/admin` ve `/preview` disallow, sitemap canonical host üzerinde.
 - `sitemap.xml`: Gemlik/Bursa local landing page'leri ve dinamik kategori/konsept/ürün route'ları canonical `www` host ile listeleniyor.
 
-NAP audit bulguları:
+NAP audit durumu — 1 Ekim 2026:
 
 - Site canonical adresi: `Hamidiye Mahallesi, Kuşlu Sokak, Semöz Apartmanı No: 2/A, Gemlik/Bursa`.
-- Yandex kaydı: `Hamidiye Mah., Irmak Sok., No:32/1C, Gemlik, Bursa` — eski/çelişkili.
-- Güncel harita/business kaydı: `Hamidiye, Kuvayi Milliye Bl. 2/A, Gemlik/Bursa` — site canonical adresinden farklı adres gösterimi.
-- Telefon: `+90 543 337 70 04` kaynaklarda tutarlı.
-
-Sonraki harici aksiyon: Google Business Profile / harita kaydı ve Yandex işletme kaydında adresi işletme sahibinin doğruladığı canonical adres standardına yaklaştırmak; fiziksel konum platform tarafından farklı cadde/sokak adıyla normalize ediliyorsa bunu mağaza sahibi hesabından doğrulamak.
+- Google Business Profile: adres doğru fiziksel mağazayı/pini gösteriyor; telefon ve website doğru. Google adres metnini kendi harita veri modeline göre normalize edebilir.
+- Yandex Business / Maps: hatalı `Irmak Sok. No:32/1C` kaydı "Edit" ile düzeltildi. Public kart `Hamidiye Mahallesi Kuşlu Sokak No: 2 Gemlik Bursa` gösteriyor; Yandex `2/A` kabul etmediği için `No: 2` platform normalizasyonu korunuyor.
+- Telefon: `+90 543 337 70 04` site, Google ve Yandex tarafında tutarlı.
+- Website: `https://www.beymerttuhafiye.com` Google ve Yandex tarafında doğru.
+- Google/Yandex işletme adları planlanan tabela değişikliğine kadar bilinçli olarak mevcut haliyle bırakıldı; final Name standardizasyonu tabela değişikliğinde tek seferde yapılacak.
+- Production public sayfalar canonical adres, telefon ve doğrulanmış Google Place ID açısından kontrol edildi; eski `Irmak Sok` / `32/1C` metni render edilmiyor.
+- Smoke test canonical adres, telefon, Place ID ve legacy adres kalıntılarını otomatik denetler.
 
 
 ## Search Console baseline — 2026-09-30
