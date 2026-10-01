@@ -61,7 +61,7 @@ Bu nedenle adres metinlerinin platformlar arasında karakter karakter aynı olma
 
 ## Çalışma saatleri
 
-2 Ekim 2026 tarihinde işletme sahibi tarafından final doğrulandı. Google Business Profile'da Pazar kapanışı için 19:09 → 19:30 düzeltmesi gönderildi; platform onayı bekleniyor:
+2 Ekim 2026 tarihinde işletme sahibi tarafından final doğrulandı. Google Business Profile'da Pazar kapanışını 19:30 yapmak için düzeltme gönderildi; platform onayı bekleniyor:
 
 - Pazartesi: 10:00–19:30
 - Salı: 10:00–19:30
