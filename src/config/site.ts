@@ -18,7 +18,7 @@ export const siteConfig = {
     weekdayLabel: "Pazartesi – Cumartesi",
     weekdayHours: "10:00 – 19:30",
     sundayLabel: "Pazar",
-    sundayHours: "13:00 – 19:09",
+    sundayHours: "13:00 – 19:30",
   },
   addressVerification: {
     status: "owner-verified",
