@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+import {
+  buildAdminCategoryOptions,
+  type CategoryLevel,
+} from "@/lib/category-hierarchy";
 import { createClient } from "@/lib/supabase/server";
 
 const successMessages: Record<string, string> = {
@@ -14,6 +18,12 @@ const statusLabels = {
   archived: "Arşiv",
 } as const;
 
+const levelLabels: Record<CategoryLevel, string> = {
+  1: "Ana kategori",
+  2: "Alt kategori",
+  3: "3. seviye",
+};
+
 export default async function AdminCategoriesPage({
   searchParams,
 }: {
@@ -23,9 +33,15 @@ export default async function AdminCategoriesPage({
   const supabase = await createClient();
   const { data: categories, error: queryError } = await supabase
     .from("categories")
-    .select("id, name, slug, description, status, sort_order, updated_at")
+    .select(
+      "id, parent_id, name, slug, description, status, sort_order, updated_at",
+    )
     .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
+
+  const rows = categories ?? [];
+  const rowsById = new Map(rows.map((category) => [category.id, category]));
+  const hierarchy = buildAdminCategoryOptions(rows);
 
   return (
     <section>
@@ -36,8 +52,9 @@ export default async function AdminCategoriesPage({
             Kategoriler
           </h1>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">
-            Ürünleri gruplamak için kullanılan kategori adlarını, açıklamalarını,
-            sıralamasını ve yayın durumunu yönetin.
+            Kategorileri üç seviyeye kadar hiyerarşik olarak yönetin. Ana
+            kategori, alt kategori ve üçüncü seviye kategori ilişkileri burada
+            birlikte gösterilir.
           </p>
         </div>
 
@@ -65,39 +82,57 @@ export default async function AdminCategoriesPage({
       ) : null}
 
       <div className="mt-6 overflow-hidden rounded-card border border-border bg-white shadow-soft">
-        {categories && categories.length > 0 ? (
+        {hierarchy.length > 0 ? (
           <div className="divide-y divide-border">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/admin/kategoriler/${category.id}`}
-                className="grid gap-3 p-5 transition hover:bg-surface-muted sm:grid-cols-[1fr_auto] sm:items-center sm:p-6"
-              >
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="truncate text-lg font-extrabold">
-                      {category.name}
-                    </h2>
-                    <span className="rounded-pill bg-surface-muted px-2.5 py-1 text-[0.7rem] font-extrabold text-primary">
-                      {statusLabels[category.status]}
+            {hierarchy.map((option) => {
+              const category = rowsById.get(option.id);
+              if (!category) return null;
+
+              return (
+                <Link
+                  key={category.id}
+                  href={`/admin/kategoriler/${category.id}`}
+                  className="grid gap-3 p-5 transition hover:bg-surface-muted sm:grid-cols-[1fr_auto] sm:items-center sm:p-6"
+                >
+                  <div
+                    className="min-w-0"
+                    style={{ paddingLeft: `${(option.level - 1) * 1.5}rem` }}
+                  >
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h2 className="truncate text-lg font-extrabold">
+                        {category.name}
+                      </h2>
+                      <span className="rounded-pill bg-primary/10 px-2.5 py-1 text-[0.7rem] font-extrabold text-primary">
+                        {levelLabels[option.level]}
+                      </span>
+                      <span className="rounded-pill bg-surface-muted px-2.5 py-1 text-[0.7rem] font-extrabold text-primary">
+                        {statusLabels[category.status]}
+                      </span>
+                    </div>
+                    {option.level > 1 ? (
+                      <p className="mt-1 text-xs font-semibold text-muted">
+                        {option.path}
+                      </p>
+                    ) : null}
+                    <p className="mt-1 font-mono text-xs text-muted">
+                      /kategoriler/{category.slug}
+                    </p>
+                    {category.description ? (
+                      <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted">
+                        {category.description}
+                      </p>
+                    ) : null}
+                  </div>
+
+                  <div className="flex items-center gap-4 text-sm text-muted">
+                    <span>Sıra {category.sort_order}</span>
+                    <span className="font-extrabold text-primary">
+                      Düzenle →
                     </span>
                   </div>
-                  <p className="mt-1 font-mono text-xs text-muted">
-                    /kategoriler/{category.slug}
-                  </p>
-                  {category.description ? (
-                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted">
-                      {category.description}
-                    </p>
-                  ) : null}
-                </div>
-
-                <div className="flex items-center gap-4 text-sm text-muted">
-                  <span>Sıra {category.sort_order}</span>
-                  <span className="font-extrabold text-primary">Düzenle →</span>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         ) : (
           <div className="p-8 text-center sm:p-12">
