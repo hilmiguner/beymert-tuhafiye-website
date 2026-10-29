@@ -120,7 +120,7 @@ export const getPublicProducts = cache(
           .select("product_id, concepts(slug)"),
         supabase
           .from("product_categories")
-          .select("product_id, category_id, categories!products_category_id_fkey(slug, name)"),
+          .select("product_id, category_id, categories!product_categories_category_id_fkey(slug, name)"),
       ]);
 
       if (productError || !rows) {
