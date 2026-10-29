@@ -1,74 +1,82 @@
 # Product Categories
 
-Phase 4 kategori sisteminin teknik ve içerik referansıdır.
+Kategori sisteminin güncel teknik ve içerik referansıdır.
 
-## Veri modeli
+## Veri kaynağı
 
-Kategori verisi `src/data/categories.ts` içinde statik olarak tutulur.
+Production kategori verisi Supabase `public.categories` tablosundan gelir.
+`src/data/categories.ts` yalnızca Supabase erişilemediğinde kullanılan fallback
+veridir.
 
-Her kategori:
+## Üç seviyeli hiyerarşi
 
-- slug
-- name
-- eyebrow
-- shortDescription
-- description
-- accent
-- accentSoft
-- accentDark
-- motif
-- sortOrder
-- highlights
+Kategori ağacı en fazla üç seviyedir:
 
-alanlarını içerir.
+1. Ana kategori
+2. Alt kategori
+3. Üçüncü seviye kategori
 
-Bu yapı daha sonra Supabase/CMS'e taşınabilecek şekilde componentlerden ayrılmıştır.
+Örnek:
 
-## İlk kategori seti
+- Balon Çeşitleri
+  - Lateks Balonlar
+    - Krom Balonlar
+    - Metalik Balonlar
+    - Makaron Balonlar
 
-1. Balonlar
-2. Doğum Günü
-3. Baby Shower
-4. Cinsiyet Partisi
-5. Söz · Nişan · Düğün
-6. Kına & Bekarlığa Veda
-7. Kişiye Özel Hediyelik
-8. Tül · Kurdele · Tuhafiye
+`categories.parent_id` aynı tablodaki üst kategoriyi işaret eder. Ana
+kategorilerde `parent_id = null` olur.
 
-Bu liste Beymert'in kamuya açık ürün/hizmet kapsamına göre başlangıç taxonomy'sidir. Gerçek operasyon envanteri geldiğinde revize edilebilir.
+Veritabanı trigger'ı:
 
-## Görsel yaklaşım
+- dördüncü seviyeyi reddeder,
+- kategorinin kendisini parent seçmesini reddeder,
+- cycle oluşmasını engeller,
+- alt dalı olan bir kategorinin taşınması sonucunda üç seviyenin aşılmasını
+  engeller.
 
-Gerçek ürün fotoğrafları henüz içerik sisteminde olmadığı için kategori kartları hafif inline/CSS artwork kullanır.
+## CMS davranışı
 
-Avantajları:
+`/admin/kategoriler` ekranında kategori ağacı hiyerarşik gösterilir.
 
-- remote image dependency yok
-- CLS riski düşük
-- hızlı yükleme
-- kategori kimlikleri birbirinden ayrılıyor
-- gerçek görseller geldiğinde CategoryCard API'si değişmeden artwork değiştirilebilir
+Kategori oluşturma/düzenleme formunda:
 
-## Responsive davranış
+- kategori seviyesi seçilir,
+- ana kategoride üst kategori seçilmez,
+- ikinci seviyede yalnız ana kategoriler parent olabilir,
+- üçüncü seviyede yalnız ikinci seviye kategoriler parent olabilir,
+- mevcut kategori kendi alt dallarından birinin altına taşınamaz.
 
-Mobil:
-- yatay snap scroll
-- yaklaşık %82 viewport kart genişliği
-- touch ile doğal kaydırma
+Mevcut kategori kayıtları migration sırasında otomatik yeniden
+sınıflandırılmaz. Böylece önceki URL, içerik ve ürün ilişkileri korunur; mağaza
+gerçek taxonomy'si girilirken kategoriler kontrollü şekilde taşınabilir.
 
-Tablet/Desktop:
-- 2 kolon
-- geniş desktopta 4 kolon
+## Public site davranışı
 
-## Route yapısı
+- `/kategoriler` yalnız ana kategorileri ana kart olarak gösterir.
+- İkinci ve üçüncü seviyeler ilgili ana kart altında görünür.
+- `/kategoriler/[slug]` breadcrumb içinde kategori atalarını gösterir.
+- Kategori detayında doğrudan alt kategoriler ve varsa üçüncü seviye gruplar
+  listelenir.
+- Ana veya alt kategori sayfası, yalnız doğrudan bağlı ürünleri değil, kendi alt
+  dalındaki kategorilere bağlı ürünleri de gösterebilir.
+- Ana sayfadaki kategori bölümü yalnız ana kategorileri gösterir.
+- Sitemap bütün yayınlanmış kategori URL'lerini ayrı ayrı korur.
 
-- `/kategoriler`
-- `/kategoriler/[slug]`
+## Yayın durumu
 
-Dynamic route build sırasında mevcut kategoriler için statik parametre üretir.
+Kategori durumları:
 
-## Empty state
+- `draft`
+- `published`
+- `archived`
 
-Product Catalog fazı henüz tamamlanmadığı için kategori detayları ürün listesi yerine açık bir empty-state gösterir ve WhatsApp bilgi alma CTA'sı sunar.
+Public kategori ağacında yalnız yayınlanmış kategoriler kullanılır. Bir alt
+kategori yayınlanmış olsa bile yayınlanmış üst kategori zinciri yoksa public
+ağaçta gösterilmez.
 
-Bu geçici durum kullanıcıya eksik/hatalı liste göstermekten daha güvenlidir.
+## Görseller
+
+Kategori kartları mevcut fallback artwork sistemini ve varsa CMS medya
+varlıklarını kullanmaya devam eder. Gerçek mağaza içeriği girildikçe temsili
+görseller gerçek fotoğraflarla değiştirilecektir.
