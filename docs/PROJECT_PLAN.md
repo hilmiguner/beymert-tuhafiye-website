@@ -659,8 +659,8 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - [x] Admin authentication — Supabase email/password server action akışı ve owner/editor membership kontrolü eklendi; ilk doğrulanmış owner hesabı `hilmi.guner@hotmail.com` için oluşturuldu.
 - [x] /admin korumalı route altyapısı — Next.js 16 `src/proxy.ts` ve server-side admin authorization eklendi.
 - [x] Admin shell / dashboard — storefront'tan ayrılmış temel yönetim paneli kabuğu eklendi.
-- [x] Kategori CRUD — listeleme, oluşturma, düzenleme, silme, sıralama ve draft/published/archived yönetimi canlı Supabase üzerinde E2E doğrulandı.
-- [x] Ürün CRUD — listeleme, oluşturma, düzenleme, silme, kategori ilişkisi, özellikler ve yayın durumu canlı Supabase üzerinde E2E doğrulandı.
+- [x] Kategori CRUD — listeleme, oluşturma, düzenleme, silme, sıralama ve draft/published/archived yönetimi canlı Supabase üzerinde E2E doğrulandı.\n- [x] Üç seviyeli kategori hiyerarşisi — `categories.parent_id`, maksimum üç seviye/cycle koruması, CMS seviye + parent seçimi, hiyerarşik admin/public görünüm ve parent-category descendant ürün kapsamı eklendi; mevcut 9 kategori top-level olarak korunarak geriye uyumlu geçiş yapıldı.
+- [x] Ürün CRUD — listeleme, oluşturma, düzenleme, silme, kategori ilişkisi, özellikler ve yayın durumu canlı Supabase üzerinde E2E doğrulandı.\n- [x] Ürün çoklu kategori ilişkisi — `product_categories` join tablosu ve `set_product_categories` RPC eklendi; mevcut 25 ürünün eski kategori ilişkileri eksiksiz backfill edildi ve CMS formu hiyerarşik çoklu kategori seçimini destekliyor.
 - [x] Ürün çoklu fotoğraf yükleme / sıralama / kapak seçimi — doğrudan Supabase Storage upload, RLS, atomik kapak seçimi ve medya temizliği canlı E2E doğrulandı; upload sonrası anlık UI güncellemesi de doğrulandı.
 - [x] Konsept CRUD — listeleme, oluşturma, düzenleme, silme, ilgili ürün ilişkileri, sıralama ve yayın durumu canlı Supabase üzerinde E2E doğrulandı.
 - [x] Konsept çoklu fotoğraf yükleme / sıralama / kapak seçimi — Storage upload, tek kapak constraint'i, atomik cover sync ve medya temizliği canlı E2E doğrulandı.
