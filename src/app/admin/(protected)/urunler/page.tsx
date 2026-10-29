@@ -21,7 +21,7 @@ export default async function AdminProductsPage({
   const supabase = await createClient();
   const { data: products, error: queryError } = await supabase
     .from("products")
-    .select("id, name, slug, short_description, status, sort_order, featured, new_arrival, categories(name)")
+    .select("id, name, slug, short_description, status, sort_order, featured, new_arrival, categories!products_category_id_fkey(name)")
     .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
 
