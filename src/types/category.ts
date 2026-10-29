@@ -12,6 +12,8 @@ export type CategoryMotif =
 
 export type Category = {
   slug: string;
+  parentSlug?: string;
+  level?: 1 | 2 | 3;
   name: string;
   eyebrow: string;
   shortDescription: string;
