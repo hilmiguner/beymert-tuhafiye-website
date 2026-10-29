@@ -5,6 +5,10 @@ import {
   updateCategoryAction,
 } from "@/app/admin/(protected)/kategoriler/actions";
 import { CategoryForm } from "@/components/admin/category-form";
+import {
+  buildAdminCategoryOptions,
+  getAdminCategoryDescendantIds,
+} from "@/lib/category-hierarchy";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function EditCategoryPage({
@@ -18,15 +22,30 @@ export default async function EditCategoryPage({
   const { error } = await searchParams;
   const supabase = await createClient();
 
-  const { data: category, error: queryError } = await supabase
-    .from("categories")
-    .select("*")
-    .eq("id", id)
-    .maybeSingle();
+  const [
+    { data: category, error: queryError },
+    { data: categories, error: categoriesError },
+  ] = await Promise.all([
+    supabase.from("categories").select("*").eq("id", id).maybeSingle(),
+    supabase
+      .from("categories")
+      .select("id, name, parent_id, sort_order")
+      .order("sort_order")
+      .order("name"),
+  ]);
 
   if (queryError || !category) {
     notFound();
   }
+
+  const rows = categories ?? [];
+  const allOptions = buildAdminCategoryOptions(rows);
+  const currentOption = allOptions.find((option) => option.id === category.id);
+  const descendants = getAdminCategoryDescendantIds(rows, category.id);
+  const parentOptions = allOptions.filter(
+    (option) =>
+      option.id !== category.id && !descendants.has(option.id),
+  );
 
   return (
     <section className="space-y-6">
@@ -39,10 +58,21 @@ export default async function EditCategoryPage({
           /kategoriler/{category.slug}
         </p>
 
+        {categoriesError ? (
+          <div
+            role="alert"
+            className="mt-5 rounded-control border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-800"
+          >
+            Kategori hiyerarşisi alınamadı. Sayfayı yenileyip tekrar deneyin.
+          </div>
+        ) : null}
+
         <div className="mt-8 border-t border-border pt-8">
           <CategoryForm
             action={updateCategoryAction}
             category={category}
+            parentOptions={parentOptions}
+            currentLevel={currentOption?.level ?? 1}
             error={error}
             submitLabel="Değişiklikleri Kaydet"
           />
@@ -53,7 +83,9 @@ export default async function EditCategoryPage({
         <h2 className="text-lg font-extrabold text-red-800">Tehlikeli alan</h2>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
           Kategoriyi silmek geri alınamaz. Bu kategoriye bağlı ürün ve galeri
-          kayıtları silinmez; kategori bağlantıları kaldırılır.
+          kayıtları silinmez; kategori bağlantıları kaldırılır. Kategorinin alt
+          kategorileri varsa önce onları başka bir üst kategoriye taşımanız veya
+          silmeniz gerekir.
         </p>
         <form action={deleteCategoryAction} className="mt-4">
           <input type="hidden" name="id" value={category.id} />
