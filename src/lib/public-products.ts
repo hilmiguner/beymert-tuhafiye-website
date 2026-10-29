@@ -104,7 +104,7 @@ export const getPublicProducts = cache(
         supabase
           .from("products")
           .select(
-            "id, slug, name, short_description, description, category_id, colors, dimensions, featured, new_arrival, whatsapp_message, sort_order, categories(slug, name)",
+            "id, slug, name, short_description, description, category_id, colors, dimensions, featured, new_arrival, whatsapp_message, sort_order, categories!products_category_id_fkey(slug, name)",
           )
           .eq("status", "published")
           .order("sort_order", { ascending: true })
@@ -120,7 +120,7 @@ export const getPublicProducts = cache(
           .select("product_id, concepts(slug)"),
         supabase
           .from("product_categories")
-          .select("product_id, category_id, categories(slug, name)"),
+          .select("product_id, category_id, categories!product_categories_category_id_fkey(slug, name)"),
       ]);
 
       if (productError || !rows) {
