@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useMemo, useState } from "react";
 
 import { ProductCard } from "@/components/products/product-card";
+import { getCategoryDescendantSlugs } from "@/lib/category-hierarchy";
 import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
 
@@ -17,13 +18,24 @@ export function ProductCatalog({
   const [categorySlug, setCategorySlug] = useState("all");
   const reducedMotion = useReducedMotion();
 
-  const visibleProducts = useMemo(
-    () =>
-      categorySlug === "all"
-        ? products
-        : products.filter((product) => product.categorySlug === categorySlug),
-    [categorySlug, products],
-  );
+  const visibleProducts = useMemo(() => {
+    if (categorySlug === "all") {
+      return products;
+    }
+
+    const branchSlugs = getCategoryDescendantSlugs(categories, categorySlug);
+
+    return products.filter((product) => {
+      const assignedSlugs =
+        product.categorySlugs && product.categorySlugs.length > 0
+          ? product.categorySlugs
+          : product.categorySlug
+            ? [product.categorySlug]
+            : [];
+
+      return assignedSlugs.some((slug) => branchSlugs.has(slug));
+    });
+  }, [categories, categorySlug, products]);
 
   return (
     <>
@@ -56,20 +68,30 @@ export function ProductCatalog({
                 : "border-border bg-surface text-muted hover:text-foreground"
             }`}
           >
+            {category.level === 2 ? "↳ " : category.level === 3 ? "↳ ↳ " : ""}
             {category.name}
           </button>
         ))}
       </div>
 
-      <motion.div layout className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <motion.div
+        layout
+        className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+      >
         <AnimatePresence mode="popLayout" initial={false}>
           {visibleProducts.map((product) => (
             <motion.div
               layout
               key={product.slug}
-              initial={reducedMotion ? false : { opacity: 0, y: 12, scale: 0.98 }}
+              initial={
+                reducedMotion ? false : { opacity: 0, y: 12, scale: 0.98 }
+              }
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={reducedMotion ? { opacity: 1 } : { opacity: 0, y: 8, scale: 0.98 }}
+              exit={
+                reducedMotion
+                  ? { opacity: 1 }
+                  : { opacity: 0, y: 8, scale: 0.98 }
+              }
               transition={{
                 duration: reducedMotion ? 0 : 0.24,
                 ease: [0.2, 0.8, 0.2, 1],
@@ -83,7 +105,7 @@ export function ProductCatalog({
 
       {visibleProducts.length === 0 ? (
         <div className="mt-8 rounded-card border border-dashed border-border bg-surface-muted/55 p-8 text-center text-muted">
-          Bu filtre için henüz örnek ürün bulunmuyor.
+          Bu filtre için henüz ürün bulunmuyor.
         </div>
       ) : null}
     </>
