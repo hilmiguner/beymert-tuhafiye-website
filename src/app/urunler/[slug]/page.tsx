@@ -7,7 +7,8 @@ import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { ProductMedia } from "@/components/products/product-media";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
-import { getPublicCategoryBySlug } from "@/lib/public-categories";
+import { getCategoryAncestors } from "@/lib/category-hierarchy";
+import { getPublicCategories } from "@/lib/public-categories";
 import { getPublicConcepts } from "@/lib/public-concepts";
 import {
   getPublicProductBySlug,
@@ -39,22 +40,34 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const [product, settings, concepts] = await Promise.all([
+  const [product, settings, concepts, categories] = await Promise.all([
     getPublicProductBySlug(slug),
     getStoreSettings(),
     getPublicConcepts(),
+    getPublicCategories(),
   ]);
 
   if (!product) {
     notFound();
   }
 
-  const [category, relatedProducts] = await Promise.all([
-    product.categorySlug
-      ? getPublicCategoryBySlug(product.categorySlug)
-      : Promise.resolve(undefined),
-    getRelatedPublicProducts(product),
-  ]);
+  const category = categories.find(
+    (candidate) => candidate.slug === product.categorySlug,
+  );
+  const categoryAncestors = category
+    ? getCategoryAncestors(categories, category.slug)
+    : [];
+  const assignedCategorySlugs = new Set(
+    product.categorySlugs && product.categorySlugs.length > 0
+      ? product.categorySlugs
+      : product.categorySlug
+        ? [product.categorySlug]
+        : [],
+  );
+  const assignedCategories = categories.filter((candidate) =>
+    assignedCategorySlugs.has(candidate.slug),
+  );
+  const relatedProducts = await getRelatedPublicProducts(product);
   const relatedConcepts = concepts.filter((concept) =>
     product.conceptSlugs.includes(concept.slug),
   );
@@ -68,6 +81,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
         items={[
           { name: "Ana Sayfa", path: "/" },
           { name: "Ürünler", path: "/urunler" },
+          ...categoryAncestors.map((ancestor) => ({
+            name: ancestor.name,
+            path: `/kategoriler/${ancestor.slug}`,
+          })),
           ...(category
             ? [
                 {
@@ -109,6 +126,20 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <p className="mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg">
                 {product.description}
               </p>
+
+              {assignedCategories.length > 1 ? (
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {assignedCategories.map((assignedCategory) => (
+                    <Link
+                      key={assignedCategory.slug}
+                      href={`/kategoriler/${assignedCategory.slug}`}
+                      className="rounded-pill border border-border bg-surface px-3 py-1.5 text-xs font-extrabold text-muted shadow-soft transition-colors hover:border-primary/30 hover:text-primary"
+                    >
+                      {assignedCategory.name}
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
 
               {product.highlights.length > 0 ? (
                 <div className="mt-7 flex flex-wrap gap-2">

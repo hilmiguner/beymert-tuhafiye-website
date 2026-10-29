@@ -23,11 +23,18 @@ export type ProductColor = {
   hex: string;
 };
 
+export type ProductCategoryRef = {
+  slug: string;
+  name: string;
+};
+
 export type Product = {
   slug: string;
   name: string;
   categorySlug: string;
   categoryName?: string;
+  categorySlugs?: readonly string[];
+  categories?: readonly ProductCategoryRef[];
   conceptSlugs: readonly string[];
   shortDescription: string;
   description: string;

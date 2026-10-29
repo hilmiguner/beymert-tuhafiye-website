@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5"
+    PostgrestVersion: "14.17"
   }
   public: {
     Tables: {
@@ -21,6 +21,7 @@ export type Database = {
           description: string
           id: string
           name: string
+          parent_id: string | null
           published_at: string | null
           slug: string
           sort_order: number
@@ -33,6 +34,7 @@ export type Database = {
           description?: string
           id?: string
           name: string
+          parent_id?: string | null
           published_at?: string | null
           slug: string
           sort_order?: number
@@ -45,6 +47,7 @@ export type Database = {
           description?: string
           id?: string
           name?: string
+          parent_id?: string | null
           published_at?: string | null
           slug?: string
           sort_order?: number
@@ -57,6 +60,13 @@ export type Database = {
             columns: ["cover_media_id"]
             isOneToOne: false
             referencedRelation: "media_assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
             referencedColumns: ["id"]
           },
         ]
@@ -271,6 +281,36 @@ export type Database = {
         }
         Relationships: []
       }
+      product_categories: {
+        Row: {
+          category_id: string
+          product_id: string
+        }
+        Insert: {
+          category_id: string
+          product_id: string
+        }
+        Update: {
+          category_id?: string
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_categories_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_concepts: {
         Row: {
           concept_id: string
@@ -464,6 +504,10 @@ export type Database = {
       }
       set_concept_products: {
         Args: { p_concept_id: string; p_product_ids: string[] }
+        Returns: undefined
+      }
+      set_product_categories: {
+        Args: { p_category_ids: string[]; p_product_id: string }
         Returns: undefined
       }
       set_product_cover: {

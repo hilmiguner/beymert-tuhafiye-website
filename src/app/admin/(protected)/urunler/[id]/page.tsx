@@ -10,6 +10,7 @@ import {
   ProductMediaManager,
   type ProductMediaItem,
 } from "@/components/admin/product-media-manager";
+import { buildAdminCategoryOptions } from "@/lib/category-hierarchy";
 import { createClient } from "@/lib/supabase/server";
 
 const successMessages: Record<string, string> = {
@@ -31,14 +32,19 @@ export default async function EditProductPage({
   const [
     { data: product, error: productError },
     { data: categories },
-    { data: relations, error: mediaError },
+    { data: categoryRelations, error: categoryRelationsError },
+    { data: mediaRelations, error: mediaError },
   ] = await Promise.all([
     supabase.from("products").select("*").eq("id", id).maybeSingle(),
     supabase
       .from("categories")
-      .select("id, name")
+      .select("id, name, parent_id, sort_order")
       .order("sort_order")
       .order("name"),
+    supabase
+      .from("product_categories")
+      .select("category_id")
+      .eq("product_id", id),
     supabase
       .from("product_media")
       .select(
@@ -52,9 +58,17 @@ export default async function EditProductPage({
     notFound();
   }
 
+  const categoryOptions = buildAdminCategoryOptions(categories ?? []);
+  const selectedCategoryIds =
+    !categoryRelationsError && (categoryRelations?.length ?? 0) > 0
+      ? categoryRelations!.map((relation) => relation.category_id)
+      : product.category_id
+        ? [product.category_id]
+        : [];
+
   const mediaItems: ProductMediaItem[] = mediaError
     ? []
-    : (relations ?? [])
+    : (mediaRelations ?? [])
         .filter((relation) => relation.media_assets)
         .map((relation) => ({
           mediaId: relation.media_id,
@@ -70,7 +84,9 @@ export default async function EditProductPage({
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="bt-eyebrow text-primary">Ürünler</p>
-            <h1 className="bt-display mt-2 text-4xl font-semibold">{product.name}</h1>
+            <h1 className="bt-display mt-2 text-4xl font-semibold">
+              {product.name}
+            </h1>
             <p className="mt-2 font-mono text-xs text-muted">
               /urunler/{product.slug}
             </p>
@@ -91,11 +107,22 @@ export default async function EditProductPage({
           </div>
         ) : null}
 
+        {categoryRelationsError ? (
+          <div
+            role="alert"
+            className="mt-5 rounded-control border border-amber-200 bg-amber-50 p-4 text-sm font-semibold text-amber-900"
+          >
+            Çoklu kategori ilişkileri okunamadı. Mevcut ana kategori yedek
+            olarak gösteriliyor.
+          </div>
+        ) : null}
+
         <div className="mt-8 border-t border-border pt-8">
           <ProductForm
             action={updateProductAction}
             product={product}
-            categories={categories ?? []}
+            categories={categoryOptions}
+            selectedCategoryIds={selectedCategoryIds}
             error={error}
             submitLabel="Değişiklikleri Kaydet"
           />
@@ -113,8 +140,9 @@ export default async function EditProductPage({
       <div className="rounded-card border border-red-200 bg-white p-6 shadow-soft">
         <h2 className="text-lg font-extrabold text-red-800">Tehlikeli alan</h2>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
-          Ürünü silmek geri alınamaz. Ürün-medya ilişkileri kaldırılır. Medya
-          dosyalarını önce fotoğraf yöneticisinden silmeniz önerilir.
+          Ürünü silmek geri alınamaz. Ürün-kategori ve ürün-medya ilişkileri
+          kaldırılır. Medya dosyalarını önce fotoğraf yöneticisinden silmeniz
+          önerilir.
         </p>
         <form action={deleteProductAction} className="mt-4">
           <input type="hidden" name="id" value={product.id} />

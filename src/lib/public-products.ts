@@ -1,8 +1,15 @@
 import { cache } from "react";
 
 import { products as fallbackProducts } from "@/data/products";
+import { getCategoryDescendantSlugs } from "@/lib/category-hierarchy";
+import { getPublicCategories } from "@/lib/public-categories";
 import { createPublicSupabaseClient } from "@/lib/supabase/public";
-import type { Product, ProductArtworkKind, ProductColor } from "@/types/product";
+import type {
+  Product,
+  ProductArtworkKind,
+  ProductCategoryRef,
+  ProductColor,
+} from "@/types/product";
 
 const genericPalette = [
   "#d13f73",
@@ -92,6 +99,7 @@ export const getPublicProducts = cache(
         { data: rows, error: productError },
         { data: mediaRows, error: mediaError },
         { data: conceptRows, error: conceptError },
+        { data: categoryRows, error: categoryError },
       ] = await Promise.all([
         supabase
           .from("products")
@@ -110,6 +118,9 @@ export const getPublicProducts = cache(
         supabase
           .from("product_concepts")
           .select("product_id, concepts(slug)"),
+        supabase
+          .from("product_categories")
+          .select("product_id, category_id, categories(slug, name)"),
       ]);
 
       if (productError || !rows) {
@@ -155,12 +166,49 @@ export const getPublicProducts = cache(
         }
       }
 
+      const categoriesByProduct = new Map<string, ProductCategoryRef[]>();
+      if (!categoryError) {
+        for (const relation of categoryRows ?? []) {
+          const category = relation.categories;
+          if (!category) continue;
+
+          const current = categoriesByProduct.get(relation.product_id) ?? [];
+          if (!current.some((item) => item.slug === category.slug)) {
+            current.push({ slug: category.slug, name: category.name });
+          }
+          categoriesByProduct.set(relation.product_id, current);
+        }
+      }
+
       return rows.map((row) => {
         const fallback = fallbackProducts.find(
           (product) => product.slug === row.slug,
         );
+        const legacyCategory = row.categories
+          ? { slug: row.categories.slug, name: row.categories.name }
+          : undefined;
+        const relatedCategories = categoriesByProduct.get(row.id) ?? [];
+        const allCategories = [
+          ...(legacyCategory ? [legacyCategory] : []),
+          ...relatedCategories.filter(
+            (category) => category.slug !== legacyCategory?.slug,
+          ),
+        ];
         const categorySlug =
-          row.categories?.slug ?? fallback?.categorySlug ?? "";
+          legacyCategory?.slug ??
+          allCategories[0]?.slug ??
+          fallback?.categorySlug ??
+          "";
+        const categoryName =
+          legacyCategory?.name ??
+          allCategories.find((category) => category.slug === categorySlug)
+            ?.name;
+        const categorySlugs =
+          allCategories.length > 0
+            ? allCategories.map((category) => category.slug)
+            : fallback
+              ? [fallback.categorySlug]
+              : [];
         const description =
           row.description.trim() ||
           fallback?.description ||
@@ -190,7 +238,9 @@ export const getPublicProducts = cache(
           slug: row.slug,
           name: row.name,
           categorySlug,
-          categoryName: row.categories?.name,
+          categoryName,
+          categorySlugs,
+          categories: allCategories,
           conceptSlugs:
             relatedConcepts && relatedConcepts.length > 0
               ? relatedConcepts
@@ -226,8 +276,22 @@ export const getPublicProductBySlug = cache(async (slug: string) => {
 });
 
 export async function getPublicProductsByCategory(categorySlug: string) {
-  const products = await getPublicProducts();
-  return products.filter((product) => product.categorySlug === categorySlug);
+  const [products, categories] = await Promise.all([
+    getPublicProducts(),
+    getPublicCategories(),
+  ]);
+  const categorySlugs = getCategoryDescendantSlugs(categories, categorySlug);
+
+  return products.filter((product) => {
+    const assignedSlugs =
+      product.categorySlugs && product.categorySlugs.length > 0
+        ? product.categorySlugs
+        : product.categorySlug
+          ? [product.categorySlug]
+          : [];
+
+    return assignedSlugs.some((slug) => categorySlugs.has(slug));
+  });
 }
 
 export async function getPublicProductsByConcept(conceptSlug: string) {
@@ -239,6 +303,13 @@ export async function getPublicProductsByConcept(conceptSlug: string) {
 
 export async function getRelatedPublicProducts(product: Product, limit = 4) {
   const products = await getPublicProducts();
+  const productCategorySlugs = new Set(
+    product.categorySlugs && product.categorySlugs.length > 0
+      ? product.categorySlugs
+      : product.categorySlug
+        ? [product.categorySlug]
+        : [],
+  );
 
   const sameConcept = products.filter(
     (candidate) =>
@@ -246,12 +317,20 @@ export async function getRelatedPublicProducts(product: Product, limit = 4) {
       candidate.conceptSlugs.some((slug) => product.conceptSlugs.includes(slug)),
   );
 
-  const sameCategory = products.filter(
-    (candidate) =>
+  const sameCategory = products.filter((candidate) => {
+    const candidateSlugs =
+      candidate.categorySlugs && candidate.categorySlugs.length > 0
+        ? candidate.categorySlugs
+        : candidate.categorySlug
+          ? [candidate.categorySlug]
+          : [];
+
+    return (
       candidate.slug !== product.slug &&
-      candidate.categorySlug === product.categorySlug &&
-      !sameConcept.some((item) => item.slug === candidate.slug),
-  );
+      candidateSlugs.some((slug) => productCategorySlugs.has(slug)) &&
+      !sameConcept.some((item) => item.slug === candidate.slug)
+    );
+  });
 
   return [...sameConcept, ...sameCategory].slice(0, limit);
 }

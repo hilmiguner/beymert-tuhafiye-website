@@ -1,5 +1,6 @@
 import { createProductAction } from "@/app/admin/(protected)/urunler/actions";
 import { ProductForm } from "@/components/admin/product-form";
+import { buildAdminCategoryOptions } from "@/lib/category-hierarchy";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function NewProductPage({
@@ -11,9 +12,11 @@ export default async function NewProductPage({
   const supabase = await createClient();
   const { data: categories } = await supabase
     .from("categories")
-    .select("id, name")
+    .select("id, name, parent_id, sort_order")
     .order("sort_order")
     .order("name");
+
+  const categoryOptions = buildAdminCategoryOptions(categories ?? []);
 
   return (
     <section>
@@ -21,13 +24,15 @@ export default async function NewProductPage({
         <p className="bt-eyebrow text-primary">Ürünler</p>
         <h1 className="bt-display mt-2 text-4xl font-semibold">Yeni ürün</h1>
         <p className="mt-3 text-sm leading-6 text-muted">
-          Önce ürünü kaydedin. Ardından açılacak düzenleme ekranından fotoğrafları ekleyebilirsiniz.
+          Ürünü bir veya birden fazla kategoriye bağlayabilirsiniz. Önce ürünü
+          kaydedin; ardından açılacak düzenleme ekranından fotoğrafları
+          ekleyebilirsiniz.
         </p>
 
         <div className="mt-8 border-t border-border pt-8">
           <ProductForm
             action={createProductAction}
-            categories={categories ?? []}
+            categories={categoryOptions}
             error={error}
             submitLabel="Ürünü Oluştur"
           />

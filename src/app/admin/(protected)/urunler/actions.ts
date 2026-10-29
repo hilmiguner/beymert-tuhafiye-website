@@ -22,7 +22,14 @@ function parseProductForm(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   const rawSlug = String(formData.get("slug") ?? "").trim();
   const slug = toSlug(rawSlug || name);
-  const categoryId = String(formData.get("categoryId") ?? "").trim() || null;
+  const categoryIds = [
+    ...new Set(
+      formData
+        .getAll("categoryIds")
+        .map((value) => String(value).trim())
+        .filter(Boolean),
+    ),
+  ];
   const shortDescription = String(
     formData.get("shortDescription") ?? "",
   ).trim();
@@ -52,31 +59,46 @@ function parseProductForm(formData: FormData) {
   }
 
   return {
-    name,
-    slug,
-    category_id: categoryId,
-    short_description: shortDescription,
-    description: richDescription.text,
-    description_rich: richDescription.json,
-    colors,
-    dimensions,
-    whatsapp_message: whatsappMessage,
-    status,
-    sort_order: sortOrder,
-    featured: formData.get("featured") === "on",
-    new_arrival: formData.get("newArrival") === "on",
+    values: {
+      name,
+      slug,
+      short_description: shortDescription,
+      description: richDescription.text,
+      description_rich: richDescription.json,
+      colors,
+      dimensions,
+      whatsapp_message: whatsappMessage,
+      status,
+      sort_order: sortOrder,
+      featured: formData.get("featured") === "on",
+      new_arrival: formData.get("newArrival") === "on",
+    },
+    categoryIds,
   };
 }
 
 function errorCode(code?: string) {
-  return code === "23505" ? "slug" : "save";
+  if (code === "23505") return "slug";
+  if (code === "23503") return "categories";
+  return "save";
+}
+
+function revalidateProductSurfaces(slug?: string) {
+  revalidatePath("/");
+  revalidatePath("/admin/urunler");
+  revalidatePath("/urunler");
+  revalidatePath("/kategoriler");
+
+  if (slug) {
+    revalidatePath(`/urunler/${slug}`);
+  }
 }
 
 export async function createProductAction(formData: FormData) {
   await requireCmsAdmin();
-  const values = parseProductForm(formData);
+  const parsed = parseProductForm(formData);
 
-  if (!values) {
+  if (!parsed) {
     redirect("/admin/urunler/yeni?error=invalid");
   }
 
@@ -84,9 +106,10 @@ export async function createProductAction(formData: FormData) {
   const { data, error } = await supabase
     .from("products")
     .insert({
-      ...values,
+      ...parsed.values,
+      category_id: null,
       published_at:
-        values.status === "published" ? new Date().toISOString() : null,
+        parsed.values.status === "published" ? new Date().toISOString() : null,
     })
     .select("id")
     .single();
@@ -95,7 +118,22 @@ export async function createProductAction(formData: FormData) {
     redirect(`/admin/urunler/yeni?error=${errorCode(error?.code)}`);
   }
 
-  revalidatePath("/admin/urunler");
+  const { error: categoriesError } = await supabase.rpc(
+    "set_product_categories",
+    {
+      p_product_id: data.id,
+      p_category_ids: parsed.categoryIds,
+    },
+  );
+
+  if (categoriesError) {
+    await supabase.from("products").delete().eq("id", data.id);
+    redirect(
+      `/admin/urunler/yeni?error=${errorCode(categoriesError.code)}`,
+    );
+  }
+
+  revalidateProductSurfaces(parsed.values.slug);
   redirect(`/admin/urunler/${data.id}?success=created`);
 }
 
@@ -103,16 +141,16 @@ export async function updateProductAction(formData: FormData) {
   await requireCmsAdmin();
 
   const id = String(formData.get("id") ?? "");
-  const values = parseProductForm(formData);
+  const parsed = parseProductForm(formData);
 
-  if (!id || !values) {
+  if (!id || !parsed) {
     redirect(`/admin/urunler/${id || "unknown"}?error=invalid`);
   }
 
   const supabase = await createClient();
   const { data: existing, error: readError } = await supabase
     .from("products")
-    .select("published_at")
+    .select("published_at, slug")
     .eq("id", id)
     .maybeSingle();
 
@@ -121,21 +159,38 @@ export async function updateProductAction(formData: FormData) {
   }
 
   const publishedAt =
-    values.status === "published"
+    parsed.values.status === "published"
       ? existing.published_at ?? new Date().toISOString()
       : null;
 
   const { error } = await supabase
     .from("products")
-    .update({ ...values, published_at: publishedAt })
+    .update({ ...parsed.values, published_at: publishedAt })
     .eq("id", id);
 
   if (error) {
     redirect(`/admin/urunler/${id}?error=${errorCode(error.code)}`);
   }
 
-  revalidatePath("/admin/urunler");
+  const { error: categoriesError } = await supabase.rpc(
+    "set_product_categories",
+    {
+      p_product_id: id,
+      p_category_ids: parsed.categoryIds,
+    },
+  );
+
+  if (categoriesError) {
+    redirect(
+      `/admin/urunler/${id}?error=${errorCode(categoriesError.code)}`,
+    );
+  }
+
   revalidatePath(`/admin/urunler/${id}`);
+  revalidateProductSurfaces(existing.slug);
+  if (existing.slug !== parsed.values.slug) {
+    revalidateProductSurfaces(parsed.values.slug);
+  }
   redirect(`/admin/urunler/${id}?success=updated`);
 }
 
@@ -149,10 +204,16 @@ export async function deleteProductAction(formData: FormData) {
 
   const supabase = await createClient();
 
-  const { data: mediaRelations } = await supabase
-    .from("product_media")
-    .select("media_id, media_assets(storage_path)")
-    .eq("product_id", id);
+  const [
+    { data: product },
+    { data: mediaRelations },
+  ] = await Promise.all([
+    supabase.from("products").select("slug").eq("id", id).maybeSingle(),
+    supabase
+      .from("product_media")
+      .select("media_id, media_assets(storage_path)")
+      .eq("product_id", id),
+  ]);
 
   const { error } = await supabase.from("products").delete().eq("id", id);
 
@@ -208,6 +269,6 @@ export async function deleteProductAction(formData: FormData) {
     }
   }
 
-  revalidatePath("/admin/urunler");
+  revalidateProductSurfaces(product?.slug);
   redirect("/admin/urunler?success=deleted");
 }

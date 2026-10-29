@@ -7,8 +7,15 @@ import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { ProductCard } from "@/components/products/product-card";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
+import {
+  getCategoryAncestors,
+  getCategoryChildren,
+} from "@/lib/category-hierarchy";
 import { getCategorySeoContent } from "@/lib/category-seo";
-import { getPublicCategoryBySlug } from "@/lib/public-categories";
+import {
+  getPublicCategories,
+  getPublicCategoryBySlug,
+} from "@/lib/public-categories";
 import { getPublicProductsByCategory } from "@/lib/public-products";
 import { buildPageMetadata } from "@/lib/seo";
 import {
@@ -44,8 +51,9 @@ export async function generateMetadata({
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
-  const [category, settings, categoryProducts] = await Promise.all([
+  const [category, categories, settings, categoryProducts] = await Promise.all([
     getPublicCategoryBySlug(slug),
+    getPublicCategories(),
     getStoreSettings(),
     getPublicProductsByCategory(slug),
   ]);
@@ -55,6 +63,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   const seo = getCategorySeoContent(category);
+  const ancestors = getCategoryAncestors(categories, category.slug);
+  const children = getCategoryChildren(categories, category.slug);
 
   return (
     <main id="main-content" tabIndex={-1}>
@@ -62,6 +72,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         items={[
           { name: "Ana Sayfa", path: "/" },
           { name: "Kategoriler", path: "/kategoriler" },
+          ...ancestors.map((ancestor) => ({
+            name: ancestor.name,
+            path: `/kategoriler/${ancestor.slug}`,
+          })),
           { name: category.name, path: `/kategoriler/${category.slug}` },
         ]}
       />
@@ -69,6 +83,23 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_0.85fr]">
             <div>
+              {ancestors.length > 0 ? (
+                <div className="mb-4 flex flex-wrap items-center gap-2 text-xs font-bold text-muted">
+                  {ancestors.map((ancestor) => (
+                    <span key={ancestor.slug} className="flex items-center gap-2">
+                      <Link
+                        href={`/kategoriler/${ancestor.slug}`}
+                        className="hover:text-primary"
+                      >
+                        {ancestor.name}
+                      </Link>
+                      <span aria-hidden="true">›</span>
+                    </span>
+                  ))}
+                  <span>{category.name}</span>
+                </div>
+              ) : null}
+
               <p
                 className="bt-eyebrow"
                 style={{ color: category.accentDark }}
@@ -106,6 +137,57 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </Container>
       </Section>
 
+      {children.length > 0 ? (
+        <Section className="border-b border-border bg-surface-muted/35">
+          <Container>
+            <p className="bt-eyebrow text-primary">Alt kategoriler</p>
+            <h2 className="bt-display mt-3 text-3xl font-semibold sm:text-4xl">
+              {category.name} içindeki gruplar
+            </h2>
+
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {children.map((child) => {
+                const grandchildren = getCategoryChildren(
+                  categories,
+                  child.slug,
+                );
+
+                return (
+                  <div
+                    key={child.slug}
+                    className="rounded-card border border-border bg-surface p-5 shadow-soft"
+                  >
+                    <Link
+                      href={`/kategoriler/${child.slug}`}
+                      className="text-lg font-extrabold transition-colors hover:text-primary"
+                    >
+                      {child.name} →
+                    </Link>
+                    <p className="mt-2 text-sm leading-6 text-muted">
+                      {child.shortDescription}
+                    </p>
+
+                    {grandchildren.length > 0 ? (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {grandchildren.map((grandchild) => (
+                          <Link
+                            key={grandchild.slug}
+                            href={`/kategoriler/${grandchild.slug}`}
+                            className="rounded-pill border border-border bg-background px-3 py-1.5 text-xs font-bold text-muted hover:border-primary/30 hover:text-primary"
+                          >
+                            {grandchild.name}
+                          </Link>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
       <Section>
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.65fr_1.35fr]">
@@ -130,8 +212,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
             <div>
               <p className="text-sm leading-6 text-muted">
-                Bu kategoride yayında olan ürünleri aşağıda görebilirsin.
-                Güncel stok bilgisi mağazadan doğrulanmalıdır.
+                Bu kategoriye veya alt kategorilerine bağlı yayındaki ürünleri
+                aşağıda görebilirsin. Güncel stok bilgisi mağazadan
+                doğrulanmalıdır.
               </p>
               {categoryProducts.length > 0 ? (
                 <div className="mt-5 grid gap-5 sm:grid-cols-2">
