@@ -1,95 +1,81 @@
 # Product Catalog
 
-Phase 6 ürün katalog altyapısının referansıdır.
+Ürün katalog altyapısının güncel referansıdır.
 
 ## Amaç
 
-Bu site e-ticaret değildir. Product modeli:
+Site e-ticaret değildir. Product modeli:
 
-- ürünü tanıtmak,
-- kategori ve konseptlerle ilişkilendirmek,
-- renk/ölçü gibi bilgileri göstermek,
-- WhatsApp üzerinden bilgi alma akışını başlatmak
-
-için kullanılır.
+- ürünü tanıtır,
+- bir veya daha fazla kategoriyle ilişkilendirir,
+- konseptlerle ilişkilendirir,
+- renk/ölçü gibi bilgileri gösterir,
+- WhatsApp üzerinden bilgi alma akışını başlatır.
 
 Fiyat, sepet ve checkout alanları bilinçli olarak yoktur.
 
-## Product modeli
+## Çoklu kategori modeli
 
-- slug
-- name
-- categorySlug
-- conceptSlugs
-- shortDescription
-- description
-- artworkKind
-- colors
-- dimensions
-- featured
-- newArrival
-- sortOrder
-- highlights
+Ürün-kategori ilişkileri `public.product_categories` join tablosunda tutulur:
 
-## Örnek veri
+- `product_id`
+- `category_id`
 
-Phase 6'da 16 adet temsili ürün kaydı bulunur.
+Bir ürün birden fazla kategoriye bağlanabilir.
 
-Bu kayıtlar gerçek mağaza envanteri değildir. Amaç route, filtre, kart, ilişki ve responsive katalog davranışlarını doğrulamaktır.
+Eski `products.category_id` alanı geriye uyumluluk amacıyla korunur. CMS
+`set_product_categories` RPC'sini kullandığında seçilen ilk kategori bu alana
+da yazılır. Public katalog ve kategori filtrelemesi esas olarak çoklu ilişki
+tablosunu kullanır.
 
-Phase 10'da:
+Migration sırasında eski `products.category_id` değerlerinin tamamı
+`product_categories` tablosuna backfill edilmiştir; mevcut ürün-kategori
+bağlantıları kaybolmaz.
 
-- gerçek ürün listesi,
-- gerçek isimler,
-- güncel varyantlar,
-- stok yaklaşımı,
-- ürün fotoğrafları
+## CMS davranışı
 
-doğrulanarak değiştirilir.
+Ürün oluşturma/düzenleme formu kategori ağacını:
 
-## ProductArtwork
+- ana kategori,
+- alt kategori,
+- üçüncü seviye kategori
 
-Gerçek fotoğraflar bulunmadığı için ürünler hafif CSS tabanlı artwork kullanır ve kullanıcıya "Temsili görsel" etiketi gösterilir.
+şeklinde hiyerarşik checkbox listesi olarak gösterir.
 
-Gerçek fotoğraflar geldiğinde ProductCard ve route API'sini değiştirmeden Next/Image tabanlı asset alanına geçilebilir.
+Ürün:
 
-## Routes
+- kategorisiz bırakılabilir,
+- tek kategoriye bağlanabilir,
+- birden fazla kategoriye bağlanabilir.
 
-- `/urunler`
-- `/urunler/[slug]`
+Düzenleme ekranında mevcut ilişkiler otomatik seçili gelir.
 
-Ürün detayında:
+## Public katalog
 
-- ana ürün bilgisi
-- renk seçenekleri
-- opsiyonel ölçü/uygulama bilgisi
-- temsili gallery
-- ilişkili konsept linkleri
-- related products
-- ürün ismi içeren WhatsApp CTA
+`/urunler` kategori filtreleri üç seviyeli ağacı kullanır.
 
-bulunur.
+Bir ana kategori seçildiğinde:
 
-## Filtering
+- doğrudan o kategoriye bağlı ürünler,
+- alt kategorilerine bağlı ürünler,
+- üçüncü seviye alt kategorilerine bağlı ürünler
 
-`/urunler` sayfası client-side kategori filtresi kullanır.
+birlikte filtrelenir.
 
-Motion:
+Bir ürün birden fazla kategoriye bağlıysa ilgili kategori dallarının her birinde
+görünebilir.
 
-- filtre değişiminde layout transition
-- enter/exit opacity + translate
-- kısa ve düşük maliyetli animasyon
+Ürün detay sayfası ana kategori breadcrumb yolunu korur ve ürün birden fazla
+kategoriye bağlıysa diğer kategori bağlantılarını da gösterir.
 
-için kullanılır.
+## Diğer ilişkiler
 
-## Bağlantılar
+Konsept ilişkileri `product_concepts`, medya ilişkileri `product_media`
+üzerinden çalışmaya devam eder. Çoklu kategori geliştirmesi bu ilişkilerin veri
+modelini değiştirmez.
 
-Phase 6 ile:
+## Gerçek içerik
 
-- category -> products
-- concept -> products
-- product -> category
-- product -> concepts
-- product -> related products
-
-ilişkileri çalışır hale gelir.
+Mevcut içerik migration sırasında korunmuştur. Phase 10 kapsamında gerçek ürün,
+kategori, konsept ve fotoğraflar CMS'e girildikçe temsili/fallback içerik
+kademeli olarak kaldırılacaktır.
