@@ -1,5 +1,7 @@
 import { createCategoryAction } from "@/app/admin/(protected)/kategoriler/actions";
 import { CategoryForm } from "@/components/admin/category-form";
+import { buildAdminCategoryOptions } from "@/lib/category-hierarchy";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function NewCategoryPage({
   searchParams,
@@ -7,6 +9,14 @@ export default async function NewCategoryPage({
   searchParams: Promise<{ error?: string }>;
 }) {
   const { error } = await searchParams;
+  const supabase = await createClient();
+  const { data: categories } = await supabase
+    .from("categories")
+    .select("id, name, parent_id, sort_order")
+    .order("sort_order")
+    .order("name");
+
+  const parentOptions = buildAdminCategoryOptions(categories ?? []);
 
   return (
     <section>
@@ -16,13 +26,14 @@ export default async function NewCategoryPage({
           Yeni kategori
         </h1>
         <p className="mt-3 text-sm leading-6 text-muted">
-          Kategori önce taslak olarak hazırlanabilir ve hazır olduğunda yayına
-          alınabilir.
+          Ana kategori, alt kategori veya üçüncü seviye kategori oluşturabilir;
+          alt kategorileri istediğiniz uygun üst kategoriye bağlayabilirsiniz.
         </p>
 
         <div className="mt-8 border-t border-border pt-8">
           <CategoryForm
             action={createCategoryAction}
+            parentOptions={parentOptions}
             error={error}
             submitLabel="Kategori Oluştur"
           />
