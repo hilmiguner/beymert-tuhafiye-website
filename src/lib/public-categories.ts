@@ -1,13 +1,14 @@
 import { cache } from "react";
 
 import { categories as fallbackCategories } from "@/data/categories";
+import { sortPublicCategoriesByHierarchy } from "@/lib/category-hierarchy";
 import { createPublicSupabaseClient } from "@/lib/supabase/public";
 import type { Category, CategoryMotif } from "@/types/category";
 import type { Tables } from "@/types/database";
 
 type CategoryRow = Pick<
   Tables<"categories">,
-  "slug" | "name" | "description" | "sort_order"
+  "id" | "parent_id" | "slug" | "name" | "description" | "sort_order"
 >;
 
 type CategoryPresentation = Pick<
@@ -57,7 +58,12 @@ function excerpt(value: string, maxLength = 118) {
   return `${normalized.slice(0, maxLength - 1).trimEnd()}…`;
 }
 
-function toPublicCategory(row: CategoryRow, index: number): Category {
+function toPublicCategory(
+  row: CategoryRow,
+  index: number,
+  parentSlug: string | undefined,
+  level: 1 | 2 | 3,
+): Category {
   const fallback = fallbackCategories.find(
     (category) => category.slug === row.slug,
   );
@@ -71,6 +77,8 @@ function toPublicCategory(row: CategoryRow, index: number): Category {
   return {
     slug: row.slug,
     name: row.name,
+    parentSlug,
+    level,
     eyebrow: fallback?.eyebrow ?? "Beymert seçkisi",
     shortDescription:
       fallback && description === fallback.description
@@ -98,7 +106,7 @@ export const getPublicCategories = cache(
     try {
       const { data, error } = await supabase
         .from("categories")
-        .select("slug, name, description, sort_order")
+        .select("id, parent_id, slug, name, description, sort_order")
         .eq("status", "published")
         .order("sort_order", { ascending: true })
         .order("name", { ascending: true });
@@ -107,7 +115,69 @@ export const getPublicCategories = cache(
         return fallbackCategories;
       }
 
-      return data.map(toPublicCategory);
+      const rowsById = new Map(data.map((row) => [row.id, row]));
+      const metadata = new Map<
+        string,
+        { parentSlug?: string; level: 1 | 2 | 3 } | null
+      >();
+
+      const resolveMetadata = (
+        row: CategoryRow,
+        path = new Set<string>(),
+      ): { parentSlug?: string; level: 1 | 2 | 3 } | null => {
+        if (metadata.has(row.id)) {
+          return metadata.get(row.id) ?? null;
+        }
+
+        if (path.has(row.id)) {
+          metadata.set(row.id, null);
+          return null;
+        }
+
+        if (!row.parent_id) {
+          const value = { level: 1 as const };
+          metadata.set(row.id, value);
+          return value;
+        }
+
+        const parent = rowsById.get(row.parent_id);
+        if (!parent) {
+          metadata.set(row.id, null);
+          return null;
+        }
+
+        const nextPath = new Set(path);
+        nextPath.add(row.id);
+        const parentMetadata = resolveMetadata(parent, nextPath);
+
+        if (!parentMetadata || parentMetadata.level >= 3) {
+          metadata.set(row.id, null);
+          return null;
+        }
+
+        const value = {
+          parentSlug: parent.slug,
+          level: (parentMetadata.level + 1) as 2 | 3,
+        };
+        metadata.set(row.id, value);
+        return value;
+      };
+
+      const categories = data.flatMap((row, index) => {
+        const resolved = resolveMetadata(row);
+        return resolved
+          ? [
+              toPublicCategory(
+                row,
+                index,
+                resolved.parentSlug,
+                resolved.level,
+              ),
+            ]
+          : [];
+      });
+
+      return sortPublicCategoriesByHierarchy(categories);
     } catch {
       return fallbackCategories;
     }
