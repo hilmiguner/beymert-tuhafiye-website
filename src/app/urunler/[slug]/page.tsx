@@ -71,6 +71,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const relatedConcepts = concepts.filter((concept) =>
     product.conceptSlugs.includes(concept.slug),
   );
+  const productImages = product.images ?? [];
   const whatsappMessage =
     product.whatsappMessage ||
     `Merhaba, web sitenizde gördüğüm "${product.name}" hakkında bilgi almak istiyorum.`;
@@ -100,7 +101,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-surface shadow-lift">
-              <ProductMedia product={product} />
+              <ProductMedia product={product} fit="contain" priority />
             </div>
 
             <div>
@@ -222,15 +223,26 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div>
               <p className="bt-eyebrow text-primary">Ürün galerisi</p>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <div className="overflow-hidden rounded-card border border-border bg-surface shadow-soft sm:col-span-2">
-                  <ProductMedia product={product} variant="main" />
-                </div>
-                <div className="overflow-hidden rounded-card border border-border bg-surface shadow-soft">
-                  <ProductMedia product={product} variant="detail" />
-                </div>
-                <div className="overflow-hidden rounded-card border border-border bg-surface shadow-soft">
-                  <ProductMedia product={product} variant="color" />
-                </div>
+                {productImages.length > 0 ? (
+                  productImages.map((image, index) => (
+                    <div
+                      key={`${image.src}-${index}`}
+                      className={`overflow-hidden rounded-card border border-border bg-surface shadow-soft ${
+                        index === 0 ? "sm:col-span-2" : ""
+                      }`}
+                    >
+                      <ProductMedia
+                        product={product}
+                        imageIndex={index}
+                        fit="contain"
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className="overflow-hidden rounded-card border border-border bg-surface shadow-soft sm:col-span-2">
+                    <ProductMedia product={product} fit="contain" />
+                  </div>
+                )}
               </div>
             </div>
           </div>

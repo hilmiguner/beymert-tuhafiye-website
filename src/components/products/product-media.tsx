@@ -15,16 +15,19 @@ export function ProductMedia({
   variant = "main",
   fill = false,
   priority = false,
+  imageIndex,
+  fit = "cover",
 }: {
   product: Product;
   variant?: ProductVariant;
   fill?: boolean;
   priority?: boolean;
+  imageIndex?: number;
+  fit?: "cover" | "contain";
 }) {
   const images = product.images ?? [];
-  const image =
-    images[imageIndexByVariant[variant]] ??
-    images[0];
+  const resolvedImageIndex = imageIndex ?? imageIndexByVariant[variant];
+  const image = images[resolvedImageIndex] ?? images[0];
 
   if (!image) {
     return <ProductArtwork product={product} variant={variant} />;
@@ -41,6 +44,7 @@ export function ProductMedia({
       <ContentImageView
         image={image}
         priority={priority}
+        fit={fit}
         sizes={
           fill
             ? "(max-width: 1023px) 100vw, 60vw"

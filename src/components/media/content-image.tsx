@@ -7,11 +7,13 @@ export function ContentImageView({
   sizes,
   priority = false,
   className = "",
+  fit = "cover",
 }: {
   image: ContentImage;
   sizes: string;
   priority?: boolean;
   className?: string;
+  fit?: "cover" | "contain";
 }) {
   return (
     <Image
@@ -22,7 +24,7 @@ export function ContentImageView({
       priority={priority}
       placeholder={image.blurDataURL ? "blur" : "empty"}
       blurDataURL={image.blurDataURL}
-      className={`object-cover ${className}`}
+      className={`${fit === "contain" ? "object-contain" : "object-cover"} ${className}`}
       style={{ objectPosition: image.objectPosition ?? "center" }}
     />
   );
