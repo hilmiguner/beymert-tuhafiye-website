@@ -410,6 +410,39 @@ export type Database = {
           },
         ]
       }
+      product_color_variant_media: {
+        Row: {
+          media_id: string
+          sort_order: number
+          variant_id: string
+        }
+        Insert: {
+          media_id: string
+          sort_order?: number
+          variant_id: string
+        }
+        Update: {
+          media_id?: string
+          sort_order?: number
+          variant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_color_variant_media_media_id_fkey"
+            columns: ["media_id"]
+            isOneToOne: false
+            referencedRelation: "media_assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_color_variant_media_variant_id_fkey"
+            columns: ["variant_id"]
+            isOneToOne: false
+            referencedRelation: "product_color_variants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_color_variants: {
         Row: {
           color_id: string
