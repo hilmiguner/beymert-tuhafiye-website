@@ -141,9 +141,7 @@ export async function createProductAction(formData: FormData) {
 
   if (categoriesError) {
     await supabase.from("products").delete().eq("id", data.id);
-    redirect(
-      `/admin/urunler/yeni?error=${errorCode(categoriesError.code)}`,
-    );
+    redirect("/admin/urunler/yeni?error=categories");
   }
 
   const { error: optionsError } = await supabase.rpc(
@@ -157,7 +155,7 @@ export async function createProductAction(formData: FormData) {
 
   if (optionsError) {
     await supabase.from("products").delete().eq("id", data.id);
-    redirect(`/admin/urunler/yeni?error=${errorCode(optionsError.code)}`);
+    redirect("/admin/urunler/yeni?error=options");
   }
 
   revalidateProductSurfaces(parsed.values.slug);
@@ -208,9 +206,7 @@ export async function updateProductAction(formData: FormData) {
   );
 
   if (categoriesError) {
-    redirect(
-      `/admin/urunler/${id}?error=${errorCode(categoriesError.code)}`,
-    );
+    redirect(`/admin/urunler/${id}?error=categories`);
   }
 
   const { error: optionsError } = await supabase.rpc(
@@ -223,9 +219,7 @@ export async function updateProductAction(formData: FormData) {
   );
 
   if (optionsError) {
-    redirect(
-      `/admin/urunler/${id}?error=${errorCode(optionsError.code)}`,
-    );
+    redirect(`/admin/urunler/${id}?error=options`);
   }
 
   revalidatePath(`/admin/urunler/${id}`);
