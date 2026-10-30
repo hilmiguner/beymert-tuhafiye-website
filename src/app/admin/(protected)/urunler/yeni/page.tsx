@@ -10,13 +10,45 @@ export default async function NewProductPage({
 }) {
   const { error } = await searchParams;
   const supabase = await createClient();
-  const { data: categories } = await supabase
-    .from("categories")
-    .select("id, name, parent_id, sort_order")
-    .order("sort_order")
-    .order("name");
+  const [
+    { data: categories },
+    { data: colors },
+    { data: series },
+  ] = await Promise.all([
+    supabase
+      .from("categories")
+      .select("id, name, parent_id, sort_order")
+      .order("sort_order")
+      .order("name"),
+    supabase
+      .from("colors")
+      .select("id, name, hex, group_key, sort_order")
+      .eq("is_active", true)
+      .order("sort_order")
+      .order("name"),
+    supabase
+      .from("color_series")
+      .select("id, name, slug, sort_order")
+      .eq("is_active", true)
+      .order("sort_order"),
+  ]);
 
   const categoryOptions = buildAdminCategoryOptions(categories ?? []);
+  const colorOptions = (colors ?? []).map((color) => ({
+    id: color.id,
+    name: color.name,
+    hex: color.hex,
+    groupKey: color.group_key as
+      | "basic"
+      | "special"
+      | "metallic_chrome"
+      | "other",
+  }));
+  const seriesOptions = (series ?? []).map((item) => ({
+    id: item.id,
+    name: item.name,
+    slug: item.slug,
+  }));
 
   return (
     <section>
@@ -33,6 +65,8 @@ export default async function NewProductPage({
           <ProductForm
             action={createProductAction}
             categories={categoryOptions}
+            colorOptions={colorOptions}
+            seriesOptions={seriesOptions}
             error={error}
             submitLabel="Ürünü Oluştur"
           />
