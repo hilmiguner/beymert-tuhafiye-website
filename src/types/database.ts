@@ -92,6 +92,72 @@ export type Database = {
         }
         Relationships: []
       }
+      color_series: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      colors: {
+        Row: {
+          created_at: string
+          group_key: string
+          hex: string | null
+          id: string
+          is_active: boolean
+          name: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          group_key: string
+          hex?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          group_key?: string
+          hex?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       concept_media: {
         Row: {
           concept_id: string
@@ -311,6 +377,131 @@ export type Database = {
           },
         ]
       }
+      product_color_series: {
+        Row: {
+          product_id: string
+          series_id: string
+          sort_order: number
+        }
+        Insert: {
+          product_id: string
+          series_id: string
+          sort_order?: number
+        }
+        Update: {
+          product_id?: string
+          series_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_color_series_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_color_series_series_id_fkey"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "color_series"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_color_variants: {
+        Row: {
+          color_id: string
+          created_at: string
+          id: string
+          media_id: string | null
+          product_id: string
+          series_id: string | null
+          sort_order: number
+        }
+        Insert: {
+          color_id: string
+          created_at?: string
+          id?: string
+          media_id?: string | null
+          product_id: string
+          series_id?: string | null
+          sort_order?: number
+        }
+        Update: {
+          color_id?: string
+          created_at?: string
+          id?: string
+          media_id?: string | null
+          product_id?: string
+          series_id?: string | null
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_color_variants_color_id_fkey"
+            columns: ["color_id"]
+            isOneToOne: false
+            referencedRelation: "colors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_color_variants_media_id_fkey"
+            columns: ["media_id"]
+            isOneToOne: false
+            referencedRelation: "media_assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_color_variants_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_color_variants_series_id_fkey"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "color_series"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_colors: {
+        Row: {
+          color_id: string
+          product_id: string
+          sort_order: number
+        }
+        Insert: {
+          color_id: string
+          product_id: string
+          sort_order?: number
+        }
+        Update: {
+          color_id?: string
+          product_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_colors_color_id_fkey"
+            columns: ["color_id"]
+            isOneToOne: false
+            referencedRelation: "colors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_colors_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_concepts: {
         Row: {
           concept_id: string
@@ -343,18 +534,21 @@ export type Database = {
       }
       product_media: {
         Row: {
+          caption: string
           is_cover: boolean
           media_id: string
           product_id: string
           sort_order: number
         }
         Insert: {
+          caption?: string
           is_cover?: boolean
           media_id: string
           product_id: string
           sort_order?: number
         }
         Update: {
+          caption?: string
           is_cover?: boolean
           media_id?: string
           product_id?: string
@@ -508,6 +702,18 @@ export type Database = {
       }
       set_product_categories: {
         Args: { p_category_ids: string[]; p_product_id: string }
+        Returns: undefined
+      }
+      set_product_color_selections: {
+        Args: {
+          p_color_ids: string[]
+          p_product_id: string
+          p_series_ids: string[]
+        }
+        Returns: undefined
+      }
+      set_product_color_variants: {
+        Args: { p_product_id: string; p_variants: Json }
         Returns: undefined
       }
       set_product_cover: {
