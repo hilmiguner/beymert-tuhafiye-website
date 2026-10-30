@@ -81,7 +81,7 @@ export default async function EditProductPage({
       .order("sort_order"),
     supabase
       .from("product_color_variants")
-      .select("color_id, series_id, media_id, sort_order")
+      .select("color_id, series_id, media_id, sort_order, product_color_variant_media(media_id, sort_order)")
       .eq("product_id", id)
       .order("sort_order"),
     supabase
@@ -152,6 +152,9 @@ export default async function EditProductPage({
       colorId: variant.color_id,
       seriesId: variant.series_id,
       mediaId: variant.media_id,
+      mediaIds: (variant.product_color_variant_media ?? [])
+        .sort((a, b) => a.sort_order - b.sort_order)
+        .map((media) => media.media_id),
       sortOrder: variant.sort_order,
     }),
   );
