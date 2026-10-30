@@ -5,6 +5,14 @@ import {
   deleteProductAction,
   updateProductAction,
 } from "@/app/admin/(protected)/urunler/actions";
+import {
+  ProductColorVariantManager,
+  type AdminProductVariant,
+} from "@/components/admin/product-color-variant-manager";
+import type {
+  AdminColorOption,
+  AdminSeriesOption,
+} from "@/components/admin/product-color-selector";
 import { ProductForm } from "@/components/admin/product-form";
 import {
   ProductMediaManager,
@@ -14,7 +22,7 @@ import { buildAdminCategoryOptions } from "@/lib/category-hierarchy";
 import { createClient } from "@/lib/supabase/server";
 
 const successMessages: Record<string, string> = {
-  created: "Ürün oluşturuldu. Şimdi fotoğraflarını ekleyebilirsiniz.",
+  created: "Ürün oluşturuldu. Şimdi fotoğraflarını ve renk seçeneklerini düzenleyebilirsiniz.",
   updated: "Ürün güncellendi.",
 };
 
@@ -33,6 +41,11 @@ export default async function EditProductPage({
     { data: product, error: productError },
     { data: categories },
     { data: categoryRelations, error: categoryRelationsError },
+    { data: colors },
+    { data: series },
+    { data: productColors },
+    { data: productSeries },
+    { data: variantRows },
     { data: mediaRelations, error: mediaError },
   ] = await Promise.all([
     supabase.from("products").select("*").eq("id", id).maybeSingle(),
@@ -46,9 +59,35 @@ export default async function EditProductPage({
       .select("category_id")
       .eq("product_id", id),
     supabase
+      .from("colors")
+      .select("id, name, hex, group_key, sort_order")
+      .eq("is_active", true)
+      .order("sort_order")
+      .order("name"),
+    supabase
+      .from("color_series")
+      .select("id, name, slug, sort_order")
+      .eq("is_active", true)
+      .order("sort_order"),
+    supabase
+      .from("product_colors")
+      .select("color_id, sort_order")
+      .eq("product_id", id)
+      .order("sort_order"),
+    supabase
+      .from("product_color_series")
+      .select("series_id, sort_order")
+      .eq("product_id", id)
+      .order("sort_order"),
+    supabase
+      .from("product_color_variants")
+      .select("color_id, series_id, media_id, sort_order")
+      .eq("product_id", id)
+      .order("sort_order"),
+    supabase
       .from("product_media")
       .select(
-        "media_id, sort_order, is_cover, media_assets(id, storage_path, alt_text)",
+        "media_id, caption, sort_order, is_cover, media_assets(id, storage_path, alt_text)",
       )
       .eq("product_id", id)
       .order("sort_order"),
@@ -66,6 +105,35 @@ export default async function EditProductPage({
         ? [product.category_id]
         : [];
 
+  const colorOptions: AdminColorOption[] = (colors ?? []).map((color) => ({
+    id: color.id,
+    name: color.name,
+    hex: color.hex,
+    groupKey: color.group_key as AdminColorOption["groupKey"],
+  }));
+  const seriesOptions: AdminSeriesOption[] = (series ?? []).map((item) => ({
+    id: item.id,
+    name: item.name,
+    slug: item.slug,
+  }));
+
+  const selectedColorIds = (productColors ?? []).map(
+    (relation) => relation.color_id,
+  );
+  const selectedSeriesIds = (productSeries ?? []).map(
+    (relation) => relation.series_id,
+  );
+  const colorById = new Map(colorOptions.map((color) => [color.id, color]));
+  const seriesById = new Map(seriesOptions.map((item) => [item.id, item]));
+  const selectedColors = selectedColorIds.flatMap((colorId) => {
+    const color = colorById.get(colorId);
+    return color ? [color] : [];
+  });
+  const selectedSeries = selectedSeriesIds.flatMap((seriesId) => {
+    const item = seriesById.get(seriesId);
+    return item ? [item] : [];
+  });
+
   const mediaItems: ProductMediaItem[] = mediaError
     ? []
     : (mediaRelations ?? [])
@@ -74,9 +142,19 @@ export default async function EditProductPage({
           mediaId: relation.media_id,
           storagePath: relation.media_assets!.storage_path,
           altText: relation.media_assets!.alt_text,
+          caption: relation.caption,
           sortOrder: relation.sort_order,
           isCover: relation.is_cover,
         }));
+
+  const initialVariants: AdminProductVariant[] = (variantRows ?? []).map(
+    (variant) => ({
+      colorId: variant.color_id,
+      seriesId: variant.series_id,
+      mediaId: variant.media_id,
+      sortOrder: variant.sort_order,
+    }),
+  );
 
   return (
     <section className="space-y-6">
@@ -123,6 +201,10 @@ export default async function EditProductPage({
             product={product}
             categories={categoryOptions}
             selectedCategoryIds={selectedCategoryIds}
+            colorOptions={colorOptions}
+            seriesOptions={seriesOptions}
+            selectedColorIds={selectedColorIds}
+            selectedSeriesIds={selectedSeriesIds}
             error={error}
             submitLabel="Değişiklikleri Kaydet"
           />
@@ -134,6 +216,16 @@ export default async function EditProductPage({
           productId={product.id}
           productName={product.name}
           initialItems={mediaItems}
+        />
+      </div>
+
+      <div className="rounded-[2rem] border border-border bg-white p-6 shadow-soft sm:p-8">
+        <ProductColorVariantManager
+          productId={product.id}
+          colors={selectedColors}
+          series={selectedSeries}
+          mediaItems={mediaItems}
+          initialVariants={initialVariants}
         />
       </div>
 
