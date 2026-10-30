@@ -18,9 +18,34 @@ export type ProductArtworkKind =
   | "gift-basket"
   | "ribbon";
 
+export type ProductColorGroupKey =
+  | "basic"
+  | "special"
+  | "metallic_chrome"
+  | "other";
+
 export type ProductColor = {
+  id?: string;
   name: string;
   hex: string;
+  groupKey?: ProductColorGroupKey;
+};
+
+export type ProductColorSeries = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
+export type ProductColorVariant = {
+  colorId: string;
+  colorName: string;
+  colorHex: string;
+  seriesId?: string;
+  seriesName?: string;
+  seriesSlug?: string;
+  mediaId?: string;
+  image?: ContentImage;
 };
 
 export type ProductCategoryRef = {
@@ -41,6 +66,8 @@ export type Product = {
   artworkKind: ProductArtworkKind;
   images?: readonly ContentImage[];
   colors: readonly ProductColor[];
+  colorSeries?: readonly ProductColorSeries[];
+  colorVariants?: readonly ProductColorVariant[];
   dimensions?: string;
   featured: boolean;
   newArrival: boolean;
