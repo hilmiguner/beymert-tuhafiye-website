@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/products/product-card";
 import { ProductGallery } from "@/components/products/product-gallery";
 import { ProductVariantHero } from "@/components/products/product-variant-hero";
+import { ProductVariantProvider } from "@/components/products/product-variant-context";
 import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
@@ -78,6 +79,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     `Merhaba, web sitenizde gördüğüm "${product.name}" hakkında bilgi almak istiyorum.`;
 
   return (
+    <ProductVariantProvider>
     <main id="main-content" tabIndex={-1}>
       <BreadcrumbJsonLd
         items={[
@@ -259,5 +261,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </Section>
       ) : null}
     </main>
+    </ProductVariantProvider>
   );
 }
