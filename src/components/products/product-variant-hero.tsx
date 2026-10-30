@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { ContentImageView } from "@/components/media/content-image";
 import { ProductArtwork } from "@/components/products/product-artwork";
+import { useProductVariantSelection } from "@/components/products/product-variant-context";
 import { dedupeProductVariants } from "@/lib/product-options";
 import type { ContentImage } from "@/types/media";
 import type { Product, ProductColorVariant } from "@/types/product";
@@ -28,12 +29,12 @@ export function ProductVariantHero({ product }: { product: Product }) {
     () => dedupeProductVariants(product.colorVariants ?? []),
     [product.colorVariants],
   );
-  const [activeVariant, setActiveVariant] =
-    useState<ProductColorVariant | null>(null);
+  const { activeVariant, selectVariant } = useProductVariantSelection();
   const [lightboxImage, setLightboxImage] = useState<ContentImage | null>(null);
 
   const defaultImage = product.images?.[0];
-  const activeImage = activeVariant?.image ?? defaultImage;
+  const selectedImages = activeVariant?.images ?? (activeVariant?.image ? [activeVariant.image] : []);
+  const activeImage = activeVariant ? selectedImages[0] ?? defaultImage : defaultImage;
   const colorVariants = uniqueByName(variants, "colorName");
   const availableSeries = activeVariant
     ? uniqueByName(
@@ -61,7 +62,7 @@ export function ProductVariantHero({ product }: { product: Product }) {
         )
       : undefined;
 
-    setActiveVariant(matchingSeries ?? candidates[0] ?? null);
+    selectVariant(matchingSeries ?? candidates[0] ?? null);
   }
 
   function selectSeries(seriesName: string) {
@@ -75,7 +76,7 @@ export function ProductVariantHero({ product }: { product: Product }) {
           seriesName.toLocaleLowerCase("tr-TR"),
     );
 
-    if (next) setActiveVariant(next);
+    if (next) selectVariant(next);
   }
 
   return (
@@ -103,6 +104,12 @@ export function ProductVariantHero({ product }: { product: Product }) {
           <ProductArtwork product={product} variant="main" />
         )}
       </button>
+
+      {activeVariant && selectedImages.length === 0 ? (
+        <p className="mt-3 rounded-control border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-900">
+          Bu renk ve seri için henüz fotoğraf eşleştirilmedi. Üstteki fotoğraf genel ürün görselidir.
+        </p>
+      ) : null}
 
       {colorVariants.length > 0 ? (
         <div className="mt-5 rounded-card border border-border bg-surface p-4 shadow-soft">
