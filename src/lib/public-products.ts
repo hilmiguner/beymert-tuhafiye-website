@@ -105,6 +105,7 @@ export const getPublicProducts = cache(
         { data: productColorRows, error: productColorError },
         { data: productSeriesRows, error: productSeriesError },
         { data: variantRows, error: variantError },
+        { data: variantMediaRows, error: variantMediaError },
       ] = await Promise.all([
         supabase
           .from("products")
@@ -141,8 +142,12 @@ export const getPublicProducts = cache(
         supabase
           .from("product_color_variants")
           .select(
-            "product_id, color_id, series_id, media_id, sort_order, colors!product_color_variants_color_id_fkey(id, name, hex, group_key), color_series!product_color_variants_series_id_fkey(id, name, slug)",
+            "id, product_id, color_id, series_id, media_id, sort_order, colors!product_color_variants_color_id_fkey(id, name, hex, group_key), color_series!product_color_variants_series_id_fkey(id, name, slug)",
           )
+          .order("sort_order", { ascending: true }),
+        supabase
+          .from("product_color_variant_media")
+          .select("variant_id, media_id, sort_order")
           .order("sort_order", { ascending: true }),
       ]);
 
@@ -246,6 +251,7 @@ export const getPublicProducts = cache(
       const variantsByProduct = new Map<
         string,
         Array<{
+          variantId: string;
           colorId: string;
           colorName: string;
           colorHex: string;
@@ -263,6 +269,7 @@ export const getPublicProducts = cache(
 
           const current = variantsByProduct.get(relation.product_id) ?? [];
           current.push({
+            variantId: relation.id,
             colorId: color.id,
             colorName: color.name,
             colorHex:
@@ -275,6 +282,15 @@ export const getPublicProducts = cache(
             mediaId: relation.media_id ?? undefined,
           });
           variantsByProduct.set(relation.product_id, current);
+        }
+      }
+
+      const mediaIdsByVariant = new Map<string, string[]>();
+      if (!variantMediaError) {
+        for (const relation of variantMediaRows ?? []) {
+          const current = mediaIdsByVariant.get(relation.variant_id) ?? [];
+          current.push(relation.media_id);
+          mediaIdsByVariant.set(relation.variant_id, current);
         }
       }
 
@@ -341,12 +357,25 @@ export const getPublicProducts = cache(
         );
         const productVariants: ProductColorVariant[] = (
           variantsByProduct.get(row.id) ?? []
-        ).map((variant) => ({
-          ...variant,
-          image: variant.mediaId
-            ? mediaById.get(variant.mediaId)
-            : undefined,
-        }));
+        ).map((variant) => {
+          const linkedIds = mediaIdsByVariant.get(variant.variantId) ??
+            (variant.mediaId ? [variant.mediaId] : []);
+          const images = linkedIds.flatMap((mediaId) => {
+            const image = mediaById.get(mediaId);
+            return image ? [image] : [];
+          });
+          return {
+            colorId: variant.colorId,
+            colorName: variant.colorName,
+            colorHex: variant.colorHex,
+            seriesId: variant.seriesId,
+            seriesName: variant.seriesName,
+            seriesSlug: variant.seriesSlug,
+            mediaId: variant.mediaId,
+            images,
+            image: images[0],
+          };
+        });
 
         return {
           slug: row.slug,
