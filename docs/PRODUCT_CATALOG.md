@@ -96,9 +96,20 @@ tek tek işaretlenir.
 - Mavi + Metalik
 - Gold + Krom
 
-Bir kombinasyona ürüne yüklenmiş ayrı fotoğraf bağlanabilir. Public ürün
-sayfasında müşteri rengi/seriyi seçtiğinde bağlı görsel varsa ana görsel sayfa
-yenilenmeden değişir.
+Bir kombinasyona ürünün mevcut galerisinden **birden fazla fotoğraf** bağlanabilir.
+Her fotoğraf birden fazla renk-seri kombinasyonuyla ilişkilendirilebilir.
+
+- Müşteri henüz renk seçmemişse ürünün bütün fotoğrafları gösterilir.
+- Müşteri bir renk/seri seçerse ana fotoğraf ve alt galeri yalnız o kombinasyonun
+  bağlı görsellerine göre güncellenir; sayfa yenilenmez.
+- Eşleştirilmiş fotoğrafı olmayan seçeneklerde alt galeri başka renklerin
+  fotoğraflarını göstermez; açıklayıcı boş durum görünür. Ana görselde genel
+  ürün kapağı gösteriliyorsa bunun özel varyant görseli olmadığı belirtilir.
+- Önceki tekli varyant fotoğraf ilişkileri migration sırasında korunur.
+
+**Not:** Renk kataloğunun eski ürünlere aktarılması otomatik fotoğraf-renk
+eşleştirmesi anlamına gelmez. Mağaza yöneticisi görselleri gerçek renklerine
+göre kombinasyon yöneticisinde bir kez eşleştirmelidir.
 
 ### Tekrarlı seçenek normalizasyonu
 
@@ -150,7 +161,8 @@ Public ürün detayında:
 - caption düzenlenir,
 - kapak seçilir,
 - geçerli renk-seri kombinasyonları tanımlanır,
-- gerektiğinde kombinasyonlara fotoğraf bağlanır.
+- kombinasyon başına bir veya daha fazla fotoğraf, küçük resimler üzerinden
+  işaretlenerek bağlanır.
 
 ## Public katalog
 
