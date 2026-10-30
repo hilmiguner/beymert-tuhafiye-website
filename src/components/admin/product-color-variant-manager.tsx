@@ -15,16 +15,64 @@ export type AdminProductVariant = {
   colorId: string;
   seriesId: string | null;
   mediaId: string | null;
+  mediaIds: string[];
   sortOrder: number;
 };
 
 type VariantState = {
   enabled: boolean;
-  mediaId: string;
+  mediaIds: string[];
 };
 
 function variantKey(colorId: string, seriesId: string | null) {
   return `${colorId}::${seriesId ?? "none"}`;
+}
+
+function VariantPhotoChecklist({
+  mediaItems,
+  selectedIds,
+  onToggle,
+}: {
+  mediaItems: ReadonlyArray<ProductMediaItem & { label: string; url: string }>;
+  selectedIds: readonly string[];
+  onToggle: (mediaId: string, selected: boolean) => void;
+}) {
+  if (mediaItems.length === 0) {
+    return <p className="mt-3 text-xs text-muted">Önce bu ürüne fotoğraf yükleyin.</p>;
+  }
+
+  return (
+    <fieldset className="mt-4 min-w-0">
+      <legend className="text-xs font-extrabold text-muted">
+        Bu seçenekte gösterilecek fotoğraflar ({selectedIds.length} seçili)
+      </legend>
+      <div className="mt-2 grid max-h-64 grid-cols-2 gap-2 overflow-y-auto sm:grid-cols-3">
+        {mediaItems.map((media) => (
+          <label
+            key={media.mediaId}
+            className="flex cursor-pointer flex-col gap-2 rounded-control border border-border bg-white p-2 text-xs"
+          >
+            <div className="flex items-center justify-between gap-1">
+              <input
+                type="checkbox"
+                checked={selectedIds.includes(media.mediaId)}
+                onChange={(event) => onToggle(media.mediaId, event.target.checked)}
+                className="size-4 accent-[var(--color-primary)]"
+              />
+              {media.isCover ? <span className="text-[0.65rem] text-muted">Kapak</span> : null}
+            </div>
+            <div
+              role="img"
+              aria-label={media.altText}
+              className="aspect-square w-full rounded-control bg-contain bg-center bg-no-repeat"
+              style={{ backgroundImage: `url("${media.url}")` }}
+            />
+            <span className="line-clamp-2 font-semibold">{media.label}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
 }
 
 export function ProductColorVariantManager({
@@ -42,6 +90,11 @@ export function ProductColorVariantManager({
 }) {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
+  const photoOptions = useMemo(() => mediaItems.map((item, index) => ({
+    ...item,
+    label: item.caption || `Fotoğraf ${index + 1}`,
+    url: supabase.storage.from("cms-media").getPublicUrl(item.storagePath).data.publicUrl,
+  })), [mediaItems, supabase]);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [variants, setVariants] = useState<Map<string, VariantState>>(() => {
@@ -50,7 +103,7 @@ export function ProductColorVariantManager({
     for (const variant of initialVariants) {
       map.set(variantKey(variant.colorId, variant.seriesId), {
         enabled: true,
-        mediaId: variant.mediaId ?? "",
+        mediaIds: variant.mediaIds.length ? variant.mediaIds : (variant.mediaId ? [variant.mediaId] : []),
       });
     }
 
@@ -58,7 +111,7 @@ export function ProductColorVariantManager({
       for (const color of colors) {
         const key = variantKey(color.id, null);
         if (!map.has(key)) {
-          map.set(key, { enabled: true, mediaId: "" });
+          map.set(key, { enabled: true, mediaIds: [] });
         }
       }
     }
@@ -76,7 +129,7 @@ export function ProductColorVariantManager({
       const next = new Map(current);
       next.set(key, {
         enabled: false,
-        mediaId: "",
+        mediaIds: [],
         ...(next.get(key) ?? {}),
         ...patch,
       });
@@ -92,7 +145,7 @@ export function ProductColorVariantManager({
       const payload: Array<{
         color_id: string;
         series_id: string | null;
-        media_id: string | null;
+        media_ids: string[];
         sort_order: number;
       }> = [];
 
@@ -104,7 +157,7 @@ export function ProductColorVariantManager({
           payload.push({
             color_id: color.id,
             series_id: null,
-            media_id: state?.mediaId || null,
+            media_ids: state?.mediaIds ?? [],
             sort_order: sortOrder++,
           });
         }
@@ -117,7 +170,7 @@ export function ProductColorVariantManager({
             payload.push({
               color_id: color.id,
               series_id: item.id,
-              media_id: state.mediaId || null,
+              media_ids: state.mediaIds,
               sort_order: sortOrder++,
             });
           }
@@ -167,7 +220,8 @@ export function ProductColorVariantManager({
           <p className="mt-2 max-w-3xl text-sm leading-6 text-muted">
             Müşteriye yalnızca burada geçerli olarak işaretlediğiniz
             kombinasyonlar gösterilir. Her kombinasyona isterseniz ürüne
-            yüklenmiş ayrı bir fotoğraf bağlayabilirsiniz.
+            yüklenmiş bir veya birden fazla fotoğraf bağlayabilirsiniz.
+            Müşterinin renk seçimi yalnız bu eşleşmedeki fotoğrafları gösterir.
           </p>
         </div>
         <button
@@ -191,7 +245,7 @@ export function ProductColorVariantManager({
           {colors.map((color) => {
             const state =
               variants.get(variantKey(color.id, null)) ??
-              ({ enabled: true, mediaId: "" } satisfies VariantState);
+              ({ enabled: true, mediaIds: [] } satisfies VariantState);
 
             return (
               <div
@@ -207,29 +261,18 @@ export function ProductColorVariantManager({
                   />
                   <p className="font-extrabold">{color.name}</p>
                 </div>
-                <label className="mt-4 block">
-                  <span className="mb-2 block text-xs font-extrabold text-muted">
-                    Bu renge ait ana görsel
-                  </span>
-                  <select
-                    value={state.mediaId}
-                    onChange={(event) =>
-                      updateVariant(color.id, null, {
-                        enabled: true,
-                        mediaId: event.target.value,
-                      })
-                    }
-                    className="min-h-11 w-full rounded-control border border-border bg-white px-3 text-sm"
-                  >
-                    <option value="">Varsayılan kapak fotoğrafı</option>
-                    {mediaItems.map((media, index) => (
-                      <option key={media.mediaId} value={media.mediaId}>
-                        Fotoğraf {index + 1}
-                        {media.caption ? ` — ${media.caption}` : ""}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <VariantPhotoChecklist
+                  mediaItems={photoOptions}
+                  selectedIds={state.mediaIds}
+                  onToggle={(mediaId, checked) =>
+                    updateVariant(color.id, null, {
+                      enabled: true,
+                      mediaIds: checked
+                        ? [...state.mediaIds, mediaId]
+                        : state.mediaIds.filter((id) => id !== mediaId),
+                    })
+                  }
+                />
               </div>
             );
           })}
@@ -254,7 +297,7 @@ export function ProductColorVariantManager({
                   const key = variantKey(color.id, item.id);
                   const state =
                     variants.get(key) ??
-                    ({ enabled: false, mediaId: "" } satisfies VariantState);
+                    ({ enabled: false, mediaIds: [] } satisfies VariantState);
 
                   return (
                     <div
@@ -282,28 +325,17 @@ export function ProductColorVariantManager({
                       </label>
 
                       {state.enabled ? (
-                        <label className="mt-3 block">
-                          <span className="mb-1.5 block text-xs font-bold text-muted">
-                            Kombinasyon görseli
-                          </span>
-                          <select
-                            value={state.mediaId}
-                            onChange={(event) =>
-                              updateVariant(color.id, item.id, {
-                                mediaId: event.target.value,
-                              })
-                            }
-                            className="min-h-10 w-full rounded-control border border-border bg-white px-3 text-xs"
-                          >
-                            <option value="">Varsayılan kapak fotoğrafı</option>
-                            {mediaItems.map((media, index) => (
-                              <option key={media.mediaId} value={media.mediaId}>
-                                Fotoğraf {index + 1}
-                                {media.caption ? ` — ${media.caption}` : ""}
-                              </option>
-                            ))}
-                          </select>
-                        </label>
+                        <VariantPhotoChecklist
+                          mediaItems={photoOptions}
+                          selectedIds={state.mediaIds}
+                          onToggle={(mediaId, checked) =>
+                            updateVariant(color.id, item.id, {
+                              mediaIds: checked
+                                ? [...state.mediaIds, mediaId]
+                                : state.mediaIds.filter((id) => id !== mediaId),
+                            })
+                          }
+                        />
                       ) : null}
                     </div>
                   );
