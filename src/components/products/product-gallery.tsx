@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { ContentImageView } from "@/components/media/content-image";
+import { useProductVariantSelection } from "@/components/products/product-variant-context";
 import type { ContentImage } from "@/types/media";
 
 export function ProductGallery({
@@ -13,6 +14,10 @@ export function ProductGallery({
   productName: string;
 }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const { activeVariant } = useProductVariantSelection();
+  const visibleImages = activeVariant
+    ? activeVariant.images ?? (activeVariant.image ? [activeVariant.image] : [])
+    : images;
 
   useEffect(() => {
     if (activeIndex === null) return;
@@ -23,12 +28,12 @@ export function ProductGallery({
         setActiveIndex((current) =>
           current === null
             ? null
-            : (current - 1 + images.length) % images.length,
+            : (current - 1 + visibleImages.length) % visibleImages.length,
         );
       }
       if (event.key === "ArrowRight") {
         setActiveIndex((current) =>
-          current === null ? null : (current + 1) % images.length,
+          current === null ? null : (current + 1) % visibleImages.length,
         );
       }
     }
@@ -41,17 +46,24 @@ export function ProductGallery({
       document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = originalOverflow;
     };
-  }, [activeIndex, images.length]);
+  }, [activeIndex, visibleImages.length]);
 
-  if (images.length === 0) return null;
+  if (visibleImages.length === 0) {
+    return activeVariant ? (
+      <div className="rounded-card border border-dashed border-border bg-surface-muted p-8 text-center">
+        <p className="font-extrabold">Bu renk ve seri için henüz fotoğraf eklenmedi.</p>
+        <p className="mt-2 text-sm text-muted">Fotoğraflar yönetim panelinde ilgili renk-seri seçeneğine bağlandığında burada görünecek.</p>
+      </div>
+    ) : null;
+  }
 
   const activeImage =
-    activeIndex === null ? null : images[activeIndex] ?? null;
+    activeIndex === null ? null : visibleImages[activeIndex] ?? null;
 
   return (
     <>
       <div className="grid gap-4 sm:grid-cols-2">
-        {images.map((image, index) => (
+        {visibleImages.map((image, index) => (
           <figure
             key={`${image.mediaId ?? image.src}-${index}`}
             className={`overflow-hidden rounded-card border border-border bg-surface shadow-soft ${
@@ -105,14 +117,14 @@ export function ProductGallery({
             Kapat
           </button>
 
-          {images.length > 1 ? (
+          {visibleImages.length > 1 ? (
             <>
               <button
                 type="button"
                 onClick={(event) => {
                   event.stopPropagation();
                   setActiveIndex(
-                    (activeIndex - 1 + images.length) % images.length,
+                    (activeIndex - 1 + visibleImages.length) % visibleImages.length,
                   );
                 }}
                 className="absolute left-3 z-10 rounded-full bg-white/95 px-4 py-3 text-xl font-black text-foreground sm:left-6"
@@ -124,7 +136,7 @@ export function ProductGallery({
                 type="button"
                 onClick={(event) => {
                   event.stopPropagation();
-                  setActiveIndex((activeIndex + 1) % images.length);
+                  setActiveIndex((activeIndex + 1) % visibleImages.length);
                 }}
                 className="absolute right-3 z-10 rounded-full bg-white/95 px-4 py-3 text-xl font-black text-foreground sm:right-6"
                 aria-label="Sonraki fotoğraf"
