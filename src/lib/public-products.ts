@@ -9,6 +9,8 @@ import type {
   ProductArtworkKind,
   ProductCategoryRef,
   ProductColor,
+  ProductColorSeries,
+  ProductColorVariant,
 } from "@/types/product";
 
 const genericPalette = [
@@ -100,6 +102,9 @@ export const getPublicProducts = cache(
         { data: mediaRows, error: mediaError },
         { data: conceptRows, error: conceptError },
         { data: categoryRows, error: categoryError },
+        { data: productColorRows, error: productColorError },
+        { data: productSeriesRows, error: productSeriesError },
+        { data: variantRows, error: variantError },
       ] = await Promise.all([
         supabase
           .from("products")
@@ -112,7 +117,7 @@ export const getPublicProducts = cache(
         supabase
           .from("product_media")
           .select(
-            "product_id, sort_order, is_cover, media_assets(storage_path, alt_text, width, height)",
+            "product_id, media_id, caption, sort_order, is_cover, media_assets(storage_path, alt_text, width, height)",
           )
           .order("sort_order", { ascending: true }),
         supabase
@@ -121,6 +126,24 @@ export const getPublicProducts = cache(
         supabase
           .from("product_categories")
           .select("product_id, category_id, categories!product_categories_category_id_fkey(slug, name)"),
+        supabase
+          .from("product_colors")
+          .select(
+            "product_id, sort_order, colors!product_colors_color_id_fkey(id, name, hex, group_key, sort_order)",
+          )
+          .order("sort_order", { ascending: true }),
+        supabase
+          .from("product_color_series")
+          .select(
+            "product_id, sort_order, color_series!product_color_series_series_id_fkey(id, name, slug, sort_order)",
+          )
+          .order("sort_order", { ascending: true }),
+        supabase
+          .from("product_color_variants")
+          .select(
+            "product_id, color_id, series_id, media_id, sort_order, colors!product_color_variants_color_id_fkey(id, name, hex, group_key), color_series!product_color_variants_series_id_fkey(id, name, slug)",
+          )
+          .order("sort_order", { ascending: true }),
       ]);
 
       if (productError || !rows) {
@@ -130,6 +153,8 @@ export const getPublicProducts = cache(
       const mediaByProduct = new Map<
         string,
         Array<{
+          mediaId: string;
+          caption: string;
           sortOrder: number;
           isCover: boolean;
           storagePath: string;
@@ -144,6 +169,8 @@ export const getPublicProducts = cache(
           if (!relation.media_assets) continue;
           const current = mediaByProduct.get(relation.product_id) ?? [];
           current.push({
+            mediaId: relation.media_id,
+            caption: relation.caption,
             sortOrder: relation.sort_order,
             isCover: relation.is_cover,
             storagePath: relation.media_assets.storage_path,
@@ -177,6 +204,77 @@ export const getPublicProducts = cache(
             current.push({ slug: category.slug, name: category.name });
           }
           categoriesByProduct.set(relation.product_id, current);
+        }
+      }
+
+      const colorsByProduct = new Map<string, ProductColor[]>();
+      if (!productColorError) {
+        for (const relation of productColorRows ?? []) {
+          const color = relation.colors;
+          if (!color) continue;
+
+          const current = colorsByProduct.get(relation.product_id) ?? [];
+          current.push({
+            id: color.id,
+            name: color.name,
+            hex:
+              color.hex ??
+              knownColorHex[normalizeColorName(color.name)] ??
+              genericPalette[current.length % genericPalette.length],
+            groupKey: color.group_key as ProductColor["groupKey"],
+          });
+          colorsByProduct.set(relation.product_id, current);
+        }
+      }
+
+      const seriesByProduct = new Map<string, ProductColorSeries[]>();
+      if (!productSeriesError) {
+        for (const relation of productSeriesRows ?? []) {
+          const item = relation.color_series;
+          if (!item) continue;
+
+          const current = seriesByProduct.get(relation.product_id) ?? [];
+          current.push({
+            id: item.id,
+            name: item.name,
+            slug: item.slug,
+          });
+          seriesByProduct.set(relation.product_id, current);
+        }
+      }
+
+      const variantsByProduct = new Map<
+        string,
+        Array<{
+          colorId: string;
+          colorName: string;
+          colorHex: string;
+          seriesId?: string;
+          seriesName?: string;
+          seriesSlug?: string;
+          mediaId?: string;
+        }>
+      >();
+
+      if (!variantError) {
+        for (const relation of variantRows ?? []) {
+          const color = relation.colors;
+          if (!color) continue;
+
+          const current = variantsByProduct.get(relation.product_id) ?? [];
+          current.push({
+            colorId: color.id,
+            colorName: color.name,
+            colorHex:
+              color.hex ??
+              knownColorHex[normalizeColorName(color.name)] ??
+              genericPalette[current.length % genericPalette.length],
+            seriesId: relation.color_series?.id,
+            seriesName: relation.color_series?.name,
+            seriesSlug: relation.color_series?.slug,
+            mediaId: relation.media_id ?? undefined,
+          });
+          variantsByProduct.set(relation.product_id, current);
         }
       }
 
@@ -214,6 +312,7 @@ export const getPublicProducts = cache(
           fallback?.description ||
           row.short_description.trim() ||
           row.name;
+        const selectedColors = colorsByProduct.get(row.id);
         const colorNames =
           row.colors.length > 0
             ? row.colors
@@ -226,6 +325,8 @@ export const getPublicProducts = cache(
               a.sortOrder - b.sortOrder,
           )
           .map((item) => ({
+            mediaId: item.mediaId,
+            caption: item.caption || undefined,
             src: supabase.storage
               .from("cms-media")
               .getPublicUrl(item.storagePath).data.publicUrl,
@@ -233,6 +334,19 @@ export const getPublicProducts = cache(
             width: item.width ?? 1600,
             height: item.height ?? 1200,
           }));
+        const mediaById = new Map(
+          media
+            .filter((item) => item.mediaId)
+            .map((item) => [item.mediaId!, item]),
+        );
+        const productVariants: ProductColorVariant[] = (
+          variantsByProduct.get(row.id) ?? []
+        ).map((variant) => ({
+          ...variant,
+          image: variant.mediaId
+            ? mediaById.get(variant.mediaId)
+            : undefined,
+        }));
 
         return {
           slug: row.slug,
@@ -255,7 +369,12 @@ export const getPublicProducts = cache(
             artworkByCategory[categorySlug] ??
             "balloon-bouquet",
           images: media.length > 0 ? media : fallback?.images,
-          colors: colorsFor(colorNames, fallback),
+          colors:
+            selectedColors && selectedColors.length > 0
+              ? selectedColors
+              : colorsFor(colorNames, fallback),
+          colorSeries: seriesByProduct.get(row.id) ?? [],
+          colorVariants: productVariants,
           dimensions: row.dimensions?.trim() || fallback?.dimensions,
           featured: row.featured,
           newArrival: row.new_arrival,
