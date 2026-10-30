@@ -117,7 +117,7 @@ export function ProductColorSelector({
           {([...groupedColors.entries()] as Array<
             [ProductColorGroupKey, AdminColorOption[]]
           >).map(([groupKey, groupColors]) => (
-            <section key={groupKey} className="not-first:mt-5">
+            <section key={groupKey} className="mt-5 first:mt-0">
               <h3 className="sticky top-0 z-10 bg-white py-2 text-xs font-black tracking-[0.08em] text-muted uppercase">
                 {colorGroupLabels[groupKey]}
               </h3>
