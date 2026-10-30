@@ -46,6 +46,7 @@ export type ProductColorVariant = {
   seriesSlug?: string;
   mediaId?: string;
   image?: ContentImage;
+  images?: readonly ContentImage[];
 };
 
 export type ProductCategoryRef = {
