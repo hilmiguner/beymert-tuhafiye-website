@@ -1,5 +1,10 @@
 import Link from "next/link";
 
+import {
+  ProductColorSelector,
+  type AdminColorOption,
+  type AdminSeriesOption,
+} from "@/components/admin/product-color-selector";
 import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import type { AdminCategoryOption } from "@/lib/category-hierarchy";
 import type { Tables } from "@/types/database";
@@ -11,6 +16,10 @@ type ProductFormProps = {
   product?: Product;
   categories: AdminCategoryOption[];
   selectedCategoryIds?: readonly string[];
+  colorOptions: readonly AdminColorOption[];
+  seriesOptions: readonly AdminSeriesOption[];
+  selectedColorIds?: readonly string[];
+  selectedSeriesIds?: readonly string[];
   error?: string;
   submitLabel: string;
 };
@@ -34,6 +43,10 @@ export function ProductForm({
   product,
   categories,
   selectedCategoryIds,
+  colorOptions,
+  seriesOptions,
+  selectedColorIds,
+  selectedSeriesIds,
   error,
   submitLabel,
 }: ProductFormProps) {
@@ -161,18 +174,12 @@ export function ProductForm({
           placeholder="Ürün detaylarını biçimlendirebilir; başlık, kalın/italik metin ve listeler kullanabilirsiniz."
         />
 
-        <label className="block">
-          <span className="mb-2 block text-sm font-extrabold">Renkler</span>
-          <input
-            name="colors"
-            defaultValue={product?.colors.join(", ") ?? ""}
-            placeholder="Altın, Gümüş, Rose Gold"
-            className="min-h-12 w-full rounded-control border border-border bg-white px-4 outline-none transition focus:border-primary"
-          />
-          <span className="mt-2 block text-xs leading-5 text-muted">
-            Virgülle ayırın.
-          </span>
-        </label>
+        <ProductColorSelector
+          colors={colorOptions}
+          series={seriesOptions}
+          selectedColorIds={selectedColorIds}
+          selectedSeriesIds={selectedSeriesIds}
+        />
 
         <label className="block">
           <span className="mb-2 block text-sm font-extrabold">Ölçü / ebat</span>
