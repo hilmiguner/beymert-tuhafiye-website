@@ -41,10 +41,22 @@ function parseProductForm(formData: FormData) {
     String(formData.get("whatsappMessage") ?? "").trim() || null;
   const status = String(formData.get("status") ?? "draft") as ContentStatus;
   const sortOrder = Number(formData.get("sortOrder") ?? 0);
-  const colors = String(formData.get("colors") ?? "")
-    .split(",")
-    .map((color) => color.trim())
-    .filter(Boolean);
+  const colorIds = [
+    ...new Set(
+      formData
+        .getAll("colorIds")
+        .map((value) => String(value).trim())
+        .filter(Boolean),
+    ),
+  ];
+  const seriesIds = [
+    ...new Set(
+      formData
+        .getAll("seriesIds")
+        .map((value) => String(value).trim())
+        .filter(Boolean),
+    ),
+  ];
 
   if (
     !name ||
@@ -65,7 +77,6 @@ function parseProductForm(formData: FormData) {
       short_description: shortDescription,
       description: richDescription.text,
       description_rich: richDescription.json,
-      colors,
       dimensions,
       whatsapp_message: whatsappMessage,
       status,
@@ -74,12 +85,14 @@ function parseProductForm(formData: FormData) {
       new_arrival: formData.get("newArrival") === "on",
     },
     categoryIds,
+    colorIds,
+    seriesIds,
   };
 }
 
 function errorCode(code?: string) {
   if (code === "23505") return "slug";
-  if (code === "23503") return "categories";
+  if (code === "23503") return "options";
   return "save";
 }
 
@@ -128,9 +141,21 @@ export async function createProductAction(formData: FormData) {
 
   if (categoriesError) {
     await supabase.from("products").delete().eq("id", data.id);
-    redirect(
-      `/admin/urunler/yeni?error=${errorCode(categoriesError.code)}`,
-    );
+    redirect("/admin/urunler/yeni?error=categories");
+  }
+
+  const { error: optionsError } = await supabase.rpc(
+    "set_product_color_selections",
+    {
+      p_product_id: data.id,
+      p_color_ids: parsed.colorIds,
+      p_series_ids: parsed.seriesIds,
+    },
+  );
+
+  if (optionsError) {
+    await supabase.from("products").delete().eq("id", data.id);
+    redirect("/admin/urunler/yeni?error=options");
   }
 
   revalidateProductSurfaces(parsed.values.slug);
@@ -181,9 +206,20 @@ export async function updateProductAction(formData: FormData) {
   );
 
   if (categoriesError) {
-    redirect(
-      `/admin/urunler/${id}?error=${errorCode(categoriesError.code)}`,
-    );
+    redirect(`/admin/urunler/${id}?error=categories`);
+  }
+
+  const { error: optionsError } = await supabase.rpc(
+    "set_product_color_selections",
+    {
+      p_product_id: id,
+      p_color_ids: parsed.colorIds,
+      p_series_ids: parsed.seriesIds,
+    },
+  );
+
+  if (optionsError) {
+    redirect(`/admin/urunler/${id}?error=options`);
   }
 
   revalidatePath(`/admin/urunler/${id}`);

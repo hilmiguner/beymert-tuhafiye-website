@@ -3,8 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ProductCard } from "@/components/products/product-card";
+import { ProductGallery } from "@/components/products/product-gallery";
+import { ProductVariantHero } from "@/components/products/product-variant-hero";
+import { ProductVariantProvider } from "@/components/products/product-variant-context";
 import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
-import { ProductMedia } from "@/components/products/product-media";
 import { ButtonLink } from "@/components/ui/button";
 import { Container, Section } from "@/components/ui/container";
 import { getCategoryAncestors } from "@/lib/category-hierarchy";
@@ -77,6 +79,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     `Merhaba, web sitenizde gördüğüm "${product.name}" hakkında bilgi almak istiyorum.`;
 
   return (
+    <ProductVariantProvider>
     <main id="main-content" tabIndex={-1}>
       <BreadcrumbJsonLd
         items={[
@@ -100,9 +103,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <Section className="border-b border-border bg-surface-muted/30">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div className="overflow-hidden rounded-[2rem] border border-white/80 bg-surface shadow-lift">
-              <ProductMedia product={product} fit="contain" priority />
-            </div>
+            <ProductVariantHero product={product} />
 
             <div>
               <div className="flex flex-wrap gap-2">
@@ -183,28 +184,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <div>
               <p className="bt-eyebrow text-secondary">Ürün bilgileri</p>
               <h2 className="bt-display mt-3 text-4xl font-semibold">
-                Renk ve detaylar.
+                Ürün detayları.
               </h2>
-
-              {product.colors.length > 0 ? (
-                <div className="mt-6">
-                  <p className="text-sm font-extrabold">Renk seçenekleri</p>
-                  <div className="mt-3 flex flex-wrap gap-3">
-                    {product.colors.map((color) => (
-                      <div
-                        key={color.name}
-                        className="flex items-center gap-2 rounded-pill border border-border bg-surface px-3 py-2"
-                      >
-                        <span
-                          className="size-5 rounded-full border border-black/5"
-                          style={{ backgroundColor: color.hex }}
-                        />
-                        <span className="text-sm font-bold">{color.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
 
               {product.dimensions ? (
                 <div className="mt-6">
@@ -222,28 +203,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             <div>
               <p className="bt-eyebrow text-primary">Ürün galerisi</p>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                {productImages.length > 0 ? (
-                  productImages.map((image, index) => (
-                    <div
-                      key={`${image.src}-${index}`}
-                      className={`overflow-hidden rounded-card border border-border bg-surface shadow-soft ${
-                        index === 0 ? "sm:col-span-2" : ""
-                      }`}
-                    >
-                      <ProductMedia
-                        product={product}
-                        imageIndex={index}
-                        fit="contain"
-                      />
-                    </div>
-                  ))
-                ) : (
-                  <div className="overflow-hidden rounded-card border border-border bg-surface shadow-soft sm:col-span-2">
-                    <ProductMedia product={product} fit="contain" />
-                  </div>
-                )}
-              </div>
+              {productImages.length > 0 ? (
+                <div className="mt-4">
+                  <ProductGallery
+                    images={productImages}
+                    productName={product.name}
+                  />
+                </div>
+              ) : (
+                <div className="mt-4 rounded-card border border-dashed border-border bg-surface-muted p-8 text-sm text-muted">
+                  Bu ürün için henüz galeri fotoğrafı bulunmuyor.
+                </div>
+              )}
             </div>
           </div>
         </Container>
@@ -290,5 +261,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </Section>
       ) : null}
     </main>
+    </ProductVariantProvider>
   );
 }

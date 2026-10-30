@@ -663,6 +663,11 @@ Amaç: Dükkan sahibinin GitHub/Vercel kullanmadan ürün, kategori, konsept, ga
 - [x] Üç seviyeli kategori hiyerarşisi — `categories.parent_id`, maksimum üç seviye/cycle koruması, CMS seviye + parent seçimi, hiyerarşik admin/public görünüm ve parent-category descendant ürün kapsamı eklendi; mevcut 9 kategori top-level olarak korunarak geriye uyumlu geçiş yapıldı.
 - [x] Ürün CRUD — listeleme, oluşturma, düzenleme, silme, kategori ilişkisi, özellikler ve yayın durumu canlı Supabase üzerinde E2E doğrulandı.
 - [x] Ürün çoklu kategori ilişkisi — `product_categories` join tablosu ve `set_product_categories` RPC eklendi; mevcut 25 ürünün eski kategori ilişkileri eksiksiz backfill edildi ve CMS formu hiyerarşik çoklu kategori seçimini destekliyor.
+- [x] Merkezi renk kataloğu — 44 sabit renk, aranabilir/gruplandırılmış multi-select, admin yeni renk ekleme ve case-insensitive duplicate koruması eklendi.
+- [x] Mevcut ürün renkleri yeni modele migrate edildi — 93 eski renk girdisi 93 `product_colors` ilişkisine eksiksiz aktarıldı; sabit katalog dışında kalan eski renkler özel renk olarak korundu.
+- [x] Renk serisi modeli — Standart, Makaron, Retro, Neon, Metalik ve Krom için ayrı ürün multi-select ilişkisi eklendi.
+- [x] Ürün renk-seri varyantları — yalnız geçerli kombinasyonların tanımlanması, kombinasyona ürün fotoğrafı bağlama ve müşteride seçimle ana görseli yenilemeden değiştirme altyapısı eklendi.
+- [x] Ürün medya geliştirmeleri — fotoğraf başına serbest açıklama/caption, public caption görünümü, tüm görseller için object-contain ve ürün detay lightbox/klavye navigasyonu eklendi.
 - [x] Ürün çoklu fotoğraf yükleme / sıralama / kapak seçimi — doğrudan Supabase Storage upload, RLS, atomik kapak seçimi ve medya temizliği canlı E2E doğrulandı; upload sonrası anlık UI güncellemesi de doğrulandı.
 - [x] Konsept CRUD — listeleme, oluşturma, düzenleme, silme, ilgili ürün ilişkileri, sıralama ve yayın durumu canlı Supabase üzerinde E2E doğrulandı.
 - [x] Konsept çoklu fotoğraf yükleme / sıralama / kapak seçimi — Storage upload, tek kapak constraint'i, atomik cover sync ve medya temizliği canlı E2E doğrulandı.
@@ -960,4 +965,4 @@ V1 sonrasında ihtiyaca göre değerlendirilebilir:
 
 ---
 
-Son güncelleme: 2026-10-02
+Son güncelleme: 2026-10-30

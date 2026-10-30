@@ -9,6 +9,7 @@ export type ProductMediaItem = {
   mediaId: string;
   storagePath: string;
   altText: string;
+  caption: string;
   sortOrder: number;
   isCover: boolean;
 };
@@ -131,6 +132,7 @@ export function ProductMediaManager({
             media_id: asset.id,
             sort_order: nextOrder,
             is_cover: shouldSetCover,
+            caption: "",
           });
 
         if (relationError) {
@@ -146,6 +148,7 @@ export function ProductMediaManager({
             selected.length === 1
               ? `${productName} görseli`
               : `${productName} görseli ${index + 1}`,
+          caption: "",
           sortOrder: nextOrder,
           isCover: shouldSetCover,
         });
@@ -177,6 +180,7 @@ export function ProductMediaManager({
       media_id: item.mediaId,
       sort_order: index,
       is_cover: item.isCover,
+      caption: item.caption,
     }));
 
     const { error } = await supabase.from("product_media").upsert(rows);
@@ -205,6 +209,38 @@ export function ProductMediaManager({
       await persistOrder(next);
     } catch {
       setMessage("Fotoğraf sırası güncellenemedi.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function saveCaption(mediaId: string) {
+    const item = items.find((candidate) => candidate.mediaId === mediaId);
+    if (!item) return;
+
+    setBusy(true);
+    setMessage(null);
+
+    try {
+      const { error } = await supabase
+        .from("product_media")
+        .update({ caption: item.caption.trim() })
+        .eq("product_id", productId)
+        .eq("media_id", mediaId);
+
+      if (error) throw error;
+
+      setItems((current) =>
+        current.map((candidate) =>
+          candidate.mediaId === mediaId
+            ? { ...candidate, caption: candidate.caption.trim() }
+            : candidate,
+        ),
+      );
+      setMessage("Fotoğraf açıklaması kaydedildi.");
+      router.refresh();
+    } catch {
+      setMessage("Fotoğraf açıklaması kaydedilemedi.");
     } finally {
       setBusy(false);
     }
@@ -327,7 +363,7 @@ export function ProductMediaManager({
               <div
                 role="img"
                 aria-label={item.altText}
-                className="aspect-[4/3] bg-cover bg-center"
+                className="aspect-[4/3] bg-contain bg-center bg-no-repeat"
                 style={{ backgroundImage: `url("${publicUrl(item.storagePath)}")` }}
               />
               <div className="p-4">
@@ -342,7 +378,36 @@ export function ProductMediaManager({
                   ) : null}
                 </div>
 
-                <div className="mt-4 flex flex-wrap gap-2">
+                <label className="mt-4 block">
+                  <span className="mb-2 block text-xs font-extrabold text-muted">
+                    Fotoğraf Açıklaması
+                  </span>
+                  <input
+                    type="text"
+                    value={item.caption}
+                    onChange={(event) =>
+                      setItems((current) =>
+                        current.map((candidate) =>
+                          candidate.mediaId === item.mediaId
+                            ? { ...candidate, caption: event.target.value }
+                            : candidate,
+                        ),
+                      )
+                    }
+                    placeholder="Örn. 18 inç veya Büyük Boy Fiyonk"
+                    className="min-h-10 w-full rounded-control border border-border bg-white px-3 text-sm outline-none focus:border-primary"
+                  />
+                </label>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    disabled={busy}
+                    onClick={() => void saveCaption(item.mediaId)}
+                    className="rounded-control border border-primary/30 bg-primary/5 px-3 py-2 text-xs font-extrabold text-primary disabled:opacity-40"
+                  >
+                    Açıklamayı Kaydet
+                  </button>
                   <button
                     type="button"
                     disabled={busy || index === 0}
