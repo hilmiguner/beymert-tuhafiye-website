@@ -28,6 +28,8 @@ const errorMessages: Record<string, string> = {
   invalid: "Lütfen zorunlu alanları ve sayısal değerleri kontrol edin.",
   categories:
     "Kategori seçimlerinden biri geçersiz. Kategorileri kontrol edip tekrar deneyin.",
+  options:
+    "Renk veya seri seçimlerinden biri geçersiz. Seçenekleri kontrol edip tekrar deneyin.",
   slug: "Bu URL adı başka bir ürün tarafından kullanılıyor.",
   save: "Ürün kaydedilemedi. Lütfen tekrar deneyin.",
 };
