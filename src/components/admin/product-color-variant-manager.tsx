@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
 import type {
@@ -39,6 +40,7 @@ export function ProductColorVariantManager({
   mediaItems: readonly ProductMediaItem[];
   initialVariants: readonly AdminProductVariant[];
 }) {
+  const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -134,6 +136,7 @@ export function ProductColorVariantManager({
           ? "Geçerli renk-seri kombinasyonları kaydedildi."
           : "Bu ürün için geçerli renk-seri kombinasyonu bırakılmadı.",
       );
+      router.refresh();
     } catch (error) {
       setMessage(
         error instanceof Error
