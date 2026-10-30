@@ -23,7 +23,7 @@
   --color-focus: var(--bt-focus);
 
   --font-sans: "Nunito Sans Variable", "Segoe UI", sans-serif;
-  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-display: Georgia, "Times New Roman", serif;
 
   --radius-control: 0.875rem;
   --radius-card: 1.5rem;
@@ -118,9 +118,8 @@ select {
 }
 
 .bt-display {
-  font-family: "Fraunces Variable", Georgia, serif;
-  font-variation-settings: "SOFT" 55, "WONK" 0;
-  letter-spacing: -0.035em;
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.03em;
 }
 
 .bt-eyebrow {
