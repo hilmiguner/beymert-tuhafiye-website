@@ -181,7 +181,8 @@ export function ProductVariantHero({ product }: { product: Product }) {
             </p>
           )}
         </div>
-      ) : product.colors.length > 0 ? (
+      ) : product.colors.length > 0 &&
+        (product.colorSeries?.length ?? 0) === 0 ? (
         <div className="mt-5 flex flex-wrap gap-2">
           {product.colors.map((color) => (
             <span
