@@ -224,6 +224,7 @@ export default async function EditProductPage({
 
       <div className="rounded-[2rem] border border-border bg-white p-6 shadow-soft sm:p-8">
         <ProductColorVariantManager
+          key={mediaItems.map((item) => item.mediaId).join(":")}
           productId={product.id}
           colors={selectedColors}
           series={selectedSeries}
