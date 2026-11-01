@@ -95,6 +95,27 @@ export function ProductColorVariantManager({
     label: item.caption || `Fotoğraf ${index + 1}`,
     url: supabase.storage.from("cms-media").getPublicUrl(item.storagePath).data.publicUrl,
   })), [mediaItems, supabase]);
+  const candidateCombinations = useMemo(
+    () =>
+      colors.flatMap((color) =>
+        series.length === 0
+          ? [
+              {
+                key: variantKey(color.id, null),
+                colorId: color.id,
+                seriesId: null as string | null,
+                label: color.name,
+              },
+            ]
+          : series.map((item) => ({
+              key: variantKey(color.id, item.id),
+              colorId: color.id,
+              seriesId: item.id as string | null,
+              label: `${color.name} · ${item.name}`,
+            })),
+      ),
+    [colors, series],
+  );
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [variants, setVariants] = useState<Map<string, VariantState>>(() => {
@@ -203,17 +224,25 @@ export function ProductColorVariantManager({
 
   if (colors.length === 0) {
     return (
-      <div>
-        <h2 className="text-xl font-extrabold">Renk ve seri kombinasyonları</h2>
+      <div id="foto-renk-eslestirme" className="scroll-mt-6">
+        <h2 className="text-xl font-extrabold">Fotoğraflara renk atama</h2>
         <p className="mt-2 text-sm leading-6 text-muted">
-          Önce ürün formundan en az bir renk seçip değişiklikleri kaydedin.
+          Bu ürün için henüz renk seçilmemiş. Önce yukarıdaki ürün formundan
+          renkleri işaretleyip <strong>Değişiklikleri Kaydet</strong> butonuna
+          basın. Ardından fotoğraf eşleştirme seçenekleri burada görünecek.
         </p>
+        <a
+          href="#urun-bilgileri"
+          className="mt-4 inline-flex min-h-10 items-center rounded-control bg-primary px-4 text-sm font-extrabold text-white"
+        >
+          Ürün renklerini seç
+        </a>
       </div>
     );
   }
 
   return (
-    <div>
+    <div id="foto-renk-eslestirme" className="scroll-mt-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="text-xl font-extrabold">Renk ve seri kombinasyonları</h2>
@@ -240,6 +269,97 @@ export function ProductColorVariantManager({
         </div>
       ) : null}
 
+      <section className="mt-6 rounded-card border border-primary/25 bg-primary/5 p-4 sm:p-5">
+        <h3 className="text-lg font-extrabold">Fotoğraf bazında renk ataması</h3>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted">
+          Her fotoğrafın altındaki renkleri işaretleyin. Bir fotoğrafı birden
+          fazla renge veya geçerli renk-seri kombinasyonuna bağlayabilirsiniz.
+          Sonrasında <strong>Kombinasyonları Kaydet</strong> butonuna basın.
+        </p>
+        {series.length > 0 ? (
+          <p className="mt-2 text-xs font-semibold text-muted">
+            Seri kullanılan ürünlerde yeni bir eşleştirmeyi işaretlemek o
+            renk-seri kombinasyonunu da geçerli hale getirir. Aşağıdaki detay
+            bölümünden fotoğrafı olmayan geçerli kombinasyonları da yönetebilirsiniz.
+          </p>
+        ) : null}
+
+        {photoOptions.length > 0 ? (
+          <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {photoOptions.map((photo, index) => {
+              const assignedCount = candidateCombinations.filter((option) =>
+                variants.get(option.key)?.mediaIds.includes(photo.mediaId),
+              ).length;
+
+              return (
+                <article
+                  id={`foto-renk-${photo.mediaId}`}
+                  key={photo.mediaId}
+                  className="scroll-mt-6 overflow-hidden rounded-card border border-border bg-white p-3 shadow-soft"
+                >
+                  <div
+                    role="img"
+                    aria-label={photo.altText}
+                    className="aspect-[4/3] rounded-control bg-contain bg-center bg-no-repeat"
+                    style={{ backgroundImage: `url("${photo.url}")` }}
+                  />
+                  <p className="mt-3 text-sm font-extrabold">
+                    {photo.label || `Fotoğraf ${index + 1}`}
+                  </p>
+                  <p className="mt-1 text-xs text-muted">
+                    {assignedCount} renk/seri eşleştirildi
+                  </p>
+                  <fieldset className="mt-3 max-h-56 space-y-1 overflow-y-auto border-t border-border pt-3">
+                    <legend className="sr-only">
+                      {photo.label} için renk seçenekleri
+                    </legend>
+                    {candidateCombinations.map((option) => {
+                      const state = variants.get(option.key);
+                      const checked = state?.mediaIds.includes(photo.mediaId) ?? false;
+                      return (
+                        <label
+                          key={option.key}
+                          className="flex cursor-pointer items-center gap-2 rounded-control px-2 py-2 text-xs hover:bg-surface-muted"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            onChange={(event) =>
+                              updateVariant(option.colorId, option.seriesId, {
+                                enabled: true,
+                                mediaIds: event.target.checked
+                                  ? [...(state?.mediaIds ?? []), photo.mediaId]
+                                  : (state?.mediaIds ?? []).filter(
+                                      (id) => id !== photo.mediaId,
+                                    ),
+                              })
+                            }
+                            className="size-4 shrink-0 accent-[var(--color-primary)]"
+                          />
+                          <span className="font-semibold">{option.label}</span>
+                        </label>
+                      );
+                    })}
+                  </fieldset>
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="mt-4 rounded-control bg-white p-4 text-sm text-muted">
+            Henüz fotoğraf yüklenmemiş. Aşağıdaki <strong>Ürün fotoğrafları</strong>
+            bölümünden fotoğraf ekleyin.
+          </p>
+        )}
+      </section>
+
+      <div className="mt-8 border-t border-border pt-6">
+        <h3 className="text-lg font-extrabold">Renk-seri kombinasyonlarını ayrıntılı yönet</h3>
+        <p className="mt-2 text-sm text-muted">
+          Dilerseniz her renk altında da geçerli kombinasyonları ve fotoğrafları
+          düzenleyebilirsiniz. İki görünüm aynı seçimleri kullanır.
+        </p>
+      </div>
       {series.length === 0 ? (
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {colors.map((color) => {
