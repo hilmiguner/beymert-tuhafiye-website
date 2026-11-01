@@ -163,6 +163,15 @@ Public ürün detayında:
 - geçerli renk-seri kombinasyonları tanımlanır,
 - kombinasyon başına bir veya daha fazla fotoğraf, küçük resimler üzerinden
   işaretlenerek bağlanır.
+- ürün düzenleme sayfasında **Fotoğraf bazında renk ataması** paneli,
+  uzun ürün fotoğrafı listesinin üstündedir; her fotoğrafın altında
+  birden çok renk veya renk-seri işaretlenebilir,
+- fotoğraf yönetimindeki her **Bu Fotoğrafa Renk Ata** bağlantısı
+  doğrudan ilgili fotoğrafın eşleştirme kutusuna gider,
+- hiç renk seçilmemişse panel ürün formunda renk seçilmesini ister;
+  seçili renkler kaydedildikten sonra eşleştirmeler görünür.
+- her iki eşleştirme görünümü aynı değişiklikleri
+  **Kombinasyonları Kaydet** düğmesiyle kaydeder.
 
 ## Public katalog
 
