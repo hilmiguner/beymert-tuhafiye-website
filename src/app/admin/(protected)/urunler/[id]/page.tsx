@@ -198,7 +198,7 @@ export default async function EditProductPage({
           </div>
         ) : null}
 
-        <div className="mt-8 border-t border-border pt-8">
+        <div id="urun-bilgileri" className="mt-8 scroll-mt-6 border-t border-border pt-8">
           <ProductForm
             action={updateProductAction}
             product={product}
@@ -215,21 +215,25 @@ export default async function EditProductPage({
       </div>
 
       <div className="rounded-[2rem] border border-border bg-white p-6 shadow-soft sm:p-8">
-        <ProductMediaManager
-          productId={product.id}
-          productName={product.name}
-          initialItems={mediaItems}
-        />
-      </div>
-
-      <div className="rounded-[2rem] border border-border bg-white p-6 shadow-soft sm:p-8">
         <ProductColorVariantManager
-          key={mediaItems.map((item) => item.mediaId).join(":")}
+          key={[
+            ...selectedColorIds,
+            ...selectedSeriesIds,
+            ...mediaItems.map((item) => item.mediaId),
+          ].join(":")}
           productId={product.id}
           colors={selectedColors}
           series={selectedSeries}
           mediaItems={mediaItems}
           initialVariants={initialVariants}
+        />
+      </div>
+
+      <div className="rounded-[2rem] border border-border bg-white p-6 shadow-soft sm:p-8">
+        <ProductMediaManager
+          productId={product.id}
+          productName={product.name}
+          initialItems={mediaItems}
         />
       </div>
 
