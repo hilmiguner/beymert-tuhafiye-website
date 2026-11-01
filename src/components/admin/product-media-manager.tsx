@@ -41,10 +41,12 @@ export function ProductMediaManager({
   productId,
   productName,
   initialItems,
+  hasSelectedColors = true,
 }: {
   productId: string;
   productName: string;
   initialItems: ProductMediaItem[];
+  hasSelectedColors?: boolean;
 }) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -402,7 +404,7 @@ export function ProductMediaManager({
 
                 <div className="mt-3 flex flex-wrap gap-2">
                   <a
-                    href={`#foto-renk-${item.mediaId}`}
+                    href={hasSelectedColors ? `#foto-renk-${item.mediaId}` : "#foto-renk-eslestirme"}
                     className="inline-flex items-center rounded-control bg-primary px-3 py-2 text-xs font-extrabold text-white hover:bg-primary-hover"
                   >
                     Bu Fotoğrafa Renk Ata
