@@ -234,7 +234,6 @@ export default async function EditProductPage({
           productId={product.id}
           productName={product.name}
           initialItems={mediaItems}
-          hasSelectedColors={selectedColors.length > 0}
         />
       </div>
 
