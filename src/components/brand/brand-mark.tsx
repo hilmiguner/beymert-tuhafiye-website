@@ -30,12 +30,12 @@ export function BrandMark({
       </span>
 
       <span className="flex min-w-0 flex-col">
-        <span className="bt-display truncate text-[1.55rem] leading-none font-semibold text-foreground">
+        <span className="bt-display text-[clamp(1.05rem,2vw,1.45rem)] leading-tight font-semibold text-foreground">
           {shortName}
         </span>
         {!compact && (
           <span className="mt-1 truncate text-[0.61rem] font-extrabold tracking-[0.13em] text-muted uppercase sm:text-[0.65rem]">
-            Parti · Tuhafiye · Tasarım
+            TASARIM - TUHAFİYE
           </span>
         )}
       </span>
