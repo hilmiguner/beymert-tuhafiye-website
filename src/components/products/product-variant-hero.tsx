@@ -105,6 +105,27 @@ export function ProductVariantHero({ product }: { product: Product }) {
         )}
       </button>
 
+      {activeImage?.caption ? (
+        <p className="mt-3 rounded-control border border-border bg-surface px-4 py-3 text-sm font-semibold text-muted">
+          {activeImage.caption}
+        </p>
+      ) : null}
+
+      <div className="mt-4">
+        <button
+          type="button"
+          onClick={() => selectVariant(null)}
+          aria-pressed={!activeVariant}
+          className={`min-h-11 rounded-pill border px-5 text-sm font-extrabold transition ${
+            !activeVariant
+              ? "border-primary bg-primary text-white"
+              : "border-border bg-white text-foreground hover:border-primary/30"
+          }`}
+        >
+          Tüm Renkler
+        </button>
+      </div>
+
       {activeVariant && selectedImages.length === 0 ? (
         <p className="mt-3 rounded-control border border-amber-200 bg-amber-50 p-3 text-sm font-semibold text-amber-900">
           Bu renk ve seri için henüz fotoğraf eşleştirilmedi. Üstteki fotoğraf genel ürün görselidir.
@@ -230,6 +251,11 @@ export function ProductVariantHero({ product }: { product: Product }) {
               fit="contain"
               sizes="100vw"
             />
+            {lightboxImage.caption ? (
+              <p className="absolute bottom-2 left-1/2 max-w-[90%] -translate-x-1/2 rounded-pill bg-white px-4 py-2 text-center text-sm font-semibold text-foreground">
+                {lightboxImage.caption}
+              </p>
+            ) : null}
           </div>
         </div>
       ) : null}
