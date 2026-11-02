@@ -15,9 +15,7 @@ const validGroups = new Set<ProductColorGroupKey>([
   "other",
 ]);
 
-export async function createColorAction(formData: FormData) {
-  await requireCmsAdmin();
-
+function readColorForm(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   const groupKey = String(formData.get("groupKey") ?? "other") as ProductColorGroupKey;
   const hexValue = String(formData.get("hex") ?? "").trim().toUpperCase();
@@ -29,9 +27,22 @@ export async function createColorAction(formData: FormData) {
     !slug ||
     !validGroups.has(groupKey) ||
     (hex && !/^#[0-9A-F]{6}$/.test(hex))
-  ) {
-    redirect("/admin/renkler?error=invalid");
-  }
+  ) return null;
+
+  return { name, group_key: groupKey, hex, slug };
+}
+
+function redirectColorError(code: string | undefined, action: "save" | "delete" = "save"): never {
+  if (code === "23505") redirect("/admin/renkler?error=duplicate");
+  if (code === "23503") redirect("/admin/renkler?error=in-use");
+  redirect(`/admin/renkler?error=${action}`);
+}
+
+export async function createColorAction(formData: FormData) {
+  await requireCmsAdmin();
+
+  const values = readColorForm(formData);
+  if (!values) redirect("/admin/renkler?error=invalid");
 
   const supabase = await createClient();
   const { data: lastColor } = await supabase
@@ -42,21 +53,64 @@ export async function createColorAction(formData: FormData) {
     .maybeSingle();
 
   const { error } = await supabase.from("colors").insert({
-    name,
-    slug,
-    group_key: groupKey,
-    hex,
+    ...values,
     sort_order: Math.max((lastColor?.sort_order ?? 999) + 1, 1000),
     is_active: true,
   });
 
-  if (error) {
-    redirect(
-      `/admin/renkler?error=${error.code === "23505" ? "duplicate" : "save"}`,
-    );
-  }
+  if (error) redirectColorError(error.code);
 
   revalidatePath("/admin/renkler");
   revalidatePath("/admin/urunler");
   redirect("/admin/renkler?success=created");
+}
+
+export async function updateColorAction(formData: FormData) {
+  await requireCmsAdmin();
+
+  const id = String(formData.get("id") ?? "").trim();
+  const values = readColorForm(formData);
+  if (!id || !values) redirect("/admin/renkler?error=invalid");
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("colors")
+    .update(values)
+    .eq("id", id)
+    .select("id")
+    .maybeSingle();
+
+  if (error) redirectColorError(error.code);
+  if (!data) redirect("/admin/renkler?error=save");
+
+  revalidatePath("/admin/renkler");
+  revalidatePath("/admin/urunler");
+  revalidatePath("/urunler");
+  redirect("/admin/renkler?success=updated");
+}
+
+export async function deleteColorAction(formData: FormData) {
+  await requireCmsAdmin();
+
+  const id = String(formData.get("id") ?? "").trim();
+  if (!id) redirect("/admin/renkler?error=invalid");
+
+  const supabase = await createClient();
+  const [links, variants] = await Promise.all([
+    supabase.from("product_colors").select("*", { count: "exact", head: true }).eq("color_id", id),
+    supabase.from("product_color_variants").select("*", { count: "exact", head: true }).eq("color_id", id),
+  ]);
+
+  if (links.error || variants.error) redirect("/admin/renkler?error=delete");
+  if ((links.count ?? 0) > 0 || (variants.count ?? 0) > 0) {
+    redirect("/admin/renkler?error=in-use");
+  }
+
+  const { error } = await supabase.from("colors").delete().eq("id", id);
+  if (error) redirectColorError(error.code, "delete");
+
+  revalidatePath("/admin/renkler");
+  revalidatePath("/admin/urunler");
+  revalidatePath("/urunler");
+  redirect("/admin/renkler?success=deleted");
 }
