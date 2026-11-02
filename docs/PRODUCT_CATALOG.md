@@ -190,3 +190,26 @@ Konsept ilişkileri `product_concepts`, medya metadata'sı `media_assets`
 
 Phase 10 kapsamında gerçek ürün, kategori, konsept, fotoğraf ve varyant
 bilgileri CMS'e girildikçe temsili/fallback içerik kademeli kaldırılacaktır.
+
+## CMS renk kataloğu bakım işlemleri
+
+`/admin/renkler` sayfasındaki her renk, ürün referanslarını koruyarak
+yeniden adlandırılabilir; renk grubu ve HEX kodu düzenlenebilir.
+Renk adı değişince bağlı ürünlerin eski `products.colors` kayıtları da
+veritabanı trigger'ı aracılığıyla senkronize edilir.
+
+Bir renge bağlı ürün ya da varyant varsa silme düğmesi devre dışıdır.
+Yalnızca kullanılmayan renkler onay verilerek silinebilir. Mevcut ürün
+renk bağlantıları otomatik silinmez.
+
+Ürün düzenlemede tek renk-fotoğraf yönetim alanı
+**Renk-seri kombinasyonlarını ayrıntılı yönet** bölümüdür;
+fotoğraf bazlı ikinci ekran kaldırılmıştır.
+
+Müşteri tarafında her ürünün kapak alanındaki **Tüm Renkler**
+seçeneği, renk veya seri filtresini sayfa yenilemeden kaldırır ve
+bütün ürün fotoğraflarını yeniden gösterir. Kapak fotoğrafı açıklaması,
+varsa görselin hemen altında yer alır.
+
+Ürün önizleme sayfası kategori ilişkisini `products_category_id_fkey`
+üzerinden çözer, galeri ve kapak açıklamalarını da gösterir.
