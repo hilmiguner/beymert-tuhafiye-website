@@ -246,7 +246,7 @@ export function HeroSection({
                   data-hero-reveal
                   className="block origin-left"
                 >
-                  Gemlik’te parti
+                  Gemlik'te Parti
                 </span>
               </span>
               <span className="block overflow-hidden pb-[0.08em]">
@@ -255,7 +255,7 @@ export function HeroSection({
                   data-hero-reveal
                   className="block origin-left text-primary"
                 >
-                  malzemeleri
+                  Malzemeleri
                 </span>
               </span>
               <span className="block overflow-hidden pb-[0.08em]">
