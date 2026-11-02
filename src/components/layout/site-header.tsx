@@ -32,7 +32,6 @@ function MenuIcon({ open }: { open: boolean }) {
 }
 
 export function SiteHeader({
-  shortName,
   whatsappUrl,
 }: {
   shortName: string;
@@ -64,9 +63,9 @@ export function SiteHeader({
     <header className="sticky top-0 z-50 border-b border-border/75 bg-background/88 backdrop-blur-xl">
       <Container>
         <div className="flex min-h-18 items-center justify-between gap-5 py-3">
-          <BrandMark shortName={shortName} />
+          <BrandMark shortName="Beymert Parti Malzemeleri" />
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Ana navigasyon">
+          <nav className="hidden items-center gap-1 xl:flex" aria-label="Ana navigasyon">
             {siteConfig.nav.map((item) => (
               <Link
                 key={item.href}
@@ -83,7 +82,7 @@ export function SiteHeader({
             ))}
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden xl:block">
             <ButtonLink
               href={whatsappUrl}
               target="_blank"
@@ -101,7 +100,7 @@ export function SiteHeader({
             aria-controls="mobile-navigation"
             aria-haspopup="true"
             onClick={() => setOpen((value) => !value)}
-            className="grid size-11 place-items-center rounded-control border border-border bg-surface text-foreground lg:hidden"
+            className="grid size-11 place-items-center rounded-control border border-border bg-surface text-foreground xl:hidden"
           >
             <MenuIcon open={open} />
           </button>
@@ -111,7 +110,7 @@ export function SiteHeader({
           id="mobile-navigation"
           aria-hidden={!open}
           inert={open ? undefined : true}
-          className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-[var(--bt-duration-normal)] ease-[var(--bt-ease-standard)] lg:hidden ${
+          className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-[var(--bt-duration-normal)] ease-[var(--bt-ease-standard)] xl:hidden ${
             open ? "grid-rows-[1fr] pb-5 opacity-100" : "grid-rows-[0fr] opacity-0"
           }`}
         >
