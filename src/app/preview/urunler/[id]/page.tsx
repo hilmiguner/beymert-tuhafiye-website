@@ -31,13 +31,13 @@ export default async function ProductPreviewPage({
   ] = await Promise.all([
     supabase
       .from("products")
-      .select("*, categories(name, slug)")
+      .select("*, categories!products_category_id_fkey(name, slug)")
       .eq("id", id)
       .maybeSingle(),
     supabase
       .from("product_media")
       .select(
-        "media_id, sort_order, is_cover, media_assets(storage_path, alt_text)",
+        "media_id, caption, sort_order, is_cover, media_assets(storage_path, alt_text)",
       )
       .eq("product_id", id)
       .order("sort_order"),
@@ -57,6 +57,7 @@ export default async function ProductPreviewPage({
       id: relation.media_id,
       storagePath: relation.media_assets!.storage_path,
       altText: relation.media_assets!.alt_text,
+      caption: relation.caption,
       isCover: relation.is_cover,
       sortOrder: relation.sort_order,
       url: supabase.storage
@@ -86,7 +87,7 @@ export default async function ProductPreviewPage({
                   <div
                     role="img"
                     aria-label={cover.altText}
-                    className="aspect-[4/3] bg-cover bg-center"
+                    className="aspect-[4/3] bg-contain bg-center bg-no-repeat"
                     style={{ backgroundImage: 'url("' + cover.url + '")' }}
                   />
                 ) : (
@@ -94,6 +95,9 @@ export default async function ProductPreviewPage({
                     Bu ürün için henüz kapak fotoğrafı yüklenmedi.
                   </div>
                 )}
+                {cover?.caption ? (
+                  <p className="border-t border-border px-4 py-3 text-sm font-semibold text-muted">{cover.caption}</p>
+                ) : null}
               </div>
 
               <div>
@@ -212,9 +216,12 @@ export default async function ProductPreviewPage({
                     <div
                       role="img"
                       aria-label={item.altText}
-                      className="aspect-[4/3] bg-cover bg-center"
+                      className="aspect-[4/3] bg-contain bg-center bg-no-repeat"
                       style={{ backgroundImage: 'url("' + item.url + '")' }}
                     />
+                    {item.caption ? (
+                      <p className="border-t border-border px-4 py-3 text-sm font-semibold text-muted">{item.caption}</p>
+                    ) : null}
                   </div>
                 ))}
               </div>
