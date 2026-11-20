@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cmsImageStoragePaths } from "@/lib/cms-image-paths";
 import { redirect } from "next/navigation";
 
 import { parseRichTextFormValue } from "@/lib/rich-text";
@@ -224,7 +225,7 @@ export async function deleteConceptAction(formData: FormData) {
     if (isUnused) {
       await supabase.from("media_assets").delete().eq("id", mediaId);
       if (storagePath) {
-        await supabase.storage.from("cms-media").remove([storagePath]);
+        await supabase.storage.from("cms-media").remove(cmsImageStoragePaths(storagePath));
       }
     }
   }
