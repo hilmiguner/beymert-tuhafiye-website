@@ -44,3 +44,9 @@ test("only HTTPS public CMS image links activate the custom loader", () => {
   assert.equal(isPreoptimizedCmsImageUrl("https://example.com/storage/v1/object/public/cms-media/photo.cmsopt.webp"), true);
   assert.equal(isPreoptimizedCmsImageUrl("/media/scene-01.cmsopt.webp"), false);
 });
+
+test("CMS image component keeps custom loader behind the client boundary", () => {
+  const component = readFileSync("src/components/media/content-image.tsx", "utf8");
+  assert.match(component, /^"use client";/);
+  assert.match(component, /loader=\{isPreoptimizedCmsImageUrl\(image\.src\) \? cmsImageLoader : undefined\}/);
+});
