@@ -10,7 +10,7 @@ import { createClient } from "@/lib/supabase/client";
 export type LegacyPhoto = {
   id: string;
   storage_path: string;
-  mime_type: string;
+  mime_type: string | null;
 };
 
 export function LegacyPhotoOptimizer({
