@@ -53,18 +53,18 @@ test("CMS image component keeps custom loader behind the client boundary", () =>
 
 test("tiny static showcase images bypass Vercel Image Optimization", () => {
   const source = readFileSync("src/components/sections/animated-showcase-section.tsx", "utf8");
-  const imageTags = [...source.matchAll(/<Image\\b[\\s\\S]*?\\/>/g)].map((match) => match[0]);
+  const imageTags = [...source.matchAll(/<Image\b[\s\S]*?\/>/g)].map((match) => match[0]);
 
   // Both mobile and desktop copies of each story image must bypass /_next/image.
   assert.equal(imageTags.length, 2);
   for (const tag of imageTags) {
-    assert.match(tag, /\\bunoptimized\\b/);
-    assert.match(tag, /src=\\{step\\.image\\}/);
-    assert.match(tag, /\\bfill\\b/);
-    assert.match(tag, /\\bsizes=/);
+    assert.match(tag, /\bunoptimized\b/);
+    assert.match(tag, /src=\{step\.image\}/);
+    assert.match(tag, /\bfill\b/);
+    assert.match(tag, /\bsizes=/);
   }
 
-  const imagePaths = [...source.matchAll(/image:\\s*"(\\/media\\/scroll-story\\/[^"]+\\.webp)"/g)]
+  const imagePaths = [...source.matchAll(/image:\s*"(\/media\/scroll-story\/[^"]+\.webp)"/g)]
     .map((match) => match[1]);
   assert.equal(imagePaths.length, 4);
 
