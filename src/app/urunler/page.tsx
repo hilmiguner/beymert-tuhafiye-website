@@ -4,6 +4,7 @@ import { ProductCatalog } from "@/components/products/product-catalog";
 import { Container, Section } from "@/components/ui/container";
 import { getPublicCategories } from "@/lib/public-categories";
 import { getPublicProducts } from "@/lib/public-products";
+import { toProductCardData } from "@/lib/product-catalog-cards";
 import { buildPageMetadata } from "@/lib/seo";
 import { getStoreSettings } from "@/lib/store-settings";
 
@@ -42,7 +43,7 @@ export default async function ProductsPage() {
 
       <Section>
         <Container>
-          <ProductCatalog products={products} categories={categories} />
+          <ProductCatalog products={toProductCardData(products)} categories={categories} />
         </Container>
       </Section>
     </main>

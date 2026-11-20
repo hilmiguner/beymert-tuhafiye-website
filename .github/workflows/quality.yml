@@ -45,6 +45,9 @@ jobs:
       - name: CDN image loader tests
         run: pnpm qa:images
 
+      - name: Catalogue payload tests
+        run: pnpm qa:catalog
+
       - name: Production build
         run: pnpm build
 

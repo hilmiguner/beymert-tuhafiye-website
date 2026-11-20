@@ -269,3 +269,13 @@ The image component keeps alt text, responsive sizes/srcSet, lazy loading,
 priority and object fit; the Vercel Image Optimization endpoint is not invoked
 for these new CMS images. The full audit, migration limitations and rollout
 procedure are documented in [IMAGE_OPTIMIZATION.md](IMAGE_OPTIMIZATION.md).
+
+## 20 Kasım 2026 — Katalog veri aktarımı ve mobil HTML denetimi
+
+- PR #49 sonrasında production `/urunler` sayfası HTTP 200 dönüyor, yaklaşık **732 KiB HTML** ve 51 `img` öğesi sunuyor (ölçüm: Vercel HTML response metin uzunluğu; transfer/sıkıştırılmış byte değildir).
+- Ürün kartları yalnızca başlık, kısa açıklama, kategori etiketi, ilk görsel, ilk dört renk, featured/newArrival bilgilerini kullanır. Kategori filtresi ayrıca `categorySlug` ve `categorySlugs` bilgilerine ihtiyaç duyar.
+- Daha önce bu listeye tüm `Product` nesnesi geçiriliyordu: ek görseller, uzun açıklamalar, her renk varyantının medyası, WhatsApp metinleri, seri verileri ve diğer yalnızca detay sayfasına özgü alanlar istemciye serileştirilebiliyordu.
+- `toProductCardData` ile `/urunler` yalnızca kartın kullandığı alanları gönderir; kapak seçimi, renk sırası, kategori filtreleri ve bütün ürün detay URL'leri korunur. Detay sayfalarının `getPublicProducts` akışı değiştirilmedi.
+- Regresyon testi gereksiz alanların kart nesnesine sızmamasını, tek kapak görseli ve dört renk limitini, filtre alanlarını doğrular. GitHub Quality Gate `pnpm qa:catalog` koşar.
+- Bu denetim responsive viewport/HTML/görsel URL incelemesidir, gerçek Chrome Lighthouse veya fiziksel telefon performans skoru değildir. HTML değişimi PR Preview üzerinden ayrı ölçülmelidir.
+- Vercel Web Analytics etkin değildir; Image Cache Writes değeri authenticated Observability API üzerinden doğrulanamadı. Kota tasarrufu yüzdesi iddia edilmez; doğru kaynak Vercel Usage → Image Optimization'dır.

@@ -6,13 +6,13 @@ import { useMemo, useState } from "react";
 import { ProductCard } from "@/components/products/product-card";
 import { getCategoryDescendantSlugs } from "@/lib/category-hierarchy";
 import type { Category } from "@/types/category";
-import type { Product } from "@/types/product";
+import type { ProductCardData } from "@/types/product";
 
 export function ProductCatalog({
   products,
   categories,
 }: {
-  products: readonly Product[];
+  products: readonly ProductCardData[];
   categories: readonly Category[];
 }) {
   const [categorySlug, setCategorySlug] = useState("all");

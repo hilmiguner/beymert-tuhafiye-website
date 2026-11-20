@@ -2,9 +2,9 @@ import Link from "next/link";
 
 import { ProductMedia } from "@/components/products/product-media";
 import { getCategoryBySlug } from "@/data/categories";
-import type { Product } from "@/types/product";
+import type { ProductCardData } from "@/types/product";
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product }: { product: ProductCardData }) {
   const categoryName =
     product.categoryName ??
     getCategoryBySlug(product.categorySlug)?.name ??
