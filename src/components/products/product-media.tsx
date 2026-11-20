@@ -18,7 +18,7 @@ export function ProductMedia({
   imageIndex,
   fit = "cover",
 }: {
-  product: Product;
+  product: Pick<Product, "name" | "images" | "artworkKind" | "colors">;
   variant?: ProductVariant;
   fill?: boolean;
   priority?: boolean;

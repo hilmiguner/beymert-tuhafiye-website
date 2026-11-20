@@ -76,3 +76,19 @@ export type Product = {
   highlights: readonly string[];
   whatsappMessage?: string;
 };
+
+/** Fields consumed by a product card and catalogue category filter only. */
+export type ProductCardData = Pick<
+  Product,
+  | "slug"
+  | "name"
+  | "categorySlug"
+  | "categoryName"
+  | "categorySlugs"
+  | "shortDescription"
+  | "artworkKind"
+  | "images"
+  | "colors"
+  | "featured"
+  | "newArrival"
+>;
