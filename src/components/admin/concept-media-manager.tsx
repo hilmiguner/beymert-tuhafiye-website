@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 
 import { createClient } from "@/lib/supabase/client";
+import { removeCmsPhoto, uploadCmsPhoto } from "@/lib/cms-image-upload";
 
 export type ConceptMediaItem = {
   mediaId: string;
@@ -21,20 +22,6 @@ const allowedTypes = new Set([
 ]);
 
 const maxFileSize = 8 * 1024 * 1024;
-
-function extensionFor(file: File) {
-  const fromName = file.name.split(".").pop()?.toLowerCase();
-  if (fromName && /^[a-z0-9]+$/.test(fromName)) return fromName;
-
-  return (
-    {
-      "image/jpeg": "jpg",
-      "image/png": "png",
-      "image/webp": "webp",
-      "image/avif": "avif",
-    }[file.type] ?? "bin"
-  );
-}
 
 export function ConceptMediaManager({
   conceptId,
@@ -92,41 +79,28 @@ export function ConceptMediaManager({
       const uploadedItems: ConceptMediaItem[] = [];
 
       for (const [index, file] of selected.entries()) {
-        const path =
-          "concepts/" +
-          conceptId +
-          "/" +
-          crypto.randomUUID() +
-          "." +
-          extensionFor(file);
+        const upload = await uploadCmsPhoto(supabase, file, `concepts/${conceptId}`);
+        const path = upload.storagePath;
         const altText =
           selected.length === 1
             ? conceptName + " görseli"
             : conceptName + " görseli " + (index + 1);
-
-        const { error: uploadError } = await supabase.storage
-          .from("cms-media")
-          .upload(path, file, {
-            cacheControl: "31536000",
-            contentType: file.type,
-            upsert: false,
-          });
-
-        if (uploadError) throw uploadError;
 
         const { data: asset, error: assetError } = await supabase
           .from("media_assets")
           .insert({
             storage_path: path,
             alt_text: altText,
-            mime_type: file.type,
+            mime_type: upload.mimeType,
+            width: upload.width ?? null,
+            height: upload.height ?? null,
             created_by: user.id,
           })
           .select("id")
           .single();
 
         if (assetError || !asset) {
-          await supabase.storage.from("cms-media").remove([path]);
+          await removeCmsPhoto(supabase, path);
           throw assetError ?? new Error("Medya kaydı oluşturulamadı.");
         }
 
@@ -141,7 +115,7 @@ export function ConceptMediaManager({
 
         if (relationError) {
           await supabase.from("media_assets").delete().eq("id", asset.id);
-          await supabase.storage.from("cms-media").remove([path]);
+          await removeCmsPhoto(supabase, path);
           throw relationError;
         }
 
@@ -153,7 +127,7 @@ export function ConceptMediaManager({
 
           if (coverError) {
             await supabase.from("media_assets").delete().eq("id", asset.id);
-            await supabase.storage.from("cms-media").remove([path]);
+            await removeCmsPhoto(supabase, path);
             throw coverError;
           }
         }
@@ -282,7 +256,7 @@ export function ConceptMediaManager({
         .eq("id", item.mediaId);
       if (deleteError) throw deleteError;
 
-      await supabase.storage.from("cms-media").remove([item.storagePath]);
+      await removeCmsPhoto(supabase, item.storagePath);
 
       const normalized = remaining.map((candidate, index) => ({
         ...candidate,
