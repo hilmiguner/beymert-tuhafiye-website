@@ -644,6 +644,15 @@ Durum: TAMAMLANDI — tam açık adres ve çalışma saatleri işletme sahibi ta
 - [x] Final CTA
 - [x] İletişim sayfası
 
+### Image optimization / Vercel quota remediation (November 2026)
+
+- [x] Audited GitHub main, CI, image component and Supabase Storage: 447 media objects, 703 MB, 429 PNG, 424 over 1 MB (20 Nov snapshot).
+- [x] Implemented on separate PR branch: client-side 640/1200/2000px high-quality WebP uploads for product, concept and gallery CMS; direct Supabase CDN image loader without Vercel optimization for new assets.
+- [x] Preserved existing images and added an admin-only, explicit, batch-based legacy image migration path (no automatic migration).
+- [x] Added regression tests, cleanup of responsive image derivatives and [IMAGE_OPTIMIZATION.md](IMAGE_OPTIMIZATION.md).
+- [ ] Verify PR Quality Gate + Preview and owner approval **before** merging or changing production.
+- [ ] After approval: test one new upload, migration of a few real legacy photos and Supabase storage/egress impact; migrate further only with operator authorization.
+
 ### Phase 10 — Real Content & CMS / Admin Panel
 
 Durum: GELİŞTİRMEDE — CMS altyapısı, public Supabase veri geçişi ve RLS/authorization hardening tamamlandı; gerçek işletme içeriği, owner doğrulamaları ve final regression QA devam ediyor.
