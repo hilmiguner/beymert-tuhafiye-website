@@ -100,7 +100,7 @@ export function LegacyPhotoOptimizer({
         <h2 className="text-xl font-extrabold">Eski fotoğrafları kontrollü optimize et</h2>
         <p className="mt-3 max-w-3xl text-sm leading-7 text-muted">
           Bu işlem otomatik başlamaz. Her tıklamada en fazla 10 eski fotoğraf
-          tarayıcıda üç WebP boyutuna çevrilir, Supabase'e yüklenir ve medya
+          tarayıcıda üç WebP boyutuna çevrilir, Supabase&apos;e yüklenir ve medya
           kaydı yeni dosyaya yönlendirilir. Fotoğraf açıklamaları, ürün/konsept
           ilişkileri, kapak ve renk eşleştirmeleri değişmez.
         </p>
