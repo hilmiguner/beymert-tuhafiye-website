@@ -8,6 +8,7 @@ const sections = [
   { label: "Ürünler", href: "/admin/urunler", status: "Aktif" },
   { label: "Kategoriler", href: "/admin/kategoriler", status: "Aktif" },
   { label: "Renkler", href: "/admin/renkler", status: "Aktif" },
+  { label: "Görsel Optimizasyonu", href: "/admin/gorsel-optimizasyonu", status: "Aktif" },
   { label: "Konseptler", href: "/admin/konseptler", status: "Aktif" },
   { label: "Galeri", href: "/admin/galeri", status: "Aktif" },
   { label: "Mağaza Bilgileri", href: "/admin/magaza", status: "Aktif" },

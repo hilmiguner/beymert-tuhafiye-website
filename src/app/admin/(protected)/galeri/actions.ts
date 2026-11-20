@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cmsImageStoragePaths } from "@/lib/cms-image-paths";
 import { redirect } from "next/navigation";
 
 import { requireCmsAdmin } from "@/lib/supabase/admin";
@@ -80,7 +81,7 @@ export async function deleteGalleryItemAction(formData: FormData) {
       .eq("id", mediaId);
 
     if (!mediaDeleteError && storagePath) {
-      await supabase.storage.from("cms-media").remove([storagePath]);
+      await supabase.storage.from("cms-media").remove(cmsImageStoragePaths(storagePath));
     }
   }
 

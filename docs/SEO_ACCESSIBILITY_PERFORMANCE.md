@@ -258,3 +258,14 @@ Not indexed / henüz Google tarafından yeterince işlenmemiş:
 - `/kategoriler/tul-kurdele-tuhafiye` — Discovered - currently not indexed
 
 Ayrıca `Beymert Local SEO Targets` topic cluster'ı oluşturuldu. Cluster; dört ana ticari sorgunun yanında Gemlik balon, helyumlu balon, doğum günü, baby shower, cinsiyet partisi, söz-nişan, tül, kurdele ve hediyelik sorgularını içeriyor.
+
+
+## November 2026 – CMS Image Optimization Quota
+
+Original CMS PNG/JPEG photos continue to use Next/Image until explicitly migrated.
+New CMS uploads are pre-encoded as 640/1200/2000px WebP assets and served
+via a custom Next/Image loader directly from the immutable Supabase CDN paths.
+The image component keeps alt text, responsive sizes/srcSet, lazy loading,
+priority and object fit; the Vercel Image Optimization endpoint is not invoked
+for these new CMS images. The full audit, migration limitations and rollout
+procedure are documented in [IMAGE_OPTIMIZATION.md](IMAGE_OPTIMIZATION.md).

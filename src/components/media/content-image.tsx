@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import type { ContentImage } from "@/types/media";
+import { cmsImageLoader, isPreoptimizedCmsImageUrl } from "@/lib/cms-image-paths";
 
 export function ContentImageView({
   image,
@@ -18,6 +19,7 @@ export function ContentImageView({
   return (
     <Image
       src={image.src}
+      loader={isPreoptimizedCmsImageUrl(image.src) ? cmsImageLoader : undefined}
       alt={image.alt}
       fill
       sizes={sizes}
