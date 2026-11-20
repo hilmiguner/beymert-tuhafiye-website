@@ -165,3 +165,14 @@ harcamaları ayrı izlenmelidir.
 - Next.js: https://nextjs.org/docs/app/api-reference/components/image
 - Supabase: https://supabase.com/docs/guides/storage/serving/image-transformations
 - Supabase: https://supabase.com/docs/guides/storage/cdn/smart-cdn
+
+## 20 Kasım 2026 — Geçiş sonrası production denetimi
+
+- PR #47 üzerinden yeni CMS CDN mimarisi production'a alındı.
+- 447 medya kaydının tamamı optimize WebP master yoluna geçti; Supabase Storage'da 447 master, 447 küçük (640), 447 orta (1200) WebP ve 447 eski orijinal bulunmaktadır (toplam 1.788 nesne).
+- PR #48 ile özel `next/image` loader'ı Client Component içinde tutuldu; bu değişiklik ana sayfa ve ürün detayı HTTP 500 hatasını giderdi. Production sayfaları 8/8 HTTP 200 olarak doğrulandı.
+- Ek taramada ana sayfanın Scroll Story bölümündeki dört ayrı, depoda değil repoda tutulan 960×720 WebP'nin hâlâ `/_next/image` kullandığı belirlendi. Dosya boyutları 10.946, 8.880, 11.058, 12.327 bayt (toplam **43.211 bayt**).
+- Bu dört zaten küçük ve optimize edilmiş statik görselin hem mobil hem desktop görünümünde `unoptimized` ile doğrudan `/media/scroll-story/*.webp` yolundan sunulması planlandı. Kod testi bu dört dosyanın her birini **20 KiB** altında tutar ve iki `<Image>` kullanımının da `unoptimized` olmasını doğrular.
+- `unoptimized` ayarı site genelinde **açılmamalıdır**: CMS görselleri hâlen `ContentImageView` üzerinden Supabase'in üç önceden hazırlanmış responsive CDN varyantını kullanır.
+- Bu ek düzeltmenin beklenen faydası dört statik sahne dosyasına bağlı Vercel image transformations/cache writes tüketiminin önlenmesidir. Trafik ve Vercel kullanım geçmişinden tasarruf miktarı henüz ölçülmemiştir.
+- Orijinaller geri dönüş güvenliği için korunmuştur; otomatik veya toplu silme yapılmaz. Supabase depolama ve egress kullanımı ayrıca takip edilir.

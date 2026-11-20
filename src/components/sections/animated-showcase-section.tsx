@@ -54,6 +54,7 @@ function MobileStoryVisual({ step }: { step: StoryStep }) {
     <div className="relative aspect-[4/3] overflow-hidden rounded-[1.35rem] border border-white/12 bg-white/[0.06]">
       <Image
         src={step.image}
+        unoptimized
         alt={step.alt}
         fill
         sizes="(max-width: 639px) calc(100vw - 3rem), (max-width: 1023px) calc(100vw - 5rem), 42rem"
@@ -337,6 +338,7 @@ export function AnimatedShowcaseSection() {
                     <Image
                       data-story-photo
                       src={step.image}
+                      unoptimized
                       alt=""
                       fill
                       sizes="(min-width: 1280px) 42rem, 52vw"

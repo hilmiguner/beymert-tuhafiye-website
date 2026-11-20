@@ -71,8 +71,9 @@ Bu yükseklik yalnızca ScrollTrigger kurulabildiğinde `data-enhanced="true"` i
 ## Performance yaklaşımı
 
 - dört WebP asset toplam payload'ı düşük tutulur
-- Next/Image responsive output üretir
-- mobilde görseller native lazy-load davranışını kullanır
+- Dört 960×720 statik WebP dosyası (toplam 43.211 bayt) hem mobil hem desktop için `next/image` üzerinde `unoptimized` olarak sunulur; `/_next/image` dönüşümü veya Vercel image cache write oluşturmaz.
+- CSS tabanlı responsive yerleşim, `fill` / `object-cover` ve mobilde native lazy-load korunur. `unoptimized` modunda çoklu `srcSet` üretilmez; mevcut küçük dosyalar doğrudan sunulur.
+- Bu dört statik dosyadan biri büyütülür veya değiştirilirse dosya boyutunu ve küçük ekranda bant genişliğini yeniden incele (CI sınırı: her biri en fazla 20 KiB).
 - desktop animasyonu yalnız transform + opacity kullanır
 - video, canvas, WebGL ve Three.js kullanılmaz
 
