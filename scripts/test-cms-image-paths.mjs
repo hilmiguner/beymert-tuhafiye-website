@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 import test from "node:test";
 import ts from "typescript";
 
@@ -49,4 +49,28 @@ test("CMS image component keeps custom loader behind the client boundary", () =>
   const component = readFileSync("src/components/media/content-image.tsx", "utf8");
   assert.match(component, /^"use client";/);
   assert.match(component, /loader=\{isPreoptimizedCmsImageUrl\(image\.src\) \? cmsImageLoader : undefined\}/);
+});
+
+test("tiny static showcase images bypass Vercel Image Optimization", () => {
+  const source = readFileSync("src/components/sections/animated-showcase-section.tsx", "utf8");
+  const imageTags = [...source.matchAll(/<Image\\b[\\s\\S]*?\\/>/g)].map((match) => match[0]);
+
+  // Both mobile and desktop copies of each story image must bypass /_next/image.
+  assert.equal(imageTags.length, 2);
+  for (const tag of imageTags) {
+    assert.match(tag, /\\bunoptimized\\b/);
+    assert.match(tag, /src=\\{step\\.image\\}/);
+    assert.match(tag, /\\bfill\\b/);
+    assert.match(tag, /\\bsizes=/);
+  }
+
+  const imagePaths = [...source.matchAll(/image:\\s*"(\\/media\\/scroll-story\\/[^"]+\\.webp)"/g)]
+    .map((match) => match[1]);
+  assert.equal(imagePaths.length, 4);
+
+  // Direct delivery is appropriate only while each existing image stays tiny.
+  for (const imagePath of imagePaths) {
+    const size = statSync(`public${imagePath}`).size;
+    assert.ok(size > 0 && size <= 20 * 1024, `${imagePath} must remain <= 20 KiB (got ${size})`);
+  }
 });
