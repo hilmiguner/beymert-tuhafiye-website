@@ -31,7 +31,6 @@ export default async function Home() {
     <main id="main-content" tabIndex={-1}>
       <HeroSection
         shortName={settings.shortName}
-        locationLabel={settings.locationLabel}
         whatsappUrl={whatsappUrl}
       />
       <CategoriesSection />
