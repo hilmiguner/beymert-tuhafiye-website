@@ -91,14 +91,14 @@ const floatingWhatsappCta = readFileSync(
 );
 
 test("floating WhatsApp CTA uses the recognizable brand mark and retains pink styling", () => {
-  const svg = floatingWhatsappCta.match(/<svg\\b[\\s\\S]*?<\\/svg>/)?.[0];
+  const svg = floatingWhatsappCta.match(/<svg\b[\s\S]*?<\/svg>/)?.[0];
   assert.ok(svg, "Floating CTA icon is missing");
   assert.match(svg, /viewBox="0 0 24 24"/);
   assert.match(svg, /fill="currentColor"/);
-  assert.match(svg, /M17\\.472 14\\.382/, "Use the actual WhatsApp brand mark, not a generic chat bubble");
+  assert.match(svg, /M17\.472 14\.382/, "Use the WhatsApp brand mark, not a generic chat bubble");
   assert.doesNotMatch(svg, /stroke=/, "Do not render the previous approximated outline");
-  assert.match(floatingWhatsappCta, /\\bbg-primary\\b/, "Keep original pink CTA background");
-  assert.match(floatingWhatsappCta, /\\btext-primary-foreground\\b/, "Keep white contrast icon and text");
+  assert.match(floatingWhatsappCta, /\bbg-primary\b/, "Keep the original pink CTA background");
+  assert.match(floatingWhatsappCta, /\btext-primary-foreground\b/, "Keep white icon and text");
   assert.ok(floatingWhatsappCta.includes("href={whatsappUrl}"));
-  assert.ok(floatingWhatsappCta.includes("aria-label={`WhatsApp üzerinden"));
+  assert.ok(floatingWhatsappCta.includes("aria-label={\`WhatsApp üzerinden"));
 });
