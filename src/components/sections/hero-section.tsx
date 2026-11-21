@@ -334,7 +334,7 @@ export function HeroSection({
             data-hero-reveal
             className="relative mx-auto min-w-0 w-full max-w-[35rem] lg:max-w-[30rem] xl:max-w-none"
             aria-label={`${shortName} parti ürünlerini temsil eden dekoratif vitrin`}
-            role="img"
+            role="group"
           >
             <div className="bt-hero-stage relative aspect-[1.03] min-h-[22rem] overflow-hidden rounded-[1.6rem] border border-white/75 bg-surface/72 p-4 shadow-lift backdrop-blur-md sm:aspect-[0.94] sm:min-h-[34rem] sm:rounded-[2rem] sm:p-6 lg:aspect-[1.03] lg:min-h-[28rem] xl:aspect-[0.94] xl:min-h-[34rem]">
               <div
