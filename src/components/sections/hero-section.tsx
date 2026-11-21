@@ -317,7 +317,7 @@ export function HeroSection({
                   key={category.kind}
                   data-hero-chip
                   data-hero-reveal
-                  className="flex min-w-0 flex-col items-center justify-end overflow-hidden rounded-[1.15rem] border border-white/85 bg-white/78 px-2 pb-3 pt-2 text-center shadow-soft backdrop-blur-sm sm:rounded-card sm:px-3 sm:pb-4"
+                  className="flex min-w-0 select-none flex-col items-center justify-end overflow-hidden rounded-[1.15rem] border border-white/85 bg-white/78 px-2 pb-3 pt-2 text-center shadow-soft backdrop-blur-sm sm:rounded-card sm:px-3 sm:pb-4"
                 >
                   <HeroCategoryArt kind={category.kind} />
                   <span className="mt-1 text-[0.76rem] leading-5 font-extrabold text-foreground sm:text-sm">
