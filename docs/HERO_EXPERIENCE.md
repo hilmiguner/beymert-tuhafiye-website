@@ -1,68 +1,62 @@
 # Hero Experience
 
-Phase 3 hero uygulamasının teknik notları.
+## 21 Kasım 2026 — ana sayfa revizyonu
 
-## Copy
+Beymert ana sayfasının sol vitrini ve sağ hareketli balon sahnesi kullanıcının onayladığı içeriğe göre revize edildi. Ana başlık, açıklama, slogan ve kutucuk adları yalnızca Hero bölümündedir; ürün kataloğuna veya Supabase veritabanına bir değişiklik yapılmadı.
 
-Ana mesaj:
+### Üst metin
 
-**Her kutlama biraz Beymert.**
+**GEMLİK · BURSA · PARTİLERİNİZE RENK KATIYORUZ**
 
-Destek metni Beymert'in parti malzemeleri, özel gün konseptleri, kişiye özel hediyelikler ve tuhafiye tarafını birlikte anlatır.
+### Ana başlık
 
-## Görsel kompozisyon
+**Gemlik’te Parti Malzemeleri, Hediyelik Eşya ve Kutlama Konseptleri**
 
-Gerçek ürün fotoğrafları henüz içerik sistemine eklenmediği için Hero, bağımsız CSS/HTML öğelerinden oluşan bir vitrin sahnesi kullanır:
+Başlık dört blokta gösterilir. H1 erişilebilir adı tam metni korur.
 
-- 3 dekoratif balon
-- Doğum günü / balon konsept kartı
-- Nişan / tasarım kartı
-- Tül / kurdele / hediyelik kartı
-- Sınırlı konfeti detayları
+### Slogan
 
-Bu yapı placeholder değildir; gerçek ürün fotoğrafları geldiğinde sahne içine adapte edilebilecek bir kompozisyon iskeletidir.
+**Hayalinizdeki Kutlamaları Gerçeğe Dönüştüren Her Detay Beymert’te!**
 
-## GSAP
+### Açıklama
 
-Client boundary yalnızca `HeroSection` içindedir.
+Balonlardan özel gün konseptlerine, kişiye özel hediyeliklerden tül ve kurdeleye kadar partileriniz için aradığınız her şey Beymert’te.
 
-Timeline sırası:
+### Sol alt — dört ürün kutucuğu
 
-1. Eyebrow
-2. Başlık satırları
-3. Açıklama
-4. CTA'lar
-5. Kategori chip'leri
-6. Vitrin sahnesi
-7. Balonlar
-8. Ürün kartları
+1. **Doğum Günü & Parti Süsleri:** Küçük pasta, parti şapkası, parti gözlüğü ve hafif konfeti.
+2. **Hediyelik Eşya & Hediye Kutuları:** Şık kurdeleli iki hediye kutusu.
+3. **Bebek Karşılama & Süsleri:** Yalnız oturan ayıcık. Biberon, ayakkabı ve gökkuşağı çizilmez.
+4. **LED Işık & Dekorasyon:** Sıcak beyaz perde LED ışıkları ve önünde birkaç küçük LED mum. Çiçek çizilmez.
 
-Sürekli hareket yalnızca üç balonda düşük genlikli `transform` animasyonu olarak çalışır.
+Görseller bağımsız, inline SVG çizimleridir. Harici görsel URL'si, yeni CDN çağrısı veya Vercel Image Optimization kullanmaz.
 
-## Pointer parallax
+### Sağ vitrin — hareketli balonların altında
 
-Sadece:
+1. **Helyum Balonlar**
+2. **Butik Çiçekler**
+3. **Tül, Kurdele & Aksesuar**
 
-- hover destekleyen
-- fine pointer kullanan
-- minimum 1024px genişlikteki
+Mobilde aynı üç başlık kompakt bir vitrin panelinde, geniş ekranda üç hafif döndürülmüş kartta gösterilir. Eski “Balon & Konsept”, “Nişan & Tasarım” ve “Tül · Kurdele · Hediyelik” yazıları kaldırılmıştır. Bu metinlerin vitrin içinde olması mağaza envanterini otomatik güncellemez.
 
-cihazlarda etkinleştirilir.
+## Korunan teknik davranışlar
 
-Mobilde pointer parallax kurulmaz.
+- Hero, Client Component olarak kalır.
+- GSAP giriş sırası: üst metin → dört başlık bloğu → slogan/açıklama → CTA → SVG kategori kartları → vitrin → balonlar → üç sağ kart.
+- Sadece üç balon düşük genlikli sürekli hareket eder.
+- Parallax yalnızca hover ve fine pointer destekli, en az 1024px cihazlarda etkindir; pointer ayrılınca katmanlar başlangıç konumuna döner.
+- \`prefers-reduced-motion: reduce\` durumunda GSAP giriş ve sürekli animasyonlar kurulmaz; içerik hareketsiz kalır.
+- Yeni SVG görseller dekoratiftir (\`aria-hidden\`); metin etiketleri görünür ve okunabilir.
+- Sağ bölüm \`role="group"\` olarak tanımlanır; vitrin başlıkları yardımcı teknolojilerce erişilebilir.
+- WebGL, Canvas, video veya yeni bitmap indirmesi eklenmedi.
 
-## Reduced motion
+## Test ve yayın politikası — 1 Aralık 2026'ya kadar
 
-`prefers-reduced-motion: reduce` aktifse GSAP giriş/sürekli animasyonları kurulmaz ve içerik statik olarak görünür.
+Kullanıcının GitHub Free Actions dakika/CI kotası dolduğu için **1 Aralık 2026'dan önce GitHub Actions CI çalıştırılmayacak ve bu PR merge edilmeyecek**.
 
-## Performance
-
-- WebGL yok
-- Canvas yok
-- Video yok
-- Hero asset download'u yok
-- Animasyonlar transform/opacity odaklı
-- Vitrin bölgesinde layout/paint containment kullanılır
-- Mobilde konfeti sayısı azaltılır
-
-Production build ve gerçek cihaz kontrolü Phase 3 merge öncesi kalite kapısıdır.
+- Geliştirmeler feature branch ve draft PR üzerinden birikir.
+- Commit başlıklarında \`[skip ci]\` kullanılır; \`push\` ve \`pull_request\` tetikli GitHub Actions atlanır. Bu durumda bekleyen Quality Gate sonucu, başarılı test anlamına gelmez.
+- \`pnpm qa:hero\` testi kalite kapısına eklendi ancak 1 Aralık'a kadar çalıştırılmayacak.
+- 1 Aralık'ta bekleyen değişiklikler tek entegrasyon PR'ında birleştirilerek **bir GitHub Quality Gate** çalıştırılacak; lint, typecheck, görsel testleri, hero testi, production build ve smoke kontrolü doğrulanacak.
+- Başarılı test ve kullanıcı merge onayı sonrasında production yayın yapılacak. Main'e merge commit mesajı da \`[skip ci]\` ile ayrı ikinci CI koşusu önlenecek.
+- PR hazırlamak production yayını anlamına gelmez; mevcut canlı ana sayfa eski haliyle çalışmaya devam eder.
