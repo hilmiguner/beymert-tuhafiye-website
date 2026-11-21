@@ -66,3 +66,14 @@ Kullanıcının GitHub Free Actions dakika/CI kotası dolduğu için **1 Aralık
 Kullanıcının ekran görüntüsündeki bazı başlıkların arkasında görünen şeftali/turuncu dikdörtgenler kartın bozuk arka planı değil, global `::selection` renginin (`--bt-accent`) seçilmiş metinlere uygulanmasıydı. Kartların metinleri yalnızca dekoratif kategori etiketleri olduğundan, dört kartın sarmalayıcısına Tailwind `select-none` eklendi. Bu, metnin yanlışlıkla fareyle seçilmesini engeller; başlıklar gerçek DOM metni olarak erişilebilir kalır. `::selection` stilinin sitenin diğer bölümlerindeki normal davranışı değiştirilmedi.
 
 `qa:hero` testi kartların `select-none` özelliğini koruduğunu denetler. GitHub Actions CI, 1 Aralık'a kadar bilinçli olarak çalıştırılmayacak; görsel tarayıcı kontrolü Preview üzerinde yapılacaktır.
+
+## 21 Kasım — dört kartta arka plan/katman düzeltmesi
+
+İkinci ekran görüntüsünde metin seçimi kaybolmuş olmasına rağmen dört kartın etrafında **dikdörtgen biçimli pembe bir gölge bloğu** ve ayıcık kartının dışında dekoratif bir parça görünüyordu. İlk `select-none` değişikliği bu asıl sorunu çözmemişti.
+
+- Kartların ortak zemini, `bg-white/78` ve `backdrop-blur-sm` yerine **opak `bg-white`** olarak güncellendi.
+- `shadow-soft` kaldırılarak kartların 50px genişliğindeki üst üste binen gölgeleri önlendi. `border-border/75` ile yuvarlatılmış sınırlar korunur.
+- `isolate` ile her kartın kendi katman sınırı belirlenir.
+- Kahverengi dekoratif parçanın kaynağı global `bt-confetti-field` olduğu için Hero genel konfeti katmanı kaldırıldı. Doğum günü kartının SVG'sindeki hafif konfeti korunur.
+- Diğer sayfaların genel CSS renkleri ve global seçili metin stilleri değiştirilmedi; GSAP animasyonları, dört SVG ve etiketler aynen kaldı.
+- `qa:hero` statik kontrolü bu regresyonu test eder. GitHub Actions çalıştırılmayacak; PR taslak kalır.

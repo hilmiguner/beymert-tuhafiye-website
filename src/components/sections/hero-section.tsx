@@ -218,15 +218,6 @@ export function HeroSection({
       ref={rootRef}
       className="bt-hero bt-brand-glow relative isolate overflow-hidden"
     >
-      <div className="bt-confetti-field" aria-hidden="true">
-        <span className="bt-confetti bt-confetti-a" />
-        <span className="bt-confetti bt-confetti-b" />
-        <span className="bt-confetti bt-confetti-c" />
-        <span className="bt-confetti bt-confetti-d" />
-        <span className="bt-confetti bt-confetti-e" />
-        <span className="bt-confetti bt-confetti-f" />
-      </div>
-
       <Container className="relative z-10">
         <div className="grid min-h-0 items-center gap-10 py-10 sm:gap-12 sm:py-14 lg:min-h-[calc(100svh-4.5rem)] lg:grid-cols-[1.02fr_0.98fr] lg:gap-6 lg:py-8 xl:gap-8 xl:py-14">
           <div className="relative z-20 min-w-0 max-w-full overflow-hidden">
@@ -317,7 +308,7 @@ export function HeroSection({
                   key={category.kind}
                   data-hero-chip
                   data-hero-reveal
-                  className="flex min-w-0 select-none flex-col items-center justify-end overflow-hidden rounded-[1.15rem] border border-white/85 bg-white/78 px-2 pb-3 pt-2 text-center shadow-soft backdrop-blur-sm sm:rounded-card sm:px-3 sm:pb-4"
+                  className="relative isolate flex min-w-0 select-none flex-col items-center justify-end overflow-hidden rounded-[1.15rem] border border-border/75 bg-white px-2 pb-3 pt-2 text-center sm:rounded-card sm:px-3 sm:pb-4"
                 >
                   <HeroCategoryArt kind={category.kind} />
                   <span className="mt-1 text-[0.76rem] leading-5 font-extrabold text-foreground sm:text-sm">

@@ -73,3 +73,14 @@ test("decorative category cards cannot accidentally select their labels", () => 
     "Category labels must remain accessible as real text",
   );
 });
+
+test("category cards have an opaque, isolated background without overlapping shadow or blur", () => {
+  const card = hero.match(/\{heroCategories\.map\(\(category\) => \(\s*<div[\s\S]*?<HeroCategoryArt kind=\{category\.kind\} \/>/)?.[0];
+  assert.ok(card, "Expected hero category card block");
+  assert.match(card, /\bbg-white\b/, "Card background must be opaque white");
+  assert.match(card, /\bisolate\b/, "Card must use a separate stacking context");
+  assert.doesNotMatch(card, /\bbg-white\/\d+\b/, "No translucent white backgrounds");
+  assert.doesNotMatch(card, /\bbackdrop-blur/, "No backdrop blur on card surfaces");
+  assert.doesNotMatch(card, /\bshadow-soft\b/, "No overlapping decorative box shadows");
+  assert.ok(!hero.includes('className="bt-confetti-field"'), "Global confetti should not protrude between cards");
+});
