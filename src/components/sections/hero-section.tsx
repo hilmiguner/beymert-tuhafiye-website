@@ -5,22 +5,24 @@ import { gsap } from "gsap";
 
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { HeroCategoryArt } from "@/components/sections/hero-category-art";
 
-const chips = ["Balon", "Doğum Günü", "Baby Shower", "Nişan & Düğün"];
+const heroCategories = [
+  { label: "Doğum Günü & Parti Süsleri", kind: "birthday" },
+  { label: "Hediyelik Eşya & Hediye Kutuları", kind: "gift" },
+  { label: "Bebek Karşılama & Süsleri", kind: "baby" },
+  { label: "LED Işık & Dekorasyon", kind: "led" },
+] as const;
 
 type HeroSectionProps = {
   shortName: string;
-  locationLabel: string;
   whatsappUrl: string;
 };
 
 export function HeroSection({
   shortName,
-  locationLabel,
   whatsappUrl,
 }: HeroSectionProps) {
-  const brandInitial =
-    shortName.trim().charAt(0).toLocaleUpperCase("tr-TR") || "B";
   const rootRef = useRef<HTMLElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
 
@@ -231,40 +233,33 @@ export function HeroSection({
             <p
               data-hero-eyebrow
               data-hero-reveal
-              className="bt-eyebrow max-w-full text-[0.68rem] leading-5 text-primary sm:text-xs"
+              className="bt-eyebrow max-w-full text-[0.67rem] leading-5 text-primary sm:text-xs"
             >
-              <span className="sm:hidden">{locationLabel}</span>
-              <span className="hidden sm:inline">
-                {locationLabel} · kutlamalara renk katıyoruz
-              </span>
+              GEMLİK · BURSA · PARTİLERİNİZE RENK KATIYORUZ
             </p>
 
-            <h1 className="bt-display bt-balance mt-4 max-w-full text-[clamp(2.8rem,13vw,3.65rem)] leading-[0.91] font-semibold sm:mt-5 sm:text-[clamp(4.25rem,7vw,5.8rem)]">
+            <h1
+              aria-label="Gemlik’te Parti Malzemeleri, Hediyelik Eşya ve Kutlama Konseptleri"
+              className="bt-display bt-balance mt-4 max-w-full text-[clamp(2.05rem,7.5vw,3rem)] leading-[1.02] font-semibold sm:mt-5 sm:text-[clamp(2.7rem,4.2vw,4.1rem)]"
+            >
               <span className="block overflow-hidden pb-[0.08em]">
-                <span
-                  data-hero-title-line
-                  data-hero-reveal
-                  className="block origin-left"
-                >
-                  Gemlik&apos;te Parti
+                <span data-hero-title-line data-hero-reveal className="block origin-left">
+                  Gemlik’te Parti{" "}
                 </span>
               </span>
               <span className="block overflow-hidden pb-[0.08em]">
-                <span
-                  data-hero-title-line
-                  data-hero-reveal
-                  className="block origin-left text-primary"
-                >
-                  Malzemeleri
+                <span data-hero-title-line data-hero-reveal className="block origin-left text-primary">
+                  Malzemeleri,{" "}
                 </span>
               </span>
               <span className="block overflow-hidden pb-[0.08em]">
-                <span
-                  data-hero-title-line
-                  data-hero-reveal
-                  className="block origin-left text-primary"
-                >
-                  ve tuhafiye.
+                <span data-hero-title-line data-hero-reveal className="block origin-left">
+                  Hediyelik Eşya ve{" "}
+                </span>
+              </span>
+              <span className="block overflow-hidden pb-[0.08em]">
+                <span data-hero-title-line data-hero-reveal className="block origin-left text-primary">
+                  Kutlama Konseptleri
                 </span>
               </span>
             </h1>
@@ -272,11 +267,18 @@ export function HeroSection({
             <p
               data-hero-copy
               data-hero-reveal
-              className="mt-5 max-w-full pr-1 text-[0.98rem] leading-7 text-muted sm:mt-6 sm:max-w-xl sm:pr-0 sm:text-lg sm:leading-8"
+              className="bt-display mt-5 max-w-xl text-[1.18rem] leading-snug font-semibold text-foreground sm:mt-6 sm:text-[1.48rem]"
+            >
+              Hayalinizdeki Kutlamaları Gerçeğe Dönüştüren Her Detay Beymert’te!
+            </p>
+            <p
+              data-hero-copy
+              data-hero-reveal
+              className="mt-3 max-w-xl text-[0.98rem] leading-7 text-muted sm:mt-4 sm:text-lg sm:leading-8"
             >
               Balonlardan özel gün konseptlerine, kişiye özel hediyeliklerden
-              tül ve kurdeleye kadar kutlamanı tamamlayan detayları bir araya
-              getiriyoruz.
+              tül ve kurdeleye kadar partileriniz için aradığınız her şey
+              Beymert’te.
             </p>
 
             <div
@@ -306,16 +308,22 @@ export function HeroSection({
               </ButtonLink>
             </div>
 
-            <div className="mt-7 flex max-w-2xl flex-wrap gap-2">
-              {chips.map((chip) => (
-                <span
-                  key={chip}
+            <div
+              className="mt-7 grid w-full max-w-[43rem] grid-cols-2 gap-3 sm:mt-8 sm:gap-4"
+              aria-label="Beymert ürün grupları"
+            >
+              {heroCategories.map((category) => (
+                <div
+                  key={category.kind}
                   data-hero-chip
                   data-hero-reveal
-                  className="rounded-pill border border-border/90 bg-surface/75 px-3.5 py-2 text-xs font-extrabold text-muted shadow-soft backdrop-blur-sm sm:text-sm"
+                  className="flex min-w-0 flex-col items-center justify-end overflow-hidden rounded-[1.15rem] border border-white/85 bg-white/78 px-2 pb-3 pt-2 text-center shadow-soft backdrop-blur-sm sm:rounded-card sm:px-3 sm:pb-4"
                 >
-                  {chip}
-                </span>
+                  <HeroCategoryArt kind={category.kind} />
+                  <span className="mt-1 text-[0.76rem] leading-5 font-extrabold text-foreground sm:text-sm">
+                    {category.label}
+                  </span>
+                </div>
               ))}
             </div>
           </div>
@@ -371,54 +379,41 @@ export function HeroSection({
 
               <div
                 data-party-card
-                className="absolute inset-x-4 bottom-4 z-10 rounded-[1.35rem] border border-white/90 bg-white/94 p-4 shadow-soft backdrop-blur-sm sm:hidden"
+                className="absolute inset-x-4 bottom-4 z-10 rounded-[1.25rem] border border-white/90 bg-white/94 p-3 shadow-soft backdrop-blur-sm sm:hidden"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <div className="min-w-0">
-                    <span className="bt-eyebrow text-primary">{shortName}</span>
-                    <p className="bt-display mt-1 text-[1.35rem] leading-tight font-semibold">
-                      Balon · Konsept · Tasarım
-                    </p>
-                    <p className="mt-1.5 text-xs font-bold leading-5 text-muted">
-                      Özel günlerini tamamlayan renkli detaylar.
-                    </p>
-                  </div>
-                  <span
-                    aria-hidden="true"
-                    className="grid size-11 shrink-0 place-items-center rounded-full bg-primary text-sm font-black text-white"
-                  >
-                    {brandInitial}
-                  </span>
-                </div>
+                <p className="text-center text-[0.83rem] leading-6 font-extrabold text-foreground">
+                  Helyum Balonlar · Butik Çiçekler
+                </p>
+                <p className="text-center text-[0.78rem] leading-5 font-bold text-secondary">
+                  Tül, Kurdele & Aksesuar
+                </p>
               </div>
 
               <div
                 data-party-card
                 data-depth="1.2"
-                className="absolute hidden sm:left-[8%] sm:top-[48%] sm:block sm:w-[46%] sm:rotate-[-4deg] sm:rounded-card sm:border sm:border-white/80 sm:bg-[#fff6f8]/95 sm:p-5 sm:shadow-soft"
+                className="absolute hidden sm:left-[7%] sm:top-[48%] sm:block sm:w-[48%] sm:rotate-[-4deg] sm:rounded-card sm:border sm:border-white/80 sm:bg-[#fff6f8]/95 sm:p-5 sm:shadow-soft"
               >
-                <span className="bt-eyebrow text-primary">Doğum Günü</span>
-                <p className="bt-display mt-2 text-xl leading-tight font-semibold sm:text-3xl">
-                  Balon & Konsept
+                <p className="bt-display text-xl leading-tight font-semibold sm:text-[1.75rem]">
+                  Helyum Balonlar
                 </p>
-                <div className="mt-4 flex gap-2" aria-hidden="true">
-                  <span className="size-7 rounded-full bg-primary" />
-                  <span className="size-7 rounded-full bg-[#e7b39a]" />
-                  <span className="size-7 rounded-full bg-[#f5d8e2]" />
+                <div className="mt-3 flex gap-2" aria-hidden="true">
+                  <span className="size-6 rounded-full bg-primary" />
+                  <span className="size-6 rounded-full bg-[#e7b39a]" />
+                  <span className="size-6 rounded-full bg-[#f5d8e2]" />
                 </div>
               </div>
 
               <div
                 data-party-card
                 data-depth="1.6"
-                className="absolute hidden sm:right-[6%] sm:top-[58%] sm:block sm:w-[45%] sm:rotate-[5deg] sm:rounded-card sm:border sm:border-white/80 sm:bg-[#f8eee9]/95 sm:p-5 sm:shadow-soft"
+                className="absolute hidden sm:right-[5%] sm:top-[60%] sm:block sm:w-[45%] sm:rotate-[5deg] sm:rounded-card sm:border sm:border-white/80 sm:bg-[#f8eee9]/95 sm:p-5 sm:shadow-soft"
               >
-                <span className="bt-eyebrow text-secondary">Özel Günler</span>
-                <p className="bt-display mt-2 text-2xl font-semibold sm:text-3xl">
-                  Nişan & Tasarım
+                <p className="bt-display text-xl leading-tight font-semibold sm:text-[1.7rem]">
+                  Butik Çiçekler
                 </p>
                 <div
-                  className="mt-4 h-1.5 w-20 rounded-pill bg-secondary/55"
+                  className="mt-3 h-1.5 w-20 rounded-pill bg-secondary/45"
                   aria-hidden="true"
                 />
               </div>
@@ -426,20 +421,11 @@ export function HeroSection({
               <div
                 data-party-card
                 data-depth="2.1"
-                className="absolute hidden sm:bottom-[6%] sm:left-[28%] sm:flex sm:w-[44%] sm:translate-x-0 sm:items-center sm:justify-between sm:gap-3 sm:rounded-card sm:border sm:border-white/80 sm:bg-white/95 sm:p-5 sm:shadow-soft"
+                className="absolute hidden sm:bottom-[6%] sm:left-[18%] sm:flex sm:w-[63%] sm:rotate-[-2deg] sm:items-center sm:justify-center sm:rounded-card sm:border sm:border-white/80 sm:bg-white/95 sm:p-5 sm:shadow-soft"
               >
-                <div>
-                  <span className="bt-eyebrow text-muted">{shortName}</span>
-                  <p className="mt-1 text-sm font-extrabold sm:text-base">
-                    Tül · Kurdele · Hediyelik
-                  </p>
-                </div>
-                <span
-                  aria-hidden="true"
-                  className="grid size-10 shrink-0 place-items-center rounded-full bg-primary text-sm font-black text-white sm:size-12"
-                >
-                    {brandInitial}
-                  </span>
+                <p className="text-center text-sm leading-5 font-extrabold sm:text-base">
+                  Tül, Kurdele & Aksesuar
+                </p>
               </div>
             </div>
 
