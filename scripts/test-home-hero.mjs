@@ -84,3 +84,21 @@ test("category cards have an opaque, isolated background without overlapping sha
   assert.doesNotMatch(card, /\bshadow-soft\b/, "No overlapping decorative box shadows");
   assert.ok(!hero.includes('className="bt-confetti-field"'), "Global confetti should not protrude between cards");
 });
+
+const floatingWhatsappCta = readFileSync(
+  "src/components/layout/floating-whatsapp-cta.tsx",
+  "utf8",
+);
+
+test("floating WhatsApp CTA uses the recognizable brand mark and retains pink styling", () => {
+  const svg = floatingWhatsappCta.match(/<svg\\b[\\s\\S]*?<\\/svg>/)?.[0];
+  assert.ok(svg, "Floating CTA icon is missing");
+  assert.match(svg, /viewBox="0 0 24 24"/);
+  assert.match(svg, /fill="currentColor"/);
+  assert.match(svg, /M17\\.472 14\\.382/, "Use the actual WhatsApp brand mark, not a generic chat bubble");
+  assert.doesNotMatch(svg, /stroke=/, "Do not render the previous approximated outline");
+  assert.match(floatingWhatsappCta, /\\bbg-primary\\b/, "Keep original pink CTA background");
+  assert.match(floatingWhatsappCta, /\\btext-primary-foreground\\b/, "Keep white contrast icon and text");
+  assert.ok(floatingWhatsappCta.includes("href={whatsappUrl}"));
+  assert.ok(floatingWhatsappCta.includes("aria-label={`WhatsApp üzerinden"));
+});
