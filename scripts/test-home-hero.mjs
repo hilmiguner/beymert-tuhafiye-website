@@ -63,3 +63,13 @@ test("hero and its inline vector illustrations have valid TSX syntax", () => {
   assert.equal((artwork.match(/<svg\b/g) ?? []).length, 4);
   assert.ok(!artwork.includes("<image") && !artwork.includes("<img"), "Artwork must be local SVG only");
 });
+
+test("decorative category cards cannot accidentally select their labels", () => {
+  const card = hero.match(/\{heroCategories\.map\(\(category\) => \(\s*<div[\s\S]*?<HeroCategoryArt kind=\{category\.kind\} \/>/)?.[0];
+  assert.ok(card, "Four-card grid should render the decorative SVG component");
+  assert.match(card, /\bselect-none\b/, "Card should suppress accidental text selection");
+  assert.ok(
+    hero.includes("{category.label}"),
+    "Category labels must remain accessible as real text",
+  );
+});
