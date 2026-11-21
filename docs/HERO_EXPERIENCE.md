@@ -60,3 +60,9 @@ Kullanıcının GitHub Free Actions dakika/CI kotası dolduğu için **1 Aralık
 - 1 Aralık'ta bekleyen değişiklikler tek entegrasyon PR'ında birleştirilerek **bir GitHub Quality Gate** çalıştırılacak; lint, typecheck, görsel testleri, hero testi, production build ve smoke kontrolü doğrulanacak.
 - Başarılı test ve kullanıcı merge onayı sonrasında production yayın yapılacak. Main'e merge commit mesajı da \`[skip ci]\` ile ayrı ikinci CI koşusu önlenecek.
 - PR hazırlamak production yayını anlamına gelmez; mevcut canlı ana sayfa eski haliyle çalışmaya devam eder.
+
+## 21 Kasım — seçili metin görünümü düzeltmesi
+
+Kullanıcının ekran görüntüsündeki bazı başlıkların arkasında görünen şeftali/turuncu dikdörtgenler kartın bozuk arka planı değil, global `::selection` renginin (`--bt-accent`) seçilmiş metinlere uygulanmasıydı. Kartların metinleri yalnızca dekoratif kategori etiketleri olduğundan, dört kartın sarmalayıcısına Tailwind `select-none` eklendi. Bu, metnin yanlışlıkla fareyle seçilmesini engeller; başlıklar gerçek DOM metni olarak erişilebilir kalır. `::selection` stilinin sitenin diğer bölümlerindeki normal davranışı değiştirilmedi.
+
+`qa:hero` testi kartların `select-none` özelliğini koruduğunu denetler. GitHub Actions CI, 1 Aralık'a kadar bilinçli olarak çalıştırılmayacak; görsel tarayıcı kontrolü Preview üzerinde yapılacaktır.
